@@ -1,7 +1,13 @@
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello");
-        // write your code here
+        JFrame frame = new JFrame("Baseball");
+        Game game = new Game();
+        frame.setContentPane(game);
+        frame.pack();
+        frame.setVisible(true);
+        game.runGame();
     }
 }
 
