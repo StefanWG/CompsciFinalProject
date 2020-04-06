@@ -1,10 +1,11 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class ContactMeter extends Meter{
+public class ContactMeter extends Meter {
+
     public ContactMeter(int x, int y, Game g) {
-        super();
         WIDTH = 300;
         HEIGHT = 50;
         meterLocation = 0;
@@ -15,6 +16,9 @@ public class ContactMeter extends Meter{
         yPosition = y;
         game = g;
 
+        addKeyListener(this);
+
+        //Create the color gradient for the meter
         Color[] colors = {Color.red, Color.yellow, Color.green, Color.yellow, Color.red};
         float[] fractions = {0.02f, 0.3f, 0.5f, 0.7f, 0.98f};
         color = new LinearGradientPaint(xPosition,yPosition, xPosition+WIDTH,yPosition, fractions, colors);
@@ -60,7 +64,7 @@ public class ContactMeter extends Meter{
         return 100 - (Math.abs(meterLocation - WIDTH/2) / (WIDTH/2) * 100);
     }
 
-    @Override
+   @Override
     public void keyTyped(KeyEvent keyEvent) {
 
     }
@@ -76,5 +80,11 @@ public class ContactMeter extends Meter{
     @Override
     public void keyReleased(KeyEvent keyEvent) {
 
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        requestFocus();
     }
 }

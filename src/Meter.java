@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 abstract class Meter extends JComponent implements KeyListener {
@@ -17,10 +16,4 @@ abstract class Meter extends JComponent implements KeyListener {
     abstract void update();
     abstract void draw(Graphics gOri);
     abstract int runMeter();
-
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        requestFocus();
-    }
 }

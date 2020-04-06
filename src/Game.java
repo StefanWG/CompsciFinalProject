@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Game extends JPanel {
     public Player player;
@@ -11,6 +13,7 @@ public class Game extends JPanel {
     public Game() {
         //Code for picking player
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
+
         cm = new ContactMeter(300,300, this);
     }
 
