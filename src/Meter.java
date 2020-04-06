@@ -9,6 +9,7 @@ abstract class Meter extends JComponent implements KeyListener {
     LinearGradientPaint color;
     int meterLocation;
     int meterSpeed;
+    int speed;
     int xPosition;
     int yPosition;
     boolean stopped;

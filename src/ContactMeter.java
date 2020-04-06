@@ -10,18 +10,21 @@ public class ContactMeter extends Meter {
         HEIGHT = 50;
         meterLocation = 0;
         meterSpeed = 1;
+        speed = 2;
         stopped = false;
 
         xPosition = x;
         yPosition = y;
         game = g;
 
-        addKeyListener(this);
-
         //Create the color gradient for the meter
         Color[] colors = {Color.red, Color.yellow, Color.green, Color.yellow, Color.red};
         float[] fractions = {0.02f, 0.3f, 0.5f, 0.7f, 0.98f};
         color = new LinearGradientPaint(xPosition,yPosition, xPosition+WIDTH,yPosition, fractions, colors);
+    }
+
+    public void setStopped(boolean s) {
+        stopped = s;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class ContactMeter extends Meter {
             update();
             game.repaint();
             try {
-                Thread.sleep(1000/200); //200 can be changed to change speed... lower it is slower meter goes
+                Thread.sleep(1000/(WIDTH*speed)); //200 can be changed to change speed... lower it is slower meter goes
             } catch (InterruptedException ignored) {}
         }
         return 100 - (Math.abs(meterLocation - WIDTH/2) / (WIDTH/2) * 100);

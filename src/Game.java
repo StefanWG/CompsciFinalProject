@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class Game extends JPanel {
     public Player player;
@@ -16,15 +15,17 @@ public class Game extends JPanel {
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
 
         cm = new ContactMeter(300,300, this);
+        setUpKeyBindings();
+    }
 
-//        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"),"STOP");
-//        this.getActionMap().put("STOP", new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent actionEvent) {
-//                System.out.println("here");
-//            }
-//        });
-
+    private void setUpKeyBindings() {
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),"STOP");
+        getActionMap().put("STOP", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                cm.setStopped(true);
+            }
+        });
     }
 
     public void runGame() {
