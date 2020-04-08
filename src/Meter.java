@@ -12,7 +12,7 @@ abstract class Meter extends JComponent implements KeyListener {
     int speed;
     int xPosition;
     int yPosition;
-    boolean stopped;
+    boolean running;
 
     abstract void update();
     abstract void draw(Graphics gOri);

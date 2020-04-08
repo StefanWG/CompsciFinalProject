@@ -4,14 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public class ContactMeter extends Meter {
+    public static boolean stopped;
 
     public ContactMeter(int x, int y, Game g) {
         WIDTH = 300;
         HEIGHT = 50;
-        meterLocation = 0;
+        meterLocation = WIDTH/2;
         meterSpeed = 1;
         speed = 2;
         stopped = false;
+        running = false;
 
         xPosition = x;
         yPosition = y;
@@ -25,6 +27,11 @@ public class ContactMeter extends Meter {
 
     public void setStopped(boolean s) {
         stopped = s;
+        running = false;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     @Override
@@ -51,13 +58,14 @@ public class ContactMeter extends Meter {
         //Draw the bar that is moving back and forth
         g.setColor(Color.black);
         g.setStroke(new BasicStroke(3)); //Sets thickness of line
-        g.drawLine(xPosition + meterLocation, yPosition - 10, xPosition + meterLocation, yPosition + HEIGHT + 10);
+        g.drawLine(xPosition + meterLocation, yPosition, xPosition + meterLocation, yPosition + HEIGHT);
 
     }
 
     @Override
     public int runMeter() {
-        while (!stopped) {
+        running = true;
+        while (running) {
             update();
             game.repaint();
             try {

@@ -7,7 +7,8 @@ public class Main {
         frame.setContentPane(game);
         frame.pack();
         frame.setVisible(true);
+
+        game.pickPlayer();
         game.runGame();
     }
 }
-

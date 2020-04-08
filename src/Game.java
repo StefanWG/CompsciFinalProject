@@ -9,15 +9,13 @@ public class Game extends JPanel {
     public Player player;
     final int WIDTH = 1000;
     final int HEIGHT = 1000;
+    final int MAX_INNINGS = 18;
     BufferedImage fieldDrawing = drawField();
 
-    ContactMeter cm;
+    AtBat atBat;
 
     public Game() {
-        //Code for picking player
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
-
-        cm = new ContactMeter(20,800, this);
         setUpKeyBindings();
     }
 
@@ -26,19 +24,32 @@ public class Game extends JPanel {
         getActionMap().put("STOP", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                cm.setStopped(true);
+                if (atBat != null) atBat.stop();
             }
         });
     }
 
     public void runGame() {
-        cm.runMeter();
+        Scoreboard scoreboard = new Scoreboard(MAX_INNINGS);
+        //Sims half inning when
+        while (scoreboard.halfInning <= scoreboard.maxInnings || scoreboard.awayRuns == scoreboard.homeRuns) {
+            while (scoreboard.outs < 3) {
+                atBat = new AtBat(scoreboard.halfInning, this);
+                int result = atBat.runAtBat();
+                scoreboard.updateBases(result);
+            }
+            scoreboard.newInning();
+        }
+    }
+
+    public void pickPlayer() {
+        //TODO Code for picking player Josh doing this for now
     }
 
     @Override
     public void paintComponent(Graphics g) {
         g.drawImage(fieldDrawing,0,0,null);
-        cm.draw(g);
+        if (atBat != null) atBat.draw(g);
     }
 
     public BufferedImage drawField() {

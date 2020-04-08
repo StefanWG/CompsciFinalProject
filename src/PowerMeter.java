@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class PowerMeter extends Meter {
+    //TODO Write PowerMeter
     @Override
     public void keyTyped(KeyEvent keyEvent) {
 
