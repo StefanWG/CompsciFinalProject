@@ -171,6 +171,7 @@ public class Scoreboard {
             case 5: Walk();
                 break;
         }
+        System.out.println(this);
     }
 //update bases method
 //    updateBases(int n)
@@ -187,6 +188,16 @@ public class Scoreboard {
         }
         //adds one to the half inning..progressing the game to the next inning
         this.halfInning++;
+    }
+
+    public String toString() {
+        String str = "";
+        String i = (halfInning / 2) + " ";
+        if (halfInning % 2 == 1) i += "<";
+        else i += ">";
+        str = "Away: "  + awayRuns + "Home: " + homeRuns + "Inning: " + i + "Outs: " + outs + "\n";
+        str += bases[0] + " " + bases[1] + " " + bases[2] + "\n";
+        return str;
     }
 
 

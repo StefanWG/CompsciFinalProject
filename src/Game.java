@@ -19,83 +19,6 @@ public class Game extends JPanel {
         setUpKeyBindings();
     }
 
-    private void setUpKeyBindings() {
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),"STOP");
-        getActionMap().put("STOP", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (atBat != null) atBat.stop();
-            }
-        });
-
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_0), "0");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_1), "1");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_2), "2");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_3), "3");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_4), "4");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_5), "5");
-
-        getActionMap().put("0", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(0);
-                for (int i = 0; i < 3; i++) {
-                    System.out.println(scoreboard.bases[i]);
-                }
-            }
-        });
-        getActionMap().put("1", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(1);
-                for (int i = 0; i < 3; i++) {
-                    System.out.print(scoreboard.bases[i] + " ");
-                }
-                System.out.println();
-            }
-        });
-        getActionMap().put("2", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(2);
-                for (int i = 0; i < 3; i++) {
-                    System.out.print(scoreboard.bases[i] + " ");
-                }
-                System.out.println();
-            }
-        });
-        getActionMap().put("3", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(3);
-                for (int i = 0; i < 3; i++) {
-                    System.out.print(scoreboard.bases[i] + " ");
-                }
-                System.out.println();
-            }
-        });
-        getActionMap().put("4", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(4);
-                for (int i = 0; i < 3; i++) {
-                    System.out.print(scoreboard.bases[i] + " ");
-                }
-                System.out.println();
-            }
-        });
-        getActionMap().put("5", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(5);
-                for (int i = 0; i < 3; i++) {
-                    System.out.print(scoreboard.bases[i] + " ");
-                }
-                System.out.println();
-            }
-        });
-    }
-
     public void runGame() {
         scoreboard = new Scoreboard(MAX_INNINGS);
         //Sims half inning when
@@ -210,5 +133,59 @@ public class Game extends JPanel {
         }
 
         return newImage;
+    }
+
+    private void setUpKeyBindings() {
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),"STOP");
+        getActionMap().put("STOP", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (atBat != null) atBat.stop();
+            }
+        });
+
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_0), "0");
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_1), "1");
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_2), "2");
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_3), "3");
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_4), "4");
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_5), "5");
+
+        getActionMap().put("0", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                scoreboard.updateBases(0);
+            }
+        });
+        getActionMap().put("1", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                scoreboard.updateBases(1);
+            }
+        });
+        getActionMap().put("2", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                scoreboard.updateBases(2);
+            }
+        });
+        getActionMap().put("3", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                scoreboard.updateBases(3);
+            }
+        });
+        getActionMap().put("4", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                scoreboard.updateBases(4);
+            }
+        });
+        getActionMap().put("5", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                scoreboard.updateBases(5);
+            }
+        });
     }
 }

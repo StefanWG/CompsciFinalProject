@@ -47,7 +47,7 @@ public class AtBat {
 
     private int determineOutcome() {
         //TODO Forumla for determining outcome
-        return (contactResult + powerResult) /34;
+        return (contactResult + powerResult) / 34;
     }
 
 
