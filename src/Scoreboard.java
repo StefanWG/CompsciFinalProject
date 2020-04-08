@@ -12,25 +12,161 @@ public class Scoreboard {
         this.awayRuns = 0;
         this.halfInning = 0;
         this.maxInnings = maxInnings;
-        //creating the array of length 3
-        bases = new boolean[3];
-        //initializing it to 0
-        for (int i = 0; i < bases.length; i++){
-            bases[i] = false;
+        this.bases = new boolean[3];
+        //creating the array of len
+    }
+    //    public boolean addOuts(int n) {
+//        //adds outs to the tally using the number of outs
+//        this.outs += n;
+//        if (this.outs >=3){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+    private void addRuns(int numRuns){
+        //this is the home team
+        if (this.halfInning % 2 ==0){
+            this.homeRuns += numRuns;
+        }
+        //this is the away team
+        else{
+            this.awayRuns += numRuns;
         }
     }
-    public boolean addOuts(int n) {
-        return false;
+
+    private void Single(){
+        boolean first = this.bases[0];
+        boolean second = this.bases[1];
+        boolean third = this.bases[2];
+        //send person at third home
+        if(third){
+            addRuns(1);
+        }
+        //send person at second to third
+        if (second){
+            this.bases[1]= false;
+            this.bases[2]= true;
+        }
+        //send person at first to second
+        if (first){
+            //send them to second
+            this.bases[1] = true;
+            //not clearing first base because it was a single and hitter will
+            //now occupy first, hence first is still occupied
+        }
     }
 
-//    addouts method
-//    addOuts(int n)
-//    Public - will be called from Game if the outcome of at bat is an out
-//    Returns a boolean, true if there are 3 outs, false if not
-//    Updates the number of outs and returns true if the inning is over (3 outs). It takes an int which is the number of outs to add.
+    private void Double(){
+        boolean first = this.bases[0];
+        boolean second = this.bases[1];
+        boolean third = this.bases[2];
+        //clear second and third and add 1 or 2 runs.
+        //if either second or third is occupied
+        if (third || second){
+            //if both are occupied
+            if (third && second){
+                addRuns(2);
+                this.bases[1]= false;
+                this.bases[2] = false;
+            }
+            //this means only one of the 2 bases to clear are occupied
+            else{
+                addRuns(1);
+                this.bases[1] = false;
+                this.bases[2] = false;
+            }
+        }
+        //send first to third
+        if (first){
+            this.bases[0] = false;
+            this.bases[2] = true;
+        }
+        //make second base occupied since a double was hit
+        this.bases[1] = true;
+    }
+
+    private void Triple() {
+        //very similar to home run. clears all bases and adds run accordingly
+        //however at the end, third base gets occupied.
+        //however, no guarantee of one scoring like HR, so we take one away from the tally
+        //to count for this
+        HomeRun();
+        //compensation for extra run from HR
+        addRuns(-1);
+        //make third base occupied and first and second empty
+        this.bases[0]= false;
+        this.bases[1] = false;
+        this.bases[2] = true;
+    }
+
+    private void HomeRun(){
+        //starts at one since at least one run scores from HR
+        int numBases = 1;
+        for (int i = 0; i<this.bases.length; i++){
+            boolean result = this.bases[i];
+            if (result){
+                numBases++;
+            }
+            //empty all the bases
+            this.bases[i] = false;
+        }
+        addRuns(numBases);
+    }
+
+    private void Walk(){
+        //here runs only score if bases are loaded
+        boolean first = this.bases[0];
+        boolean second = this.bases[1];
+        boolean third = this.bases[2];
+        //if bases are loaded add a run and keep bases loaded
+        if (first && second && third){
+            addRuns(1);
+        }
+        //if first is empty, just fill first
+        if (!first){
+            this.bases[0] = true;
+        }
+        //otherwise first is full
+        else{
+            //first is full but second empty
+            if (!second){
+                this.bases[1] = true;
+            }
+            //first and second are full
+            else {
+                if (!third){
+                    this.bases[2] = true;
+                }
+                //otherwise all three are full and this has been accounted for at the beginning
+            }
+        }
+    }
+
 
     public void updateBases(int n) {
-
+        //will range from 1-5
+        switch (n){
+            //out
+            case 0: this.outs ++;
+                break;
+            //single
+            case 1: Single();
+                break;
+            //double
+            case 2: Double();
+                break;
+            //triple
+            case 3: Triple();
+                break;
+            //HR
+            case 4: HomeRun();
+                break;
+            //Walk
+            case 5: Walk();
+                break;
+        }
     }
 //update bases method
 //    updateBases(int n)
@@ -39,14 +175,15 @@ public class Scoreboard {
 //    Int n represents the at bat outcome. There will be a switch statement that updates the bases based on the outcome.
 
     public void newInning() {
-
+        //resets outs
+        this.outs = 0;
+        //makes all the bases empty by making them false
+        for (int i = 0; i<this.bases.length; i++){
+            bases[i] = false;
+        }
+        //adds one to the half inning..progressing the game to the next inning
+        this.halfInning++;
     }
-    //newinning method
-//    newInning()
-//    Public - will be called from game when inning is over
-//            Void
-//    This will reset outs and bases, and will add will add one to the next inning
-
 
 
 }

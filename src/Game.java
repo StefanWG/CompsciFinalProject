@@ -32,6 +32,7 @@ public class Game extends JPanel {
     public void runGame() {
         Scoreboard scoreboard = new Scoreboard(MAX_INNINGS);
         //Sims half inning when
+        scoreboard.newInning();
         while (scoreboard.halfInning <= scoreboard.maxInnings || scoreboard.awayRuns == scoreboard.homeRuns) {
             while (scoreboard.outs < 3) {
                 atBat = new AtBat(scoreboard.halfInning, this);
