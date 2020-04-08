@@ -1,6 +1,6 @@
 public class Scoreboard {
     int outs;
-    boolean[] bases;
+    boolean[] bases = new boolean[3];
     int homeRuns;
     int awayRuns;
     int halfInning;
@@ -12,10 +12,11 @@ public class Scoreboard {
         this.awayRuns = 0;
         this.halfInning = 0;
         this.maxInnings = maxInnings;
-        this.bases = new boolean[3];
-        //creating the array of len
+        for (int i = 0; i<this.bases.length; i++){
+            bases[i] = false;
+        }
     }
-    //    public boolean addOuts(int n) {
+//    public boolean addOuts(int n) {
 //        //adds outs to the tally using the number of outs
 //        this.outs += n;
 //        if (this.outs >=3){
@@ -43,6 +44,7 @@ public class Scoreboard {
         //send person at third home
         if(third){
             addRuns(1);
+            this.bases[2] = false;
         }
         //send person at second to third
         if (second){
@@ -56,6 +58,7 @@ public class Scoreboard {
             //not clearing first base because it was a single and hitter will
             //now occupy first, hence first is still occupied
         }
+        this.bases[0] = true; //send person to first base
     }
 
     private void Double(){
@@ -103,51 +106,52 @@ public class Scoreboard {
 
     private void HomeRun(){
         //starts at one since at least one run scores from HR
-        int numBases = 1;
-        for (int i = 0; i<this.bases.length; i++){
-            boolean result = this.bases[i];
-            if (result){
-                numBases++;
-            }
-            //empty all the bases
-            this.bases[i] = false;
+    int numBases = 1;
+    for (int i = 0; i<this.bases.length; i++){
+        boolean result = this.bases[i];
+        if (result){
+            numBases++;
         }
-        addRuns(numBases);
+        //empty all the bases
+        this.bases[i] = false;
+    }
+    addRuns(numBases);
     }
 
     private void Walk(){
-        //here runs only score if bases are loaded
-        boolean first = this.bases[0];
-        boolean second = this.bases[1];
-        boolean third = this.bases[2];
-        //if bases are loaded add a run and keep bases loaded
-        if (first && second && third){
-            addRuns(1);
+    //here runs only score if bases are loaded
+    boolean first = this.bases[0];
+    boolean second = this.bases[1];
+    boolean third = this.bases[2];
+    //if bases are loaded add a run and keep bases loaded
+    if (first && second && third){
+        addRuns(1);
+    }
+    //if first is empty, just fill first
+    if (!first){
+        this.bases[0] = true;
+    }
+    //otherwise first is full
+    else{
+        //first is full but second empty
+        if (!second){
+            this.bases[1] = true;
         }
-        //if first is empty, just fill first
-        if (!first){
-            this.bases[0] = true;
-        }
-        //otherwise first is full
-        else{
-            //first is full but second empty
-            if (!second){
-                this.bases[1] = true;
+        //first and second are full
+        else {
+            if (!third){
+                this.bases[2] = true;
             }
-            //first and second are full
-            else {
-                if (!third){
-                    this.bases[2] = true;
-                }
-                //otherwise all three are full and this has been accounted for at the beginning
-            }
+            //otherwise all three are full and this has been accounted for at the beginning
         }
+    }
     }
 
 
     public void updateBases(int n) {
         //will range from 1-5
-        switch (n){
+        int outcomes = n;
+        switch (outcomes){
             //out
             case 0: this.outs ++;
                 break;
