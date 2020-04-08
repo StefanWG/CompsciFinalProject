@@ -3,9 +3,8 @@ import java.awt.*;
 public class AtBat {
     private int contactResult;
     private int powerResult;
-    private ContactMeter contactMeter;
-    //private PowerMeter powerMeter;
-    private ContactMeter powerMeter;
+    private Meter contactMeter;
+    private Meter powerMeter;
     private int currentInning;
     public Game g;
 
@@ -15,14 +14,15 @@ public class AtBat {
         contactResult = -1;
         powerResult = -1;
         currentInning = inning;
-        contactMeter = new ContactMeter(0,0, this.g); //Change location
-        powerMeter = new ContactMeter(0,100, this.g); //Change location
+        contactMeter = new Meter(0,0, this.g); //Change location
+        powerMeter = new Meter(0,100, this.g); //Change location
     }
 
     public int runAtBat() {
         if (currentInning % 2 == 0) {
             //User At Bat
             contactResult = contactMeter.runMeter();
+            powerResult = powerMeter.runMeter();
         } else {
             //TODO Computer At Bat
             contactResult = (int) (Math.random() * 101);
@@ -38,9 +38,8 @@ public class AtBat {
     }
 
     public void stop() {
-        if (!contactMeter.isRunning()) {
+        if (contactMeter.isRunning()) {
             contactMeter.setStopped(true);
-            powerMeter.runMeter();
         } else {
             powerMeter.setStopped(true);
         }
@@ -48,8 +47,7 @@ public class AtBat {
 
     private int determineOutcome() {
         //TODO Forumla for determining outcome
-        int result = contactResult / 17;
-        return result;
+        return (contactResult + powerResult) /34;
     }
 
 
