@@ -10,7 +10,7 @@ public class Scoreboard {
         this.outs = 0;
         this.homeRuns = 0;
         this.awayRuns = 0;
-        this.halfInning = 0;
+        this.halfInning = 1;
         this.maxInnings = maxInnings;
         for (int i = 0; i<this.bases.length; i++){
             bases[i] = false;

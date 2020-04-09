@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.font.TextLayout;
 import java.awt.geom.Arc2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Game extends JPanel {
@@ -38,14 +40,15 @@ public class Game extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(fieldDrawing,0,0,null);
+        g.drawImage(drawScoreboard(),0,0,null);
+       // g.drawImage(fieldDrawing,0,0,null);
         if (atBat != null) atBat.draw(g);
     }
 
     public BufferedImage drawField() {
         int xOri = 250;
         int yOri = 500;
-        //Graphics2D g = (Graphics2D) gOri;
+
         BufferedImage image = new BufferedImage ( 500, 550, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = image.createGraphics ();
 
@@ -104,6 +107,84 @@ public class Game extends JPanel {
         image = makeTransparent(Color.lightGray, image);
         return image;
 
+    }
+
+    public BufferedImage drawScoreboard() {
+        BufferedImage image = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
+        final Graphics2D g = image.createGraphics ();
+
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(200,200,400,360, 50, 50));
+        //g.fillRect(200,200, 400,300);
+        g.setColor(Color.BLACK);
+        g.fill(new RoundRectangle2D.Double(225,225,75,75, 20, 20)); //Away
+        g.fill(new RoundRectangle2D.Double(500,225,75,75, 20, 20)); //Home
+        g.fill(new RoundRectangle2D.Double(350,225,100,100, 20, 20)); //Inning
+        g.fill(new RoundRectangle2D.Double(225,400,75,75, 20, 20)); //Outs
+        g.fill(new RoundRectangle2D.Double(500,400,75,75, 20, 20)); //AtBat
+
+        writeText("Away", g,225, 300, 335);
+        writeText("Home", g,500, 575, 335);
+        writeText("Inning", g,350, 450, 360);
+        writeText("Outs", g,225, 300, 510);
+        writeText("At Bat", g,500, 575, 510);
+
+
+        writeText(String.valueOf(scoreboard.awayRuns), g, 225, 300, 225, 300);
+        writeText(String.valueOf(scoreboard.homeRuns), g, 500, 575, 225, 300);
+        writeText(String.valueOf(scoreboard.halfInning/2), g, 350, 450, 225, 325);
+        writeText(String.valueOf(scoreboard.outs), g, 225, 300, 400, 475);
+        if (scoreboard.halfInning%2 == 1) writeText("A", g, 500, 575, 400, 475);
+        else writeText("H", g, 500, 575, 400, 475);
+
+        float[] fracs = {.25f,.75f};
+        Color[] colors = {new Color(0,102,0), new Color(0,179,0)};
+        LinearGradientPaint grass = new LinearGradientPaint(0,0, 800,800, fracs, colors, MultipleGradientPaint.CycleMethod.REPEAT);
+        g.setColor(Color.black);
+        drawRect(g, new Point(400,395), new Point(465,460), new Point(400,525), new Point(335,460));
+        g.setPaint(grass);
+        drawRect(g, new Point(400,400), new Point(460,460), new Point(400,520), new Point(340,460));
+
+        if (scoreboard.bases[0]) g.setColor(Color.red);
+        else g.setColor(Color.white);
+        drawRect(g, new Point(460,460), new Point(450,450), new Point(440,460), new Point(450,470));
+
+        if (scoreboard.bases[1]) g.setColor(Color.red);
+        else g.setColor(Color.white);
+        drawRect(g, new Point(400,400), new Point(410,410), new Point(400,420), new Point(390,410));
+
+        if (scoreboard.bases[2]) g.setColor(Color.red);
+        else g.setColor(Color.white);
+        drawRect(g, new Point(340,460), new Point(350,450), new Point(360,460), new Point(350,470));
+
+        g.setColor(Color.white);
+        drawRect(g, new Point(400,520), new Point(410,510), new Point(400,500), new Point(390,510));
+
+        image = makeTransparent(Color.lightGray, image);
+        return image;
+
+    }
+
+    public void writeText(String str, Graphics2D g, int x1, int x2, int y) {
+        Font font = new Font("Impact", Font.PLAIN, 30);
+        TextLayout textLayout = new TextLayout(str, font, g.getFontRenderContext());
+        float x = (x1 + x2 + textLayout.getVisibleAdvance()) / 2 - textLayout.getVisibleAdvance();
+        g.setColor(new Color (0,40,0));
+        textLayout.draw(g, x + 3, y + 3);
+
+        g.setColor(new Color(0,100,0));
+        textLayout.draw(g, x, y);
+    }
+
+    public void writeText(String str, Graphics2D g, int x1, int x2, int y1, int y2) {
+        Font font = new Font("Impact", Font.PLAIN, 50);
+        TextLayout textLayout = new TextLayout(str, font, g.getFontRenderContext());
+        float y = (y1 + y2 + textLayout.getAscent()) / 2 - textLayout.getAscent()/8;
+        float x = (x1 + x2 + textLayout.getVisibleAdvance()) / 2 - textLayout.getVisibleAdvance();
+        g.setColor(new Color (0,40,0));
+        textLayout.draw(g, x+3, y+3);
+        g.setColor(new Color(0,100,0));
+        textLayout.draw(g, x, y);
     }
 
     public void drawRect(Graphics g, Point p1, Point p2, Point p3, Point p4) {
