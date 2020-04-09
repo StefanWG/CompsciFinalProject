@@ -40,8 +40,8 @@ public class Game extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(drawScoreboard(),0,0,null);
-       // g.drawImage(fieldDrawing,0,0,null);
+        g.drawImage(drawScoreboard(),50,400,null);
+        g.drawImage(fieldDrawing,500,300,null);
         if (atBat != null) atBat.draw(g);
     }
 
@@ -114,51 +114,51 @@ public class Game extends JPanel {
         final Graphics2D g = image.createGraphics ();
 
         g.setColor(Color.darkGray);
-        g.fill(new RoundRectangle2D.Double(200,200,400,360, 50, 50));
+        g.fill(new RoundRectangle2D.Double(0,0,400,360, 50, 50));
         //g.fillRect(200,200, 400,300);
         g.setColor(Color.BLACK);
-        g.fill(new RoundRectangle2D.Double(225,225,75,75, 20, 20)); //Away
-        g.fill(new RoundRectangle2D.Double(500,225,75,75, 20, 20)); //Home
-        g.fill(new RoundRectangle2D.Double(350,225,100,100, 20, 20)); //Inning
-        g.fill(new RoundRectangle2D.Double(225,400,75,75, 20, 20)); //Outs
-        g.fill(new RoundRectangle2D.Double(500,400,75,75, 20, 20)); //AtBat
+        g.fill(new RoundRectangle2D.Double(25,25,75,75, 20, 20)); //Away
+        g.fill(new RoundRectangle2D.Double(300,25,75,75, 20, 20)); //Home
+        g.fill(new RoundRectangle2D.Double(150,25,100,100, 20, 20)); //Inning
+        g.fill(new RoundRectangle2D.Double(25,200,75,75, 20, 20)); //Outs
+        g.fill(new RoundRectangle2D.Double(300,200,75,75, 20, 20)); //AtBat
 
-        writeText("Away", g,225, 300, 335);
-        writeText("Home", g,500, 575, 335);
-        writeText("Inning", g,350, 450, 360);
-        writeText("Outs", g,225, 300, 510);
-        writeText("At Bat", g,500, 575, 510);
+        writeText("Away", g,25, 100, 135);
+        writeText("Home", g,300, 375, 135);
+        writeText("Inning", g,150, 250, 160);
+        writeText("Outs", g,25, 100, 310);
+        writeText("At Bat", g,300, 375, 310);
 
 
-        writeText(String.valueOf(scoreboard.awayRuns), g, 225, 300, 225, 300);
-        writeText(String.valueOf(scoreboard.homeRuns), g, 500, 575, 225, 300);
-        writeText(String.valueOf(scoreboard.halfInning/2), g, 350, 450, 225, 325);
-        writeText(String.valueOf(scoreboard.outs), g, 225, 300, 400, 475);
-        if (scoreboard.halfInning%2 == 1) writeText("A", g, 500, 575, 400, 475);
-        else writeText("H", g, 500, 575, 400, 475);
+        writeText(String.valueOf(scoreboard.awayRuns), g, 25, 100, 25, 100);
+        writeText(String.valueOf(scoreboard.homeRuns), g, 300, 375, 25, 100);
+        writeText(String.valueOf(scoreboard.halfInning/2), g, 150, 250, 25, 125);
+        writeText(String.valueOf(scoreboard.outs), g, 25, 100, 200, 275);
+        if (scoreboard.halfInning%2 == 1) writeText("A", g, 300, 375, 200, 275);
+        else writeText("H", g, 300, 375, 200, 275);
 
         float[] fracs = {.25f,.75f};
         Color[] colors = {new Color(0,102,0), new Color(0,179,0)};
-        LinearGradientPaint grass = new LinearGradientPaint(0,0, 800,800, fracs, colors, MultipleGradientPaint.CycleMethod.REPEAT);
+        LinearGradientPaint grass = new LinearGradientPaint(0,0, 400,400, fracs, colors, MultipleGradientPaint.CycleMethod.REPEAT);
         g.setColor(Color.black);
-        drawRect(g, new Point(400,395), new Point(465,460), new Point(400,525), new Point(335,460));
+        drawRect(g, new Point(200,195), new Point(265,260), new Point(200,325), new Point(135,260));
         g.setPaint(grass);
-        drawRect(g, new Point(400,400), new Point(460,460), new Point(400,520), new Point(340,460));
+        drawRect(g, new Point(200,200), new Point(260,260), new Point(200,320), new Point(140,260));
 
         if (scoreboard.bases[0]) g.setColor(Color.red);
         else g.setColor(Color.white);
-        drawRect(g, new Point(460,460), new Point(450,450), new Point(440,460), new Point(450,470));
+        drawRect(g, new Point(260,260), new Point(250,250), new Point(240,260), new Point(250,270));
 
         if (scoreboard.bases[1]) g.setColor(Color.red);
         else g.setColor(Color.white);
-        drawRect(g, new Point(400,400), new Point(410,410), new Point(400,420), new Point(390,410));
+        drawRect(g, new Point(200,200), new Point(210,210), new Point(200,220), new Point(190,210));
 
         if (scoreboard.bases[2]) g.setColor(Color.red);
         else g.setColor(Color.white);
-        drawRect(g, new Point(340,460), new Point(350,450), new Point(360,460), new Point(350,470));
+        drawRect(g, new Point(140,260), new Point(150,250), new Point(160,260), new Point(150,270));
 
         g.setColor(Color.white);
-        drawRect(g, new Point(400,520), new Point(410,510), new Point(400,500), new Point(390,510));
+        drawRect(g, new Point(200,320), new Point(210,310), new Point(200,300), new Point(190,310));
 
         image = makeTransparent(Color.lightGray, image);
         return image;
