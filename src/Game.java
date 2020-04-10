@@ -19,8 +19,6 @@ public class Game extends JPanel {
     public Game() {
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setUpKeyBindings();
-        player = new Player(19, "Rams", "Poke", 80, "Rohil", 80);
-
     }
 
     public void runGame() {
@@ -31,6 +29,10 @@ public class Game extends JPanel {
                 atBat = new AtBat(scoreboard.halfInning, this, player);
                 int result = atBat.runAtBat();
                 scoreboard.updateBases(result);
+                repaint();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {}
             }
             scoreboard.newInning();
         }
@@ -38,6 +40,7 @@ public class Game extends JPanel {
 
     public void pickPlayer() {
         //TODO Code for picking player Josh doing this for now
+        player = new Player(19, "Rams", "Poke", 80, "Rohil", 80); //placeholder
     }
 
     @Override

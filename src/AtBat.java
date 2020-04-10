@@ -17,7 +17,7 @@ public class AtBat {
         powerResult = -1;
         currentInning = inning;
         contactMeter = new Meter(0,0, this.g); //Change location
-        powerMeter = new Meter(0,100, this.g); //Change location
+        powerMeter = new Meter(0,130, this.g); //Change location
     }
 
     public int runAtBat() {
@@ -31,8 +31,8 @@ public class AtBat {
             System.out.println("Power Result: " + powerResult);
         } else {
             //TODO Computer At Bat
-            contactResult = (int) (Math.random() * 101);
-            powerResult = (int) (Math.random() * 101);
+            contactResult = (int) (Math.random() * 51) + 50;
+            powerResult = (int) (Math.random() * 51) + 50;
         }
         return determineOutcome();
     }
@@ -61,8 +61,8 @@ public class AtBat {
         //4 - HR
         if (result ==100) return 4;
         else if (result>97) return 3;
-        else if (result > 90) return 2;
-        else if (result > 70) return 1;
+        else if (result > 92) return 2;
+        else if (result > 80) return 1;
         else return 0;
     }
     
@@ -79,11 +79,12 @@ public class AtBat {
         double preresult = (contactResult*contactWeight) + (powerResult*powerWeight);
         //to turn it into 0-100, we can divide it by max number (150) to find how close
         //user was to doing best they could
-        result = (int)((preresult/105) * 100);
+        result = (int)((preresult/125) * 100);
         if (result>100){
             result = 100;
         }
         //Use weights and results to come up with new result, 0-100
+        System.out.print(result);
         return result;
     }
     
@@ -94,7 +95,7 @@ public class AtBat {
         //for a contact rating which is between 0 and 100
         //the average is 50
         //this gives us how far it is from the mean (positive or negative)
-        double multiplier =  1 + ((contactRating-50)/100);
+        double multiplier =  1 + ((double) (contactRating-50)/100.0);
         contactResult = (int) (meterResult * multiplier);
         //this returns a value between 50 and 150
         return contactResult;
@@ -105,7 +106,7 @@ public class AtBat {
         int meterResult = powerResult;
         int powerRating = player.powerRating;
         //find multiplier by finding how under or above average (50) the powerResult is
-        double multiplier = 1 + ((powerRating-50)/100);
+        double multiplier = 1 + ((double) (powerRating-50)/100.0);
         powerResult = (int)(meterResult * multiplier);
         //this returns a value between 50 and 150
         return powerResult;

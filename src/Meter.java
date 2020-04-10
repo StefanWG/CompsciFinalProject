@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.font.TextLayout;
 
 public class Meter {
     Game game;
@@ -11,7 +12,9 @@ public class Meter {
     int xPosition;
     int yPosition;
     boolean running;
+    boolean done;
     public static boolean stopped;
+    int result;
 
     public Meter(int x, int y, Game g) {
         WIDTH = 300;
@@ -19,8 +22,10 @@ public class Meter {
         meterLocation = WIDTH/2;
         meterSpeed = 1;
         speed = 2;
+        //TODO edit stopped
         stopped = false;
         running = false;
+
 
         xPosition = x;
         yPosition = y;
@@ -35,6 +40,7 @@ public class Meter {
     public void setStopped(boolean s) {
         stopped = s;
         running = false;
+        done = true;
     }
 
     public boolean isRunning() {
@@ -65,7 +71,22 @@ public class Meter {
         g.setStroke(new BasicStroke(3)); //Sets thickness of line
         g.drawLine(xPosition + meterLocation, yPosition, xPosition + meterLocation, yPosition + HEIGHT);
 
+        if (done) {
+            writeText(String.valueOf(result), g, xPosition, xPosition+WIDTH, yPosition + HEIGHT +15,  yPosition + HEIGHT +65);
+        }
     }
+
+    public void writeText(String str, Graphics2D g, int x1, int x2, int y1, int y2) {
+        Font font = new Font("Impact", Font.PLAIN, 50);
+        TextLayout textLayout = new TextLayout(str, font, g.getFontRenderContext());
+        float y = (y1 + y2 + textLayout.getAscent()) / 2 - textLayout.getAscent()/8;
+        float x = (x1 + x2 + textLayout.getVisibleAdvance()) / 2 - textLayout.getVisibleAdvance();
+        g.setColor(Color.darkGray);
+        textLayout.draw(g, x+3, y+3);
+        g.setColor(Color.black);
+        textLayout.draw(g, x, y);
+    }
+
 
     public int runMeter() {
         running = true;
@@ -76,8 +97,7 @@ public class Meter {
                 Thread.sleep(1000/(WIDTH*speed)); //200 can be changed to change speed... lower it is slower meter goes
             } catch (InterruptedException ignored) {}
         }
-
-        //Fun
-        return 100 - (int) (Math.abs((double ) (meterLocation - WIDTH/2) / (double) (WIDTH/2) * 100));
+        result = 100 - (int) (Math.abs((double) (meterLocation - WIDTH/2) / (double) (WIDTH/2) * 100));
+        return result;
     }
 }
