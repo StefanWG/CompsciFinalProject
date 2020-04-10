@@ -6,8 +6,6 @@ public class Player {
     int powerRating;
     int contactRating;
 
-
-
     public Player (int a, String t, String FF, int PR, String n, int CR) {
         name = n;
         age = a;
@@ -37,7 +35,7 @@ public class Player {
     }
 
     public String randomFood(){
-        String[] foods = {"Tacos", "Burgers", "Spaghetti", "Daal", "Empandas", "Bagesls"};
+        String[] foods = {"Tacos", "Burgers", "Spaghetti", "Daal", "Empandas", "Bagels"};
         return foods[(int)(Math.random() * foods.length)];
     }
 
@@ -45,8 +43,8 @@ public class Player {
         return ((int) (min + (Math.random() * (max-min))));
     }
 
-    Player player1 = new Player (20, "Gladiators" , "Sushi", 87, "Josh", 70 );
-    Player player2 = new Player (19, "Polar Bears", "Buffalo Wings",75, "Stefan", 88);
-    Player player3 = new Player (19, "Rams", "Burgers", 80, "Rohil", 80);
+//    Player player1 = new Player (20, "Gladiators" , "Sushi", 87, "Josh", 70 );
+//    Player player2 = new Player (19, "Polar Bears", "Buffalo Wings",75, "Stefan", 88);
+//    Player player3 = new Player (19, "Rams", "Poke", 80, "Rohil", 80);
 
 }

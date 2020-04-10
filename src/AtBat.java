@@ -24,13 +24,16 @@ public class AtBat {
         if (currentInning % 2 == 0) {
             //User At Bat
             contactResult = contactMeter.runMeter();
+            //testing
+            System.out.println("Contact Result: " + contactResult);
             powerResult = powerMeter.runMeter();
+            //testing
+            System.out.println("Power Result: " + powerResult);
         } else {
             //TODO Computer At Bat
             contactResult = (int) (Math.random() * 101);
             powerResult = (int) (Math.random() * 101);
         }
-
         return determineOutcome();
     }
 
@@ -48,39 +51,63 @@ public class AtBat {
     }
 
     private int determineOutcome() {
-        //TODO Forumla for determining outcome
+        //this gives us a number between 0 and 100
         int result = findResult();
         //Manipulate result to 0 -4 ;
-        if (result > 98) return 4;
-        else if (result >97) return 3;
+        //0 - out
+        //1- single
+        //2 - double
+        //3- triple
+        //4 - HR
+        if (result ==100) return 4;
+        else if (result>97) return 3;
         else if (result > 90) return 2;
         else if (result > 70) return 1;
         else return 0;
     }
     
     private int findResult() {
-        //this is where we determine how we want conbatct and powr to be handld
-        //turn this into one number to use in get Result (that returns 0 to 4 outcome)
-        //return from 0-100
+        //this is where we determine how we want contact and power to be handled
+        //turn this into one number (0-100) to use in getResult (that returns 0 to 4 outcome)
+        //contactResult and powerResult are (50-150).
         contactResult = calculateConRes();
         powerResult = calculatePowRes();
-        
         int result = 0;
-        double contactWeight = .5;
-        double powerWeight = .5;
-
+        double contactWeight = .7;
+        double powerWeight = .3;
+        //this will be in between 50 and 150
+        double preresult = (contactResult*contactWeight) + (powerResult*powerWeight);
+        //to turn it into 0-100, we can divide it by max number (150) to find how close
+        //user was to doing best they could
+        result = (int)((preresult/105) * 100);
+        if (result>100){
+            result = 100;
+        }
         //Use weights and results to come up with new result, 0-100
-
         return result;
     }
     
     private int calculateConRes(){
         //Using the rating and meter result it will return an update contact result
+         int meterResult = contactResult;
+         int contactRating = player.contactRating;
+        //for a contact rating which is between 0 and 100
+        //the average is 50
+        //this gives us how far it is from the mean (positive or negative)
+        double multiplier =  1 + ((contactRating-50)/100);
+        contactResult = (int) (meterResult * multiplier);
+        //this returns a value between 50 and 150
         return contactResult;
     }
     
     private int calculatePowRes(){
         //Using the rating and meter result it will return an update power result
+        int meterResult = powerResult;
+        int powerRating = player.powerRating;
+        //find multiplier by finding how under or above average (50) the powerResult is
+        double multiplier = 1 + ((powerRating-50)/100);
+        powerResult = (int)(meterResult * multiplier);
+        //this returns a value between 50 and 150
         return powerResult;
     }
 

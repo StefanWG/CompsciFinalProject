@@ -16,16 +16,8 @@ public class Scoreboard {
             bases[i] = false;
         }
     }
-//    public boolean addOuts(int n) {
-//        //adds outs to the tally using the number of outs
-//        this.outs += n;
-//        if (this.outs >=3){
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
+
+
     private void addRuns(int numRuns){
         //this is the home team
         if (this.halfInning % 2 ==0){
@@ -171,7 +163,7 @@ public class Scoreboard {
             case 5: Walk();
                 break;
         }
-        System.out.println(this);
+        //System.out.println(this);
     }
 //update bases method
 //    updateBases(int n)

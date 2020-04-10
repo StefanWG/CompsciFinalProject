@@ -76,6 +76,6 @@ public class Meter {
                 Thread.sleep(1000/(WIDTH*speed)); //200 can be changed to change speed... lower it is slower meter goes
             } catch (InterruptedException ignored) {}
         }
-        return 100 - (Math.abs(meterLocation - WIDTH/2) / (WIDTH/2) * 100);
+        return 100 - (int) (Math.abs((double ) (meterLocation - WIDTH/2) / (double) (WIDTH/2) * 100));
     }
 }

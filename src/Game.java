@@ -19,6 +19,8 @@ public class Game extends JPanel {
     public Game() {
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setUpKeyBindings();
+        player = new Player(19, "Rams", "Poke", 80, "Rohil", 80);
+
     }
 
     public void runGame() {
@@ -26,7 +28,7 @@ public class Game extends JPanel {
         //Sims half inning when
         while (scoreboard.halfInning <= scoreboard.maxInnings || scoreboard.awayRuns == scoreboard.homeRuns) {
             while (scoreboard.outs < 3) {
-                atBat = new AtBat(scoreboard.halfInning, this);
+                atBat = new AtBat(scoreboard.halfInning, this, player);
                 int result = atBat.runAtBat();
                 scoreboard.updateBases(result);
             }
