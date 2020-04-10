@@ -43,8 +43,8 @@ public class Player {
         return ((int) (min + (Math.random() * (max-min))));
     }
 
-//    Player player1 = new Player (20, "Gladiators" , "Sushi", 87, "Josh", 70 );
-//    Player player2 = new Player (19, "Polar Bears", "Buffalo Wings",75, "Stefan", 88);
+//    Player player1 = new Player (20, "Gladiators" , "Sushi", 84, "Josh", 76 );
+//    Player player2 = new Player (19, "Polar Bears", "Buffalo Wings",74, "Stefan", 86);
 //    Player player3 = new Player (19, "Rams", "Poke", 80, "Rohil", 80);
 
 }

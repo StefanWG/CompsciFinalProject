@@ -24,11 +24,7 @@ public class AtBat {
         if (currentInning % 2 == 0) {
             //User At Bat
             contactResult = contactMeter.runMeter();
-            //testing
-            System.out.println("Contact Result: " + contactResult);
             powerResult = powerMeter.runMeter();
-            //testing
-            System.out.println("Power Result: " + powerResult);
         } else {
             //TODO Computer At Bat
             contactResult = (int) (Math.random() * 51) + 50;
@@ -84,7 +80,6 @@ public class AtBat {
             result = 100;
         }
         //Use weights and results to come up with new result, 0-100
-        System.out.print(result);
         return result;
     }
     
