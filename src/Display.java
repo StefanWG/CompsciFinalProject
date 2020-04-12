@@ -6,6 +6,23 @@ import java.util.Random;
 
 public class Display {
 
+    public static BufferedImage outcomeText(int outcome) {
+        BufferedImage image = new BufferedImage(800,150,BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2D = image.createGraphics();
+        String str;
+        switch (outcome) {
+            case 0: str = "OUT"; break;
+            case 1: str = "SINGLE"; break;
+            case 2: str = "DOUBLE"; break;
+            case 3: str = "TRIPLE"; break;
+            case 4: str = "HOME RUN"; break;
+            case 5: str = "WALK"; break;
+            default: str = " "; break;
+        }
+        writeText(str, g2D, 0,800,0,150,Color.orange);
+        return image;
+    }
+
     public static BufferedImage drawScoreboard(Scoreboard scoreboard) {
         BufferedImage image = new BufferedImage ( 800, 160, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = image.createGraphics ();
@@ -33,12 +50,18 @@ public class Display {
 
             writeText(String.valueOf(i+1),g,100+i*50, 140+i*50, 10,50,textColor); //Innings
             try {
-                writeText(String.valueOf(scoreboard.awayRunsInning.get(i)),g,100+i*50, 140+i*50, 60,100,textColor); //AwayRuns
+                Color c;
+                if (i == scoreboard.halfInning/2 && scoreboard.halfInning%2 == 1) c = Color.green;
+                else c = textColor;
+                writeText(String.valueOf(scoreboard.awayRunsInning.get(i)),g,100+i*50, 140+i*50, 60,100,c); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
                 writeText(" ",g,100+i*50, 140+i*50, 60,100,textColor); //AwayRuns
             }
             try {
-                writeText(String.valueOf(scoreboard.homeRunsInning.get(i)),g,120+i*50, 160+i*50, 110,150,textColor); //AwayRuns
+                Color c;
+                if (i == (scoreboard.halfInning - 1)/2 && scoreboard.halfInning%2 == 0) c = Color.green;
+                else c = textColor;
+                writeText(String.valueOf(scoreboard.homeRunsInning.get(i)),g,100+i*50, 140+i*50, 110,150,c); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
                 writeText(" ",g,100+i*50, 140+i*50, 100,150,textColor); //AwayRuns
             }
@@ -57,8 +80,8 @@ public class Display {
         g.fill(new RoundRectangle2D.Double(600,60,40,40, 20, 20)); //A
         g.fill(new RoundRectangle2D.Double(600,110,40,40, 20, 20)); //H
         writeText("H", g, 600, 640, 10, 50, Color.green);
-        writeText(String.valueOf(scoreboard.awayRuns), g, 600, 640, 60, 100, Color.green);
-        writeText(String.valueOf(scoreboard.homeRuns), g, 600, 640, 110, 150, Color.green);
+        writeText(String.valueOf(scoreboard.awayHits), g, 600, 640, 60, 100, Color.green);
+        writeText(String.valueOf(scoreboard.homeHits), g, 600, 640, 110, 150, Color.green);
 
 
 
@@ -89,7 +112,7 @@ public class Display {
 
         fieldView = resize(fieldView,140,140);
 
-        g.drawImage(fieldView,640,10,null);
+        g.drawImage(fieldView,650,10,null);
         image = makeTransparent(Color.lightGray, image);
         return image;
 
@@ -320,8 +343,6 @@ class Ball {
 
 
         //TODO modify size so it looks like coming forward
-        //TODO SET resizable false
-
 
         return image;
     }

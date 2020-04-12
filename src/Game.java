@@ -10,6 +10,7 @@ public class Game extends JPanel {
     final int HEIGHT = 900;
     final int MAX_INNINGS = 18;
     BufferedImage fieldDrawing = Display.drawField();
+    BufferedImage resultText = Display.outcomeText(7);
     Scoreboard scoreboard;
     AtBat atBat;
 
@@ -21,15 +22,27 @@ public class Game extends JPanel {
     }
 
     public void runGame() {
+        //TODO END THE GAME
         //Sims half inning when
         while (scoreboard.halfInning <= scoreboard.maxInnings || scoreboard.awayRuns == scoreboard.homeRuns) {
+            repaint();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {}
+
             while (scoreboard.outs < 3) {
                 atBat = new AtBat(scoreboard.halfInning, this, player);
                 int result = atBat.runAtBat();
                 scoreboard.updateBases(result);
+                resultText = Display.outcomeText(result);
                 repaint();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(700);
+                } catch (InterruptedException ignored) {}
+                resultText = Display.outcomeText(7);
+                repaint();
+                try {
+                    Thread.sleep(300);
                 } catch (InterruptedException ignored) {}
             }
             scoreboard.newInning();
@@ -76,6 +89,7 @@ public class Game extends JPanel {
     public void paintComponent(Graphics g) {
         g.drawImage(fieldDrawing,0,100,null);
         g.drawImage(Display.drawScoreboard(scoreboard),0,0,null);
+        g.drawImage(resultText, 0,275,null);
         if (atBat != null) atBat.draw(g);
     }
 
@@ -133,3 +147,4 @@ public class Game extends JPanel {
         });
     }
 }
+

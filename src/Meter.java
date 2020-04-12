@@ -13,7 +13,6 @@ public class Meter {
     int yPosition;
     boolean running;
     boolean done;
-    public static boolean stopped;
     int result;
 
     public Meter(int x, int y, Game g) {
@@ -23,7 +22,6 @@ public class Meter {
         meterSpeed = 1;
         speed = 2;
         //TODO edit stopped
-        stopped = false;
         running = false;
 
 
@@ -37,8 +35,7 @@ public class Meter {
         color = new LinearGradientPaint(xPosition,yPosition, xPosition+WIDTH,yPosition, fractions, colors);
     }
 
-    public void setStopped(boolean s) {
-        stopped = s;
+    public void stop() {
         running = false;
         done = true;
     }

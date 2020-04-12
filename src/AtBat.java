@@ -27,7 +27,6 @@ public class AtBat {
             contactResult = contactMeter.runMeter();
             powerResult = powerMeter.runMeter();
         } else {
-            //TODO Computer At Bat
             contactResult = (int) (Math.random() * 51) + 50;
             powerResult = (int) (Math.random() * 51) + 50;
         }
@@ -41,9 +40,9 @@ public class AtBat {
 
     public void stop() {
         if (contactMeter.isRunning()) {
-            contactMeter.setStopped(true);
+            contactMeter.stop();
         } else {
-            powerMeter.setStopped(true);
+            powerMeter.stop();
         }
     }
 
@@ -69,7 +68,7 @@ public class AtBat {
         //contactResult and powerResult are (50-150).
         contactResult = calculateConRes();
         powerResult = calculatePowRes();
-        int result = 0;
+        int result;
         double contactWeight = .7;
         double powerWeight = .3;
         //this will be in between 50 and 150
