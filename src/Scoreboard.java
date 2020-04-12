@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Scoreboard {
     int outs;
     boolean[] bases = new boolean[3];
@@ -5,6 +7,9 @@ public class Scoreboard {
     int awayRuns;
     int halfInning;
     int maxInnings;
+    ArrayList<Integer> homeRunsInning = new ArrayList<>();
+    ArrayList<Integer> awayRunsInning = new ArrayList<>();
+
 
     public Scoreboard(int maxInnings){
         this.outs = 0;
@@ -15,17 +20,25 @@ public class Scoreboard {
         for (int i = 0; i<this.bases.length; i++){
             bases[i] = false;
         }
+        awayRunsInning.add(0);
     }
 
 
     private void addRuns(int numRuns){
+        int inning = (halfInning - 1) / 2;
         //this is the home team
         if (this.halfInning % 2 ==0){
             this.homeRuns += numRuns;
+            int runs = this.homeRunsInning.get(inning);
+            this.homeRunsInning.remove(inning);
+            this.homeRunsInning.add(runs + numRuns);
         }
         //this is the away team
         else{
             this.awayRuns += numRuns;
+            int runs = this.awayRunsInning.get(inning);
+            this.awayRunsInning.remove(inning);
+            this.awayRunsInning.add(runs + numRuns);
         }
     }
 
@@ -172,6 +185,7 @@ public class Scoreboard {
 //    Int n represents the at bat outcome. There will be a switch statement that updates the bases based on the outcome.
 
     public void newInning() {
+
         //resets outs
         this.outs = 0;
         //makes all the bases empty by making them false
@@ -180,6 +194,11 @@ public class Scoreboard {
         }
         //adds one to the half inning..progressing the game to the next inning
         this.halfInning++;
+        if (halfInning % 2 == 1) {
+            awayRunsInning.add(0);
+        } else {
+            homeRunsInning.add(0);
+        }
     }
 
     public String toString() {
