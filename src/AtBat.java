@@ -61,7 +61,7 @@ public class AtBat {
         else if (result > 80) return 1;
         else return 0;
     }
-    
+
     private int findResult() {
         //this is where we determine how we want contact and power to be handled
         //turn this into one number (0-100) to use in getResult (that returns 0 to 4 outcome)
@@ -82,11 +82,11 @@ public class AtBat {
         //Use weights and results to come up with new result, 0-100
         return result;
     }
-    
+
     private int calculateConRes(){
         //Using the rating and meter result it will return an update contact result
-         int meterResult = contactResult;
-         int contactRating = player.contactRating;
+        int meterResult = contactResult;
+        int contactRating = player.contactRating;
         //for a contact rating which is between 0 and 100
         //the average is 50
         //this gives us how far it is from the mean (positive or negative)
@@ -95,7 +95,7 @@ public class AtBat {
         //this returns a value between 50 and 150
         return contactResult;
     }
-    
+
     private int calculatePowRes(){
         //Using the rating and meter result it will return an update power result
         int meterResult = powerResult;
