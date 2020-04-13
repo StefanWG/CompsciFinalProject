@@ -3,5 +3,6 @@
 // each and contact and power ratings for each
 //
 public class Team {
+    //TODO add a team class
 }
 

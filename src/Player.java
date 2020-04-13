@@ -55,8 +55,11 @@ public class Player {
                 '}';
     }
 
-    //    Player player1 = new Player (20, "Gladiators" , "Sushi", 84, "Josh", 76 );
-//    Player player2 = new Player (19, "Polar Bears", "Buffalo Wings",74, "Stefan", 86);
-//    Player player3 = new Player (19, "Rams", "Poke", 80, "Rohil", 80);
+
 
 }
+
+
+// TO DO have an other class that extends JPanel
+// this is to have an intro screen where u can choose the planel
+

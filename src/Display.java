@@ -83,8 +83,6 @@ public class Display {
         writeText(String.valueOf(scoreboard.awayHits), g, 600, 640, 60, 100, Color.green);
         writeText(String.valueOf(scoreboard.homeHits), g, 600, 640, 110, 150, Color.green);
 
-
-
         BufferedImage fieldView = new BufferedImage(400,400,BufferedImage.TYPE_INT_ARGB);
         Graphics2D f = fieldView.createGraphics();
 
@@ -165,12 +163,7 @@ public class Display {
         g.setPaint(new Color(0,100,0));
         g.fillRect(0,0,800,800);
         Random rand = new Random();
-//        for (int i = 0; i < 800; i++) {
-//            for (int j = 0; j < 800; j++) {
-//                int green = rand.nextInt(75) + 40;
-//                tile.setRGB(i,j, new Color(0, green, 0).getRGB());
-//            }
-//        }
+
         for (int i = 0; i < 300000;i++) {
             int green = rand.nextInt(75) + 40;
             g.setPaint(new Color (0,green,0));
@@ -270,8 +263,6 @@ public class Display {
         g.fillPolygon(new int[]{350,450,453,400,347}, new int[]{550,550,580,610,580}, 5);
         g.fillRect(380,127,40,2);
 
-
-
         BufferedImage dirt = dirt();
 
         //MAKE DIRT
@@ -305,47 +296,47 @@ public class Display {
     }
 }
 
-class Ball {
-    int rotation = 0;
-
-    public void update() {
-        rotation += 1;
-    }
-
-
-    public BufferedImage draw(int diameter) {
-        BufferedImage seams = new BufferedImage(200,628,BufferedImage.TYPE_INT_ARGB);
-        Graphics2D s = seams.createGraphics();
-        s.setPaint(Color.black);
-        s.fillRect(0,0,200,628);
-        s.setPaint(Color.red);
-        s.setStroke(new BasicStroke(5));
-        s.drawArc(0,0,200,200, 330,240);
-        s.drawArc(0,240,200,200,150,240);
-        s.drawArc(208-40, 120-40,280,280,150,60);
-        s.drawArc(-208-40, 120-40,280,280,330,60);
-
-        BufferedImage image = new BufferedImage(220,220,BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = image.createGraphics();
-        g.setColor(Color.black);
-        g.fillRect(0,0,220,220);
-        g.setPaint(Color.lightGray);
-        g.fillOval(0,0,220,220);
-        for (int i = 0; i < 200; i++) {
-            for (int j = 0; j < 200; j++) {
-                Color color = new Color(seams.getRGB(i,(j+rotation)%628));
-                Color current = new Color(image.getRGB(i+10,220 - j - 10));
-                if (!color.equals(Color.black) && current.equals(Color.lightGray)) image.setRGB(i+10,220 - j - 10,color.getRGB());
-            }
-        }
-        image = Display.makeTransparent(Color.black,image);
-        image = Display.resize(image, diameter,diameter);
-
-
-        //TODO modify size so it looks like coming forward
-
-        return image;
-    }
+//class Ball {
+//    int rotation = 0;
+//
+//    public void update() {
+//        rotation += 1;
+//    }
+//
+//
+//    public BufferedImage draw(int diameter) {
+//        BufferedImage seams = new BufferedImage(200,628,BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D s = seams.createGraphics();
+//        s.setPaint(Color.black);
+//        s.fillRect(0,0,200,628);
+//        s.setPaint(Color.red);
+//        s.setStroke(new BasicStroke(5));
+//        s.drawArc(0,0,200,200, 330,240);
+//        s.drawArc(0,240,200,200,150,240);
+//        s.drawArc(208-40, 120-40,280,280,150,60);
+//        s.drawArc(-208-40, 120-40,280,280,330,60);
+//
+//        BufferedImage image = new BufferedImage(220,220,BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D g = image.createGraphics();
+//        g.setColor(Color.black);
+//        g.fillRect(0,0,220,220);
+//        g.setPaint(Color.lightGray);
+//        g.fillOval(0,0,220,220);
+//        for (int i = 0; i < 200; i++) {
+//            for (int j = 0; j < 200; j++) {
+//                Color color = new Color(seams.getRGB(i,(j+rotation)%628));
+//                Color current = new Color(image.getRGB(i+10,220 - j - 10));
+//                if (!color.equals(Color.black) && current.equals(Color.lightGray)) image.setRGB(i+10,220 - j - 10,color.getRGB());
+//            }
+//        }
+//        image = Display.makeTransparent(Color.black,image);
+//        image = Display.resize(image, diameter,diameter);
+//
+//
+//        //TODO modify size so it looks like coming forward
+//
+//        return image;
+//    }
 //    Code for running ball
 //    public void runBall() {
 //        DIAMETER = 20;
@@ -371,4 +362,4 @@ class Ball {
 //    g.drawImage(ballImage,realX, realY,null);
 //    g.setColor(new Color(0,0,0, 80));
 //    g.fillOval(realX-80, realY+40, ballImage.getWidth(),ballImage.getHeight());
-}
+//}

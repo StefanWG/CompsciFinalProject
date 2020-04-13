@@ -50,13 +50,13 @@ public class Game extends JPanel {
     }
 
     public void pickPlayer () {
-        //TODO Code for picking player Josh doing this for now
         Player josh = new Player(20, "Gladiators", "Sushi", 84, "Josh", 76);
         Player stefan = new Player (19, "Polar Bears", "Buffalo Wings",74, "Stefan", 86);
-        Player  rohil = new Player (19, "Rams", "Poke", 80, "Rohil", 80);
+        Player rohil = new Player (19, "Rams", "Poke", 80, "Rohil", 80);
         System.out.println(josh);
         System.out.println(stefan);
         System.out.println(rohil);
+
         int option = getUserInt("Please choose a player (1, 2, 3, or 4 for a random character)");
 
 
@@ -68,6 +68,7 @@ public class Game extends JPanel {
             player = rohil;
         } else if (option == 4) {
             player = new Player();
+            System.out.println(player);
         }
     }
 
