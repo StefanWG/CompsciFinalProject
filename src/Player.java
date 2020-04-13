@@ -62,4 +62,6 @@ public class Player {
 
 // TO DO have an other class that extends JPanel
 // this is to have an intro screen where u can choose the planel
+// can include pictures that are not copyrighted as character models
+// move the pick player method to this new class
 

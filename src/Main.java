@@ -6,7 +6,7 @@ public class Main {
         Game game = new Game();
 
        // frame.setContentPane(LoadingClass);
-        //do whatveer to get player,when finsihed
+        //do whatever to get player,when finished
         frame.setContentPane(game);
         frame.pack();
         frame.setResizable(false);
