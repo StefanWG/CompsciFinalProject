@@ -63,10 +63,22 @@ public class Main {
             }
         });
 
+        JMenuItem mute = new JMenuItem("Mute Sounds");
+        mute.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_M, ActionEvent.META_MASK));
+        mute.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Mute Game");
+                //TODO write code to mute game, maybe static variable
+            }
+        });
+
 
         file.add(newGame);
         file.add(changePlayer);
         file.add(pauseGame);
+        file.add(mute);
 
         menuBar.add(file);
         frame.setJMenuBar(menuBar);
