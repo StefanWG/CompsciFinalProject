@@ -172,7 +172,8 @@ public class Scoreboard {
 
 
     public void updateBases(int n) {
-        //will range from 1-5
+        Thread audioClip = new Thread(new Audio(n));
+        audioClip.start();
         switch (n) {
             //out
             case 0:
