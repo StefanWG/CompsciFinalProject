@@ -32,7 +32,7 @@ public class Main {
 
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_N, InputEvent.META_MASK));
+                KeyEvent.VK_N, ActionEvent.META_MASK));
         newGame.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,7 +43,7 @@ public class Main {
 
         JMenuItem changePlayer = new JMenuItem("Change Player");
         changePlayer.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_C, InputEvent.META_MASK));
+                KeyEvent.VK_C, ActionEvent.META_MASK));
         changePlayer.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +54,7 @@ public class Main {
 
         JMenuItem pauseGame = new JMenuItem("Pause Game");
         pauseGame.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_P, InputEvent.META_MASK));
+                KeyEvent.VK_P, ActionEvent.META_MASK));
         pauseGame.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
