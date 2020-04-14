@@ -157,7 +157,7 @@ public class Display {
         return newImage;
     }
 
-    public static BufferedImage grassTile() {
+    public static BufferedImage grass() {
         BufferedImage tile = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = tile.createGraphics ();
         g.setPaint(new Color(0,100,0));
@@ -179,7 +179,6 @@ public class Display {
 
     public static BufferedImage dirt() {
         BufferedImage tile = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
-        final Graphics2D g = tile.createGraphics ();
         Random rand = new Random();
         for (int i = 0; i < 800; i++) {
             for (int j = 0; j < 800; j++) {
@@ -194,17 +193,36 @@ public class Display {
         }
         return tile;
     }
-    //TODO improve drawing for homeplate and fence
+
+    public static BufferedImage fence() {
+        BufferedImage image = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
+        Random rand = new Random();
+        for (int i = 0; i < 800; i++) {
+            for (int j = 0; j < 800; j++) {
+                switch (rand.nextInt(40)) {
+                    case 0: image.setRGB(i,j, new Color(150, 150, 150).getRGB()); break;
+                    case 1: image.setRGB(i,j, new Color(125,125,125).getRGB()); break;
+                    case 2: image.setRGB(i,j, new Color(115,115,115).getRGB()); break;
+                    case 3: image.setRGB(i,j, new Color(95,95,95).getRGB()); break;
+                    case 4: image.setRGB(i,j, new Color(85,85,85).getRGB()); break;
+                    case 5: image.setRGB(i,j, new Color(60,60,60).getRGB()); break;
+                    default: image.setRGB(i,j, new Color(105, 105, 105).getRGB()); break;
+                }
+            }
+        }
+        return image;
+    }
+
     public static BufferedImage drawField() {
         BufferedImage image = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = image.createGraphics ();
 
-        float[] fracs = {.25f,.75f};
-        Color[] colors = {new Color(0,102,0), new Color(0,179,0)};
-        LinearGradientPaint grass = new LinearGradientPaint(0,0, 0,800, fracs, colors, MultipleGradientPaint.CycleMethod.REPEAT);
+        Color fence = new Color(105,105,105);
+        Color infield = new Color(181, 107, 23);
+        Color mound = new Color(158, 94, 21);
 
         //Background
-        g.drawImage(grassTile(),0,0,null);
+        g.drawImage(grass(),0,0,null);
         //Outside the field
         g.setPaint(Color.lightGray);
         g.setStroke(new BasicStroke(5));
@@ -217,12 +235,11 @@ public class Display {
         g.setColor(Color.red);
         g.setStroke(new BasicStroke(5));
         g.drawArc(-1400,90,3600,3600,0,360);
-        g.setColor(new Color(105,105,105));
+        g.setColor(fence);
         g.setStroke(new BasicStroke(15));
         g.drawArc(-1400,97,3600,3600,0,360);
 
         //HOME PLATE DIRT AND BASELINES
-        Color infield = new Color(181, 107, 23);
         g.setPaint(infield);
         g.fillOval(-200, 350, 1200,800);
         g.fillPolygon(new int[]{240,0,0}, new int[]{500, 210, 500},3);
@@ -245,7 +262,6 @@ public class Display {
 
 
         //MOUND
-        Color mound = new Color(158, 94, 21);
         g.setPaint(mound);
         g.fillOval(320,122,160,20);
         //FOUL LINES
@@ -258,27 +274,28 @@ public class Display {
         g.drawPolygon(new int[]{-20,280,330,100}, new int[]{790,790,500,500},4);
         //HOME PLATE AND PITCHING RUBBER
         g.setColor(Color.darkGray);
-        g.fillPolygon(new int[]{346,446,449,396,343}, new int[]{554,554,584,614,584}, 5);
+        g.fillPolygon(new int[]{347,453,456,400,344}, new int[]{550,550,583,613,583}, 5);
         g.setPaint(new Color(215, 193, 142));
         g.fillPolygon(new int[]{350,450,453,400,347}, new int[]{550,550,580,610,580}, 5);
         g.fillRect(380,127,40,2);
 
-        BufferedImage dirt = dirt();
+        BufferedImage dirtImage = dirt();
+        BufferedImage fenceImage = fence();
 
         //MAKE DIRT
         for (int i = 0; i < 800; i++) {
-            for (int j = 0; j <800; j++) {
+            for (int j = 0; j < 800; j++) {
                 if (image.getRGB(i,j) == infield.getRGB()) {
-                    Color c = new Color(dirt.getRGB(i,j));
+                    Color c = new Color(dirtImage.getRGB(i,j));
                     image.setRGB(i,j,c.darker().getRGB());
                 } else if (image.getRGB(i,j) == mound.getRGB()) {
-                    Color c = new Color(dirt.getRGB(i,j));
+                    Color c = new Color(dirtImage.getRGB(i,j));
                     image.setRGB(i,j,c.darker().darker().getRGB());
+                } else if (image.getRGB(i,j) == fence.getRGB()) {
+                    image.setRGB(i,j,fenceImage.getRGB(i,j));
                 }
             }
         }
-
-
 
         image = makeTransparent(Color.lightGray, image);
         return image;

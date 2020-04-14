@@ -15,22 +15,42 @@ public class Game extends JPanel {
     AtBat atBat;
 
     public Game() {
-        setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setUpKeyBindings();
         scoreboard = new Scoreboard(MAX_INNINGS);
     }
 
+    public void newGame() {
+        //TODO newGame() method
+    }
+
+    public void pauseGame() {
+        //TODO pauseGame() method
+    }
+
+    public void endGame() {
+        //TODO endGame() method
+    }
+
+    public boolean gameOver() {
+        if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
+        else if (scoreboard.halfInning%2 == 1 && scoreboard.homeRuns == scoreboard.awayRuns) return false; //Top of any extra inning and game isn't tied
+        else if (scoreboard.halfInning%2 == 0 && scoreboard.homeRuns <= scoreboard.awayRuns) return false; //Bottom of inning and home team isn't winning
+        else return true;
+    }
+
     public void runGame() {
         //TODO END THE GAME
         //Sims half inning when
-        while (scoreboard.halfInning <= scoreboard.maxInnings || scoreboard.awayRuns == scoreboard.homeRuns) {
+        while (!gameOver()) {
             repaint();
             try {
                 Thread.sleep(1000);
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
 
-            while (scoreboard.outs < 3) {
+            while (scoreboard.outs < 3  && !gameOver()) {
                 atBat = new AtBat(scoreboard.halfInning, this, player);
                 int result = atBat.runAtBat();
                 scoreboard.updateBases(result);
@@ -38,21 +58,23 @@ public class Game extends JPanel {
                 repaint();
                 try {
                     Thread.sleep(700);
-                } catch (InterruptedException ignored) {}
+                } catch (InterruptedException ignored) {
+                }
                 resultText = Display.outcomeText(7);
                 repaint();
                 try {
                     Thread.sleep(300);
-                } catch (InterruptedException ignored) {}
+                } catch (InterruptedException ignored) {
+                }
             }
             scoreboard.newInning();
         }
     }
 
-    public void pickPlayer () {
+    public void pickPlayer() {
         Player josh = new Player(20, "Gladiators", "Sushi", 84, "Josh", 76);
-        Player stefan = new Player (19, "Polar Bears", "Buffalo Wings",74, "Stefan", 86);
-        Player rohil = new Player (19, "Rams", "Poke", 80, "Rohil", 80);
+        Player stefan = new Player(19, "Polar Bears", "Buffalo Wings", 74, "Stefan", 86);
+        Player rohil = new Player(19, "Rams", "Poke", 80, "Rohil", 80);
         System.out.println(josh);
         System.out.println(stefan);
         System.out.println(rohil);
@@ -64,7 +86,7 @@ public class Game extends JPanel {
             player = josh;
         } else if (option == 2) {
             player = stefan;
-        } else if (option ==3 ) {
+        } else if (option == 3) {
             player = rohil;
         } else if (option == 4) {
             player = new Player();
@@ -77,9 +99,9 @@ public class Game extends JPanel {
         while (true) {
             try {
                 System.out.println(prompt);
-                while (true){
+                while (true) {
                     int input = scan.nextInt();
-                    if (input >= 1 && input <= 4){
+                    if (input >= 1 && input <= 4) {
                         return input;
                     }
                     System.out.println("Sorry incorrect input.");
@@ -95,62 +117,18 @@ public class Game extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(fieldDrawing,0,100,null);
-        g.drawImage(Display.drawScoreboard(scoreboard),0,0,null);
-        g.drawImage(resultText, 0,275,null);
+        g.drawImage(fieldDrawing, 0, 100, null);
+        g.drawImage(Display.drawScoreboard(scoreboard), 0, 0, null);
+        g.drawImage(resultText, 0, 275, null);
         if (atBat != null) atBat.draw(g);
     }
 
     private void setUpKeyBindings() {
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0),"STOP");
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "STOP");
         getActionMap().put("STOP", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (atBat != null) atBat.stop();
-            }
-        });
-
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_0), "0");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_1), "1");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_2), "2");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_3), "3");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_4), "4");
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke((char) KeyEvent.VK_5), "5");
-
-        getActionMap().put("0", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(0);
-            }
-        });
-        getActionMap().put("1", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(1);
-            }
-        });
-        getActionMap().put("2", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(2);
-            }
-        });
-        getActionMap().put("3", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(3);
-            }
-        });
-        getActionMap().put("4", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(4);
-            }
-        });
-        getActionMap().put("5", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                scoreboard.updateBases(5);
             }
         });
     }
