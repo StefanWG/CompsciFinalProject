@@ -1,11 +1,11 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 public class Main {
     JFrame frame = new JFrame("Baseball");
     Game game = new Game();
+    Loading loading = new Loading();
 
     public static void main(String[] args) {
         new Main();
@@ -14,13 +14,19 @@ public class Main {
     public Main() {
         System.setProperty("apple.laf.useScreenMenuBar", "true");
 
-        // frame.setContentPane(LoadingClass);
-        //do whatever to get player,when finished
-        frame.setContentPane(game);
+        //frame.setContentPane(loading);
         setUpMenu(frame);
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
+//        game.pickPlayer();
+        frame.setContentPane(game);
+        game.pickPlayer(); //delete this if other pick player method is uncomments
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
+
+        game.runGame();
 
         Thread t = new Thread(new Runner());
         t.start();
@@ -73,6 +79,7 @@ public class Main {
                 //TODO write code to mute game, maybe static variable
             }
         });
+
 
 
         file.add(newGame);

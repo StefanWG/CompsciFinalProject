@@ -14,11 +14,16 @@ public class Game extends JPanel {
     Scoreboard scoreboard;
     AtBat atBat;
 
+    Audio charge = new Audio("file:" + System.getProperty("user.dir") + "/" + "SoundFiles/charge.wav");
+    Thread chargeThread = new Thread(charge);
+
     public Game() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setUpKeyBindings();
         scoreboard = new Scoreboard(MAX_INNINGS);
+
+        chargeThread.start();
     }
 
     public void newGame() {
@@ -51,6 +56,9 @@ public class Game extends JPanel {
             }
 
             while (scoreboard.outs < 3  && !gameOver()) {
+                if (scoreboard.halfInning % 2 == 0 && scoreboard.outs == 2) charge.play();
+                else charge.stop();
+
                 atBat = new AtBat(scoreboard.halfInning, this, player);
                 int result = atBat.runAtBat();
                 scoreboard.updateBases(result);

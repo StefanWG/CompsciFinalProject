@@ -1,28 +1,42 @@
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Audio implements Runnable {
+    FloatControl volumeControl;
     AudioInputStream ais;
     Clip clip;
-    int result;
+    URL url;
 
-    public Audio(int result) {
-        this.result = result;
+    public Audio(String url) {
+        try {
+            this.url = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run() {
         try {
-            switch (result) {
-                case 0: ais = null;
-                default: ais = AudioSystem.getAudioInputStream(new URL("file:" + System.getProperty("user.dir") + "/" + "SoundFiles/hitball.wav"));
-            }
+            ais = AudioSystem.getAudioInputStream(url);
             clip = AudioSystem.getClip();
             clip.open(ais);
+            volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void stop() {
+        clip.stop();
+        clip.setMicrosecondPosition(0);
+    }
+
+    public void play() {
+        if (!clip.isRunning()) {
+            clip.setMicrosecondPosition(0);
             clip.loop(0);
-        } catch (Exception ignored){
-            ignored.printStackTrace();
+            System.out.println("here");
         }
     }
 }
