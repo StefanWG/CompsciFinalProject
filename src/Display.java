@@ -312,12 +312,33 @@ public class Display {
         return dimg;
     }
 
-    public static BufferedImage characterModels(){
+    public static BufferedImage characterJosh(){
         BufferedImage character = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = character.createGraphics ();
-
+        g.setColor(Color.black);
+        g.fillRect(400 ,400,300,300);
+        g.setColor(Color.yellow);
+        g.drawString("Player 1", 400,400);
 
         return character;
+    }
+
+    public static BufferedImage characterStefan() {
+       BufferedImage character2 = new BufferedImage (800,800,BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = character2.createGraphics();
+
+
+        return character2;
+    }
+
+
+
+    public static BufferedImage characterRohil(){
+        BufferedImage character3 = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
+        final Graphics2D g = character3.createGraphics ();
+
+
+        return character3;
     }
 
 
