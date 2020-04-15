@@ -45,14 +45,12 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", team='" + team + '\'' +
-                ", favfood='" + favfood + '\'' +
-                ", powerRating=" + powerRating +
-                ", contactRating=" + contactRating +
-                '}';
+        return "Name: " + name + "\n" +
+                "Age: " + age + "\n" +
+                "Team: " + team + "\n" +
+                "Favorite Food: " + favfood + "\n" +
+                "Contact: " + contactRating + "\n" +
+                "Power: " + powerRating + "\n";
     }
 
 

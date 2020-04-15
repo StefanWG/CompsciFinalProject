@@ -37,7 +37,6 @@ public class Audio implements Runnable {
         if (!clip.isRunning()) {
             clip.setMicrosecondPosition(0);
             clip.loop(0);
-            System.out.println("here");
         }
     }
 }

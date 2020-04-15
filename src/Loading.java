@@ -14,7 +14,7 @@ public class Loading extends JPanel {
     Player[] players = {josh, stefan, rohil};
 
     public Loading(Main main) {
-        JLabel label = new JLabel("Select a player");
+        JTextArea textArea = new JTextArea("Select a player");
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayout(10,1));
@@ -24,7 +24,7 @@ public class Loading extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (player != null) main.newGame();
-                else label.setText("You must select a player to advance");
+                else textArea.setText("You must select a player to advance");
 
             }
         });
@@ -41,7 +41,7 @@ public class Loading extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     player = players[finalI];
-                    label.setText("You have selected: " + players[finalI].name);
+                    textArea.setText("You have selected: \n" + players[finalI].toString());
                 }
             });
             panel1.add(button);
@@ -59,7 +59,7 @@ public class Loading extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(panel1);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, label);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, textArea);
         splitPane.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         splitPane.setDividerLocation(WIDTH/2);
         splitPane.setDividerSize(0);

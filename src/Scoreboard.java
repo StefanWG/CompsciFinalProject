@@ -1,3 +1,4 @@
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Scoreboard {
@@ -12,6 +13,8 @@ public class Scoreboard {
     ArrayList<Integer> homeRunsInning = new ArrayList<>();
     ArrayList<Integer> awayRunsInning = new ArrayList<>();
 
+    Audio hitball = new Audio("file:" + System.getProperty("user.dir") + "/" + "SoundFiles/hitball.wav");
+    Thread hitballThread = new Thread(hitball);
 
     public Scoreboard(int maxInnings) {
         this.outs = 0;
@@ -23,6 +26,8 @@ public class Scoreboard {
             bases[i] = false;
         }
         awayRunsInning.add(0);
+
+        hitballThread.start();
     }
 
 
@@ -172,7 +177,7 @@ public class Scoreboard {
 
 
     public void updateBases(int n) {
-        //will range from 1-5
+        hitball.play();
         switch (n) {
             //out
             case 0:
@@ -208,7 +213,6 @@ public class Scoreboard {
 //    Int n represents the at bat outcome. There will be a switch statement that updates the bases based on the outcome.
 
     public void newInning() {
-
         //resets outs
         this.outs = 0;
         //makes all the bases empty by making them false
