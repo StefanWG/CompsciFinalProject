@@ -17,7 +17,8 @@ public class Game extends JPanel {
     Audio charge = new Audio("file:" + System.getProperty("user.dir") + "/" + "SoundFiles/charge.wav");
     Thread chargeThread = new Thread(charge);
 
-    public Game() {
+    public Game(Player player) {
+        this.player = player;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setUpKeyBindings();

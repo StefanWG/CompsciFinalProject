@@ -311,6 +311,16 @@ public class Display {
 
         return dimg;
     }
+
+    public static BufferedImage characterModels(){
+        BufferedImage character = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
+        final Graphics2D g = character.createGraphics ();
+
+
+        return character;
+    }
+
+
 }
 
 //class Ball {

@@ -1,7 +1,6 @@
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 
-public class AtBat  {
+public class AtBat {
     private int contactResult;
     private int powerResult;
     private Meter contactMeter;
