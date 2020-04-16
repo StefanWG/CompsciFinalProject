@@ -326,7 +326,39 @@ public class Display {
     public static BufferedImage characterStefan() {
        BufferedImage character2 = new BufferedImage (800,800,BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = character2.createGraphics();
+        g.setColor(Color.blue);
+        g.fillOval(250, 400, 150, 300);
+        g.fillOval(400, 400, 150, 300);
+        g.setStroke(new BasicStroke(15));
+        g.setColor(Color.black);
+        g.drawOval(250, 400, 150, 300);
+        g.drawOval(400, 400, 150, 300);
 
+
+        g.setColor(Color.BLUE.darker());
+        g.fillOval(225,120, 350, 400);
+        g.setColor(Color.black);
+        g.drawOval(225,120,350,400);
+
+        g.setColor(Color.BLUE);
+        g.fillOval(325,50,150,100);
+        g.setColor(Color.black);
+        g.drawOval(325,50,150,100);
+
+        g.setStroke(new BasicStroke(4));
+        for (int i = 0; i < 4; i++) {
+            g.setColor(Color.cyan);
+            g.fillOval(380,200+i*60, 40,40);
+            g.setColor(Color.black);
+            g.drawOval(380,200+i*60, 40,40);
+        }
+
+        g.setColor(Color.green.darker());
+        g.fillOval(360, 85, 30,30);
+        g.fillOval(410, 85, 30,30);
+        g.setColor(Color.black);
+        g.drawOval(360, 85, 30,30);
+        g.drawOval(410, 85, 30,30);
 
         return character2;
     }
