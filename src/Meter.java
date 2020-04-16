@@ -15,23 +15,25 @@ public class Meter {
     boolean done;
     int result;
 
-    public Meter(int x, int y, Game g) {
+    public Meter(int x, int y, Game g, int rating) {
         WIDTH = 300;
         HEIGHT = 50;
-        meterLocation = WIDTH/2;
+//        meterLocation = WIDTH/2;
+        meterLocation = 150;
         meterSpeed = 1;
         speed = 2;
-        //TODO edit stopped
         running = false;
-
 
         xPosition = x;
         yPosition = y;
         game = g;
 
         //Create the color gradient for the meter
+        float single = (float) 11250/(float) (rating + 50) / 200;
+        single = single - single * .2f;
+
         Color[] colors = {Color.red, Color.yellow, Color.green, Color.yellow, Color.red};
-        float[] fractions = {0.02f, 0.3f, 0.5f, 0.7f, 0.98f};
+        float[] fractions = {0.02f, single, 0.5f, 1-single, 0.98f};
         color = new LinearGradientPaint(xPosition,yPosition, xPosition+WIDTH,yPosition, fractions, colors);
     }
 

@@ -17,8 +17,8 @@ public class AtBat {
         powerResult = -1;
         currentInning = inning;
         //TODO imporve positioning of meters
-        contactMeter = new Meter(30,650, this.g); //Change location
-        powerMeter = new Meter(470,650, this.g); //Change location
+        contactMeter = new Meter(30,650, this.g, p.contactRating); //Change location
+        powerMeter = new Meter(470,650, this.g, p.powerRating); //Change location
     }
 
     public int runAtBat() {

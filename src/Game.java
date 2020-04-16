@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Game extends JPanel {
     public Player player;
@@ -14,7 +15,7 @@ public class Game extends JPanel {
     Scoreboard scoreboard;
     AtBat atBat;
 
-    Audio charge = new Audio("file:" + System.getProperty("user.dir") + "/" + "SoundFiles/charge.wav");
+    Audio charge = new Audio("/SoundFiles/charge.wav");
     Thread chargeThread = new Thread(charge);
 
     public Game(Player player) {
@@ -78,50 +79,6 @@ public class Game extends JPanel {
             }
             scoreboard.newInning();
         }
-    }
-
-    public void pickPlayer() {
-        Player josh = new Player(20, "Gladiators", "Sushi", 84, "Josh", 76);
-        Player stefan = new Player(19, "Polar Bears", "Buffalo Wings", 74, "Stefan", 86);
-        Player rohil = new Player(19, "Rams", "Poke", 80, "Rohil", 80);
-        System.out.println(josh);
-        System.out.println(stefan);
-        System.out.println(rohil);
-
-        int option = getUserInt("Please choose a player (1, 2, 3, or 4 for a random character)");
-
-
-        if (option == 1) {
-            player = josh;
-        } else if (option == 2) {
-            player = stefan;
-        } else if (option == 3) {
-            player = rohil;
-        } else if (option == 4) {
-            player = new Player();
-            System.out.println(player);
-        }
-    }
-
-    static int getUserInt(String prompt) {
-        java.util.Scanner scan = new java.util.Scanner(System.in);
-        while (true) {
-            try {
-                System.out.println(prompt);
-                while (true) {
-                    int input = scan.nextInt();
-                    if (input >= 1 && input <= 4) {
-                        return input;
-                    }
-                    System.out.println("Sorry incorrect input.");
-                    System.out.println(prompt);
-                }
-            } catch (java.util.InputMismatchException e) {
-                System.out.println("Sorry incorrect input.");
-                scan.nextLine();     // to clear the rest of the line
-            }
-        }
-
     }
 
     @Override

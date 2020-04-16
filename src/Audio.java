@@ -1,36 +1,42 @@
-
 import javax.sound.sampled.*;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.File;
 
 public class Audio implements Runnable {
     FloatControl volumeControl;
     AudioInputStream ais;
     Clip clip;
-    URL url;
+    String string;
+    File file;
 
-    public Audio(String url) {
-        try {
-            this.url = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+    public Audio(String string) {
+        this.string = string;
     }
 
     public void run() {
         try {
-            ais = AudioSystem.getAudioInputStream(url);
+            file = new File(System.getProperty("user.dir")+ string);
+            ais = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(ais);
             volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         } catch (Exception ex){
-            ex.printStackTrace();
+            try {
+                file = new File(System.getProperty("user.dir")+ "/src" + string);
+                ais = AudioSystem.getAudioInputStream(file);
+                clip = AudioSystem.getClip();
+                clip.open(ais);
+                volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void stop() {
-        clip.stop();
-        clip.setMicrosecondPosition(0);
+        try {
+            clip.stop();
+            clip.setMicrosecondPosition(0);
+        } catch (Exception ignored) {}
     }
 
     public void play() {

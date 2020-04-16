@@ -1,4 +1,4 @@
-import java.net.URL;
+import java.io.File;
 import java.util.ArrayList;
 
 public class Scoreboard {
@@ -13,7 +13,7 @@ public class Scoreboard {
     ArrayList<Integer> homeRunsInning = new ArrayList<>();
     ArrayList<Integer> awayRunsInning = new ArrayList<>();
 
-    Audio hitball = new Audio("file:" + System.getProperty("user.dir") + "/" + "SoundFiles/hitball.wav");
+    Audio hitball = new Audio("/SoundFiles/hitball.wav");
     Thread hitballThread = new Thread(hitball);
 
     public Scoreboard(int maxInnings) {
@@ -175,7 +175,6 @@ public class Scoreboard {
         }
     }
 
-
     public void updateBases(int n) {
         hitball.play();
         switch (n) {
@@ -204,8 +203,8 @@ public class Scoreboard {
                 Walk();
                 break;
         }
-        //System.out.println(this);
     }
+
 //update bases method
 //    updateBases(int n)
 //    Public - will be called from Game if the outcome of at bat needs the bases to be updated
