@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.ArrayList;
 
 public class Scoreboard {
@@ -13,7 +12,7 @@ public class Scoreboard {
     ArrayList<Integer> homeRunsInning = new ArrayList<>();
     ArrayList<Integer> awayRunsInning = new ArrayList<>();
 
-    Audio hitball = new Audio("/SoundFiles/hitball.wav");
+    Audio hitball = new Audio("hitball.wav");
     Thread hitballThread = new Thread(hitball);
 
     public Scoreboard(int maxInnings) {

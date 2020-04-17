@@ -9,8 +9,8 @@ public class Loading extends JPanel {
     final int WIDTH = 800;
     final int HEIGHT = 850;
     BufferedImage image1 = Display.characterJosh();
-    BufferedImage image2 = Display.characterRohil();
-    BufferedImage image3 = Display.characterStefan();
+    BufferedImage image2 = Display.characterStefan();
+    BufferedImage image3 = Display.characterRohil();
     Player josh = new Player(20, "Gladiators", "Sushi", 84, "Josh", 76);
     Player stefan = new Player (19, "Polar Bears", "Buffalo Wings",74, "Stefan", 86);
     Player rohil = new Player (19, "Rams", "Poke", 80, "Rohil", 80);

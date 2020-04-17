@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class Game extends JPanel {
     public Player player;
@@ -15,7 +14,7 @@ public class Game extends JPanel {
     Scoreboard scoreboard;
     AtBat atBat;
 
-    Audio charge = new Audio("/SoundFiles/charge.wav");
+    Audio charge = new Audio("charge.wav");
     Thread chargeThread = new Thread(charge);
 
     public Game(Player player) {

@@ -315,10 +315,16 @@ public class Display {
     public static BufferedImage characterJosh(){
         BufferedImage character = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = character.createGraphics ();
-        g.setColor(Color.black);
-        g.fillRect(400 ,400,300,300);
-        g.setColor(Color.yellow);
-        g.drawString("Player 1", 400,400);
+        g.setColor(Color.red);
+        g.fillRect(270 ,450,70,300);
+        g.fillRect(370,450,70,300);
+        g.setColor(Color.blue.brighter());
+        g.fillRect(230, 120, 225, 350);
+        g.setColor(Color.red.darker());
+        g.fillRect(300,100,100,100);
+        g.setColor(Color.blue);
+        g.fillRect(310,125, 25,25);
+        g.fillRect(360,125,25,25);
 
         return character;
     }
