@@ -27,7 +27,7 @@ public class Team {
 
     public void initializeRandTeam(){
         for(int i = 0; i<lineup.length; i++){
-            lineup[i] = new Player();
+            lineup[i] = new Player(TeamName);
         }
     }
 
@@ -56,11 +56,10 @@ public class Team {
             try {
                 String name = scanner.next();
                 int age = scanner.nextInt();
-                String team = scanner.next();
-                String favfood = scanner.next();
+                String team = this.TeamName;
                 int powerRating = scanner.nextInt();
                 int contactRating = scanner.nextInt();
-                lineup[i] = new Player(age, team, favfood, powerRating, name, contactRating);
+                lineup[i] = new Player(age, team, powerRating, name, contactRating);
             }
             catch (InputMismatchException e){
                 System.out.println("Error: could not read information from line: " + lineNumber);

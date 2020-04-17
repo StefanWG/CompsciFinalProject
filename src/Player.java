@@ -2,26 +2,38 @@ public class Player {
     String name;
     int age;
     String team;
-    String favfood;
     int powerRating;
     int contactRating;
+    int atBats;
+    int Singles;
+    int Doubles;
+    int Triples;
+    int HRs;
 
-    public Player (int a, String t, String FF, int PR, String n, int CR) {
+    public Player (int a, String t, int PR, String n, int CR) {
         name = n;
         age = a;
         team = t;
-        favfood = FF;
         powerRating = PR;
         contactRating = CR;
+        atBats = 0;
+        Singles = 0;
+        Doubles = 0;
+        Triples = 0;
+        HRs = 0;
     }
 
-    public Player () {
+    public Player (String teamName) {
         name = randomName();
-        age = randomInt(18,23);
-        team = randomTeam();
-        favfood = randomFood();
+        age = randomInt(18,40);
+        team = teamName;
         powerRating = randomInt(60,100);
         contactRating = randomInt(60,100);
+        atBats = 0;
+        Singles = 0;
+        Doubles = 0;
+        Triples = 0;
+        HRs = 0;
     }
 
     public String randomName() {
@@ -34,11 +46,6 @@ public class Player {
         return teams[(int)(Math.random() * teams.length)];
     }
 
-    public String randomFood(){
-        String[] foods = {"Tacos", "Burgers", "Spaghetti", "Daal", "Empandas", "Bagels"};
-        return foods[(int)(Math.random() * foods.length)];
-    }
-
     public int randomInt(int min, int max ){
         return ((int) (min + (Math.random() * (max-min))));
     }
@@ -48,7 +55,6 @@ public class Player {
         return "Name: " + name + "\n" +
                 "Age: " + age + "\n" +
                 "Team: " + team + "\n" +
-                "Favorite Food: " + favfood + "\n" +
                 "Contact: " + contactRating + "\n" +
                 "Power: " + powerRating + "\n";
     }

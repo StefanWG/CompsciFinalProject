@@ -1,5 +1,8 @@
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Audio implements Runnable {
     FloatControl volumeControl;
@@ -14,21 +17,17 @@ public class Audio implements Runnable {
 
     public void run() {
         try {
-            file = new File(System.getProperty("user.dir")+ string);
+            file = new File(string).getAbsoluteFile();
             ais = AudioSystem.getAudioInputStream(file);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        try {
             clip = AudioSystem.getClip();
             clip.open(ais);
             volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        } catch (Exception ex){
-            try {
-                file = new File(System.getProperty("user.dir")+ "/src" + string);
-                ais = AudioSystem.getAudioInputStream(file);
-                clip = AudioSystem.getClip();
-                clip.open(ais);
-                volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (LineUnavailableException | IOException e) {
+            e.printStackTrace();
         }
     }
 
