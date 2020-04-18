@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
 import java.util.InputMismatchException;
@@ -11,11 +12,14 @@ public class Team {
     //will keep track of where in the lineup we are
     int lineupPos;
     //home team (our team)
-    public Team(String name, String fileName){
+    Color textColor;
+
+    public Team(String name, String fileName, Color color){
         teamName = name;
         lineup = new Player[9];
         initializeTeam(fileName);
         lineupPos = 0;
+        textColor = color;
     }
     //away team (randomized)
     public Team(){
@@ -24,6 +28,7 @@ public class Team {
         //initialize the team with all random players
         initializeRandTeam();
         teamName = randTeamName();
+        textColor = new Color(0,102,0);
     }
 
     public void initializeRandTeam(){

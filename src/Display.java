@@ -378,8 +378,7 @@ public class Display {
     public static BufferedImage lineupCard(Team team) {
         BufferedImage image = new BufferedImage ( 533, 800, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = image.createGraphics ();
-        Color textColor = new Color(0,100,0);
-
+        Color textColor = team.textColor;
 
         g.setColor(Color.darkGray);
         g.fill(new RoundRectangle2D.Double(0,0,image.getWidth(),image.getHeight(), 0, 0));

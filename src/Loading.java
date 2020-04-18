@@ -12,10 +12,15 @@ public class Loading extends JPanel {
     BufferedImage image2 = Display.characterStefan();
     BufferedImage image3 = Display.characterRohil();
 
-    BufferedImage[] imagesArray = {image1, image2, image3};
+    BufferedImage[] imagesArray = {image1, image2, image3,image1, image2, image3};
     JLabel label = new JLabel("Please Select a Team");
-    Team[] teams  = new Team[] {new Team("Astronauts", "HoustonAstronauts.txt"),new Team("Swordfish",
-            "MiamiSwordfish.txt"),new Team("Americans","NewyorkAmericans.txt")};
+    Team[] teams  = new Team[] {new Team("Astronauts", "HoustonAstronauts.txt", Color.orange),
+            new Team("Swordfish", "MiamiSwordfish.txt", Color.CYAN),
+            new Team("Americans","NewyorkAmericans.txt", Color.blue),
+            new Team("Rocks", "ColoradoRocks.txt", new Color(68,8,122)),
+            new Team("Red Socks", "BostonRedsocks.txt", Color.red),
+            new Team("Angles", "LosangelesAngles.txt", Color.red)};
+
 
     public Loading(Main main) {
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -41,15 +46,8 @@ public class Loading extends JPanel {
         JScrollPane scrollPane = new JScrollPane(panel1);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             panel1.add(new Button(imagesArray[i], this, i));
-        }
-
-        for (int i = 0; i < 7; i++) {
-            BufferedImage imageIcon;
-            if (i % 2 == 0)  imageIcon = Display.dirt();
-            else imageIcon = Display.grass();
-            panel1.add(new Button(imageIcon, this, i));
         }
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, label);
