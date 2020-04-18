@@ -7,13 +7,14 @@ import java.io.FileNotFoundException;
 public class Team {
     String TeamName;
     //9 player team
-    Player[] lineup;
+    public Player[] lineup;
     //will keep track of where in the lineup we are
     int lineupPos;
     //home team (our team)
-    public Team(String name){
+    public Team(String name, String fileName){
         TeamName = name;
         lineup = new Player[9];
+        initializeTeam(fileName);
         lineupPos = 0;
     }
     //away team (randomized)
@@ -73,5 +74,3 @@ public class Team {
     }
 
 }
-
-

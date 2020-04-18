@@ -1,5 +1,6 @@
 import java.awt.*;
-
+//TODO add who is at bat
+//TODO add on deck
 public class AtBat {
     private int contactResult;
     private int powerResult;
@@ -22,6 +23,7 @@ public class AtBat {
     }
 
     public int runAtBat() {
+        System.out.println(player);
         if (currentInning % 2 == 0) {
             //User At Bat
             contactResult = contactMeter.runMeter();

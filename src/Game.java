@@ -5,9 +5,10 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Game extends JPanel {
-    public Player player;
+    public Team awayTeam;
+    public Team homeTeam;
     final int WIDTH = 800;
-    final int HEIGHT = 900;
+    final int HEIGHT = 850;
     final int MAX_INNINGS = 18;
     BufferedImage fieldDrawing = Display.drawField();
     BufferedImage resultText = Display.outcomeText(7);
@@ -17,8 +18,9 @@ public class Game extends JPanel {
     Audio charge = new Audio("charge.wav");
     Thread chargeThread = new Thread(charge);
 
-    public Game(Player player) {
-        this.player = player;
+    public Game(Team team) {
+        homeTeam = team;
+        awayTeam = new Team();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setUpKeyBindings();
@@ -57,11 +59,28 @@ public class Game extends JPanel {
             }
 
             while (scoreboard.outs < 3  && !gameOver()) {
+                Team team;
+                if (scoreboard.halfInning%2 == 1) team = awayTeam;
+                else team = homeTeam;
+
                 if (scoreboard.halfInning % 2 == 0 && scoreboard.outs == 2) charge.play();
                 else charge.stop();
 
-                atBat = new AtBat(scoreboard.halfInning, this, player);
+
+                //NEW STUFF
+                //WHY CANT ATBAT TAKE  MY TEAM.LINEUP REFERENCE (DEBUG)
+                //this tells us where in the order our next batter is (0-8)
+                int order = team.lineupPos % 9;
+                atBat = new AtBat(scoreboard.halfInning, this, team.lineup[order]);
                 int result = atBat.runAtBat();
+                //add one to a players atbat since they just batted
+                team.lineup[order].atBats++;
+                //based on type of hit, add one to tally of given player that just batted.
+                UpdateBoxScore(result, order);
+                //advance the order so that next atBat, the next batter is shown
+                team.lineupPos++;
+
+                //NEW STUFF ENDS HERE
                 scoreboard.updateBases(result);
                 resultText = Display.outcomeText(result);
                 repaint();
@@ -96,5 +115,27 @@ public class Game extends JPanel {
                 if (atBat != null) atBat.stop();
             }
         });
+    }
+
+    private void UpdateBoxScore(int result, int order){
+        Team team;
+        if (scoreboard.halfInning%2 == 1) team = awayTeam;
+        else team = homeTeam;
+        if (result==1){
+            //single
+            team.lineup[order].Singles++;
+        }
+        else if (result == 2){
+            //double
+            team.lineup[order].Doubles++;
+        }
+        else if (result==3){
+            //triple
+            team.lineup[order].Triples++;
+        }
+        else if (result ==4){
+            //HR
+            team.lineup[order].HRs++;
+        }
     }
 }

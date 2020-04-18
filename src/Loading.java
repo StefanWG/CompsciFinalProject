@@ -6,18 +6,19 @@ import java.awt.image.BufferedImage;
 
 public class Loading extends JPanel {
     public Player player;
+    public Team team;
     final int WIDTH = 800;
     final int HEIGHT = 850;
     BufferedImage image1 = Display.characterJosh();
     BufferedImage image2 = Display.characterStefan();
     BufferedImage image3 = Display.characterRohil();
-    Player josh = new Player(20, "Gladiators", "Sushi", 84, "Josh", 76);
-    Player stefan = new Player (19, "Polar Bears", "Buffalo Wings",74, "Stefan", 86);
-    Player rohil = new Player (19, "Rams", "Poke", 80, "Rohil", 80);
+//    Player josh = new Player(20, "Gladiators", 84, "Josh", 76);
+//    Player stefan = new Player (19, "Polar Bears",74, "Stefan", 86);
+//    Player rohil = new Player (19, "Rams", 80, "Rohil", 80);
     BufferedImage[] imagesArray = {image1, image2, image3};
     JTextArea textArea = new JTextArea("Select a player");
-    
-    Player[] players = {josh, stefan, rohil};
+    Team[] teams  = new Team[] {new Team(),new Team(),new Team()};
+//    Player[] players = {josh, stefan, rohil};
 
     public Loading(Main main) {
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -29,8 +30,8 @@ public class Loading extends JPanel {
         advance.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (player != null) main.newGame();
-                else textArea.setText("You must select a player to advance");
+                if (team != null) main.newGame();
+                else textArea.setText("You must select a team to advance");
 
             }
         });

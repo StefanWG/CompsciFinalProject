@@ -11,8 +11,8 @@ public class Button extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    loading.player = loading.players[finalI];
-                    loading.textArea.setText("You have selected: \n" + loading.players[finalI].toString());
+                    loading.team = loading.teams[finalI];
+                    loading.textArea.setText("You have selected: \n" + loading.teams[finalI].toString());
                 } catch (Exception ignored) {}
             }
         });
