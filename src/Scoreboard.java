@@ -9,13 +9,17 @@ public class Scoreboard {
     int homeHits;
     int halfInning;
     int maxInnings;
+    String homeName;
+    String awayName;
     ArrayList<Integer> homeRunsInning = new ArrayList<>();
     ArrayList<Integer> awayRunsInning = new ArrayList<>();
 
     Audio hitball = new Audio("hitball.wav");
     Thread hitballThread = new Thread(hitball);
 
-    public Scoreboard(int maxInnings) {
+    public Scoreboard(int maxInnings, String homeName, String awayName) {
+        this.homeName = homeName;
+        this.awayName = awayName;
         this.outs = 0;
         this.homeRuns = 0;
         this.awayRuns = 0;

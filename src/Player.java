@@ -42,7 +42,7 @@ public class Player {
     }
 
     public String randomTeam(){
-        String[] teams = {"Astronauts", "Red Socks", "Marlins", "Pirates", "Rangers"};
+        String[] teams = {"ASTRONAUTS", "RED SOCKS", "MARLINS", "PIRATES", "RANGERS"};
         return teams[(int)(Math.random() * teams.length)];
     }
 
@@ -52,15 +52,13 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Name: " + name + "\n" +
-                "Age: " + age + "\n" +
-                "Team: " + team + "\n" +
-                "Contact: " + contactRating + "\n" +
-                "Power: " + powerRating + "\n";
+        String str = "";
+        str += name + "\t   ";
+        str += age + "    ";
+        str += contactRating + "    ";
+        str += powerRating;
+        return str;
     }
-
-
-
 }
 
 

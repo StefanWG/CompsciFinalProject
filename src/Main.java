@@ -24,8 +24,6 @@ public class Main {
 
     public void newGame() {
         game = new Game(loading.team);
-        Team astros = new Team("Astros", "HoustonAstronauts.txt");
-        game = new Game(astros);
         this.frame.setContentPane(this.game);
         this.frame.pack();
         this.frame.validate();

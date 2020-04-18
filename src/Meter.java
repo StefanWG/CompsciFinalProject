@@ -18,8 +18,7 @@ public class Meter {
     public Meter(int x, int y, Game g, int rating) {
         WIDTH = 300;
         HEIGHT = 50;
-//        meterLocation = WIDTH/2;
-        meterLocation = 150;
+        meterLocation = WIDTH/2;
         meterSpeed = 1;
         speed = 2;
         running = false;
@@ -31,6 +30,7 @@ public class Meter {
         //Create the color gradient for the meter
         float single = (float) 11250/(float) (rating + 50) / 200;
         single = single - single * .2f;
+        if (single >= 0.5) single = .49f;
 
         Color[] colors = {Color.red, Color.yellow, Color.green, Color.yellow, Color.red};
         float[] fractions = {0.02f, single, 0.5f, 1-single, 0.98f};

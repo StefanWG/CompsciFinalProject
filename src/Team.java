@@ -5,14 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Team {
-    String TeamName;
+    String teamName;
     //9 player team
     public Player[] lineup;
     //will keep track of where in the lineup we are
     int lineupPos;
     //home team (our team)
     public Team(String name, String fileName){
-        TeamName = name;
+        teamName = name;
         lineup = new Player[9];
         initializeTeam(fileName);
         lineupPos = 0;
@@ -23,12 +23,12 @@ public class Team {
         lineup = new Player[9];
         //initialize the team with all random players
         initializeRandTeam();
-        TeamName = randTeamName();
+        teamName = randTeamName();
     }
 
     public void initializeRandTeam(){
         for(int i = 0; i<lineup.length; i++){
-            lineup[i] = new Player(TeamName);
+            lineup[i] = new Player(teamName);
         }
     }
 
@@ -57,7 +57,7 @@ public class Team {
             try {
                 String name = scanner.next();
                 int age = scanner.nextInt();
-                String team = this.TeamName;
+                String team = this.teamName;
                 int powerRating = scanner.nextInt();
                 int contactRating = scanner.nextInt();
                 lineup[i] = new Player(age, team, powerRating, name, contactRating);
@@ -73,4 +73,31 @@ public class Team {
         }
     }
 
+    @Override
+    public String toString() {
+        String toReturn = headerString() + "\n";
+        int count = 1;
+        for (Player p : lineup) {
+            toReturn += count + ": " + p + "\n";
+            count++;
+        }
+        return toReturn;
+    }
+
+    public String headerString() {
+        String str = "\t   ";
+        str += "Age";
+        for (int i = 0; i < 5 - "Age".length(); i++) {
+            str += " ";
+        }
+        str += "Con";
+        for (int i = 0; i < 5 - "Con".length(); i++) {
+            str += " ";
+        }
+        str += "Pow";
+        for (int i = 0; i < 5 - "Pow".length(); i++) {
+            str += " ";
+        }
+        return str;
+    }
 }

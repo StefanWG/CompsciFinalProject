@@ -37,10 +37,8 @@ public class Display {
         g.fill(new RoundRectangle2D.Double(10,60,80,40, 20, 20)); //AwayName
         g.fill(new RoundRectangle2D.Double(10,110,80,40, 20, 20)); //HomeName
 
-        //TODO CHANGE TO TEAM NAME OR INTIALS
-
-        writeText("AWA", g,10, 90, 60,100,textColor);
-        writeText("HOM", g,10, 90, 110, 150,textColor);
+        writeText(scoreboard.awayName.substring(0,3).toUpperCase(), g,10, 90, 60,100,textColor);
+        writeText(scoreboard.homeName.substring(0,3).toUpperCase(), g,10, 90, 110, 150,textColor);
 
         for (int i = 0; i < 9; i++) {
             g.setColor(Color.black);
@@ -122,8 +120,8 @@ public class Display {
         TextLayout textLayout = new TextLayout(str, font, g.getFontRenderContext());
         float y = (y1 + y2 + textLayout.getAscent()) / 2 - textLayout.getAscent()/8;
         float x = (x1 + x2 + textLayout.getVisibleAdvance()) / 2 - textLayout.getVisibleAdvance();
-        g.setColor(color.darker());
-        textLayout.draw(g, x+3, y+3);
+//        g.setColor(color.darker());
+//        textLayout.draw(g, x+3, y+3);
         g.setColor(color);
         textLayout.draw(g, x, y);
     }
@@ -369,14 +367,55 @@ public class Display {
         return character2;
     }
 
-
-
     public static BufferedImage characterRohil(){
         BufferedImage character3 = new BufferedImage ( 800, 800, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = character3.createGraphics ();
 
 
         return character3;
+    }
+
+    public static BufferedImage lineupCard(Team team) {
+        BufferedImage image = new BufferedImage ( 533, 800, BufferedImage.TYPE_INT_ARGB );
+        final Graphics2D g = image.createGraphics ();
+        Color textColor = new Color(0,100,0);
+
+
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(0,0,image.getWidth(),image.getHeight(), 0, 0));
+        g.setColor(Color.BLACK);
+        g.fill(new RoundRectangle2D.Double(50,50,image.getWidth() - 100,60, 20, 20)); //Name
+        writeText(team.teamName.toUpperCase(), g,50, image.getWidth()-50, 50, 110,textColor);
+
+        g.setColor(Color.black);
+        g.fill(new RoundRectangle2D.Double(46,170,200,50, 20, 20)); //Name
+        g.fill(new RoundRectangle2D.Double(276,170,50,50, 20, 20)); //Age
+        g.fill(new RoundRectangle2D.Double(356,170,50,50, 20, 20)); //Contact
+        g.fill(new RoundRectangle2D.Double(436,170,50,50, 20, 20)); //Power
+
+        writeText("NAME",g,46, 246, 170,220,textColor); //Name
+        writeText("A",g,276, 326, 170,220,textColor); //Age
+        writeText("C",g,356, 406, 170,220,textColor); //Contact
+        writeText("P",g,436, 486, 170,220,textColor); //Power
+
+        //Players
+        for (int i = 0; i < 9; i++) {
+            g.setColor(Color.black);
+            g.fill(new RoundRectangle2D.Double(46,240+60*i,200,50, 20, 20)); //Name
+            g.fill(new RoundRectangle2D.Double(276,240+60*i,50,50, 20, 20)); //Age
+            g.fill(new RoundRectangle2D.Double(356,240+60*i,50,50, 20, 20)); //Contact
+            g.fill(new RoundRectangle2D.Double(436,240+60*i,50,50, 20, 20)); //Power
+
+            writeText(team.lineup[i].name,g,46, 246, 240+60*i,290+60*i,textColor); //Name
+            writeText(String.valueOf(team.lineup[i].age),g,276, 326, 240+60*i,290+60*i,textColor); //Age
+            writeText(String.valueOf(team.lineup[i].contactRating),g,356, 406, 240+60*i,290+60*i,textColor); //Contact
+            writeText(String.valueOf(team.lineup[i].powerRating),g,436, 486, 240+60*i,290+60*i,textColor); //Power
+
+        }
+
+        image = makeTransparent(Color.lightGray, image);
+        return image;
+
     }
 
 

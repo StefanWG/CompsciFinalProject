@@ -24,7 +24,7 @@ public class Game extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setUpKeyBindings();
-        scoreboard = new Scoreboard(MAX_INNINGS);
+        scoreboard = new Scoreboard(MAX_INNINGS, homeTeam.teamName, awayTeam.teamName);
 
         chargeThread.start();
     }
@@ -65,11 +65,6 @@ public class Game extends JPanel {
 
                 if (scoreboard.halfInning % 2 == 0 && scoreboard.outs == 2) charge.play();
                 else charge.stop();
-
-
-                //NEW STUFF
-                //WHY CANT ATBAT TAKE  MY TEAM.LINEUP REFERENCE (DEBUG)
-                //this tells us where in the order our next batter is (0-8)
                 int order = team.lineupPos % 9;
                 atBat = new AtBat(scoreboard.halfInning, this, team.lineup[order]);
                 int result = atBat.runAtBat();
@@ -80,7 +75,6 @@ public class Game extends JPanel {
                 //advance the order so that next atBat, the next batter is shown
                 team.lineupPos++;
 
-                //NEW STUFF ENDS HERE
                 scoreboard.updateBases(result);
                 resultText = Display.outcomeText(result);
                 repaint();
@@ -101,7 +95,7 @@ public class Game extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(fieldDrawing, 0, 100, null);
+        g.drawImage(fieldDrawing, 0, 50, null);
         g.drawImage(Display.drawScoreboard(scoreboard), 0, 0, null);
         g.drawImage(resultText, 0, 275, null);
         if (atBat != null) atBat.draw(g);

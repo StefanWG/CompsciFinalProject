@@ -12,7 +12,7 @@ public class Button extends JButton {
             public void actionPerformed(ActionEvent e) {
                 try {
                     loading.team = loading.teams[finalI];
-                    loading.textArea.setText("You have selected: \n" + loading.teams[finalI].toString());
+                    loading.label.setIcon(new ImageIcon(Display.lineupCard(loading.team)));
                 } catch (Exception ignored) {}
             }
         });
