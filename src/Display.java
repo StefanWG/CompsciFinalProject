@@ -24,9 +24,11 @@ public class Display {
     }
 
     public static BufferedImage drawScoreboard(Scoreboard scoreboard) {
-        BufferedImage image = new BufferedImage ( 800, 160, BufferedImage.TYPE_INT_ARGB );
+        BufferedImage image = new BufferedImage ( 800, 220, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = image.createGraphics ();
         Color textColor = new Color(0,100,0);
+        Color homeColor = scoreboard.homeTeam.textColor;
+        Color awayColor = scoreboard.awayTeam.textColor;
         float[] fracs = {.25f,.75f};
         Color[] colors = {new Color(0,102,0), new Color(0,179,0)};
         LinearGradientPaint grass = new LinearGradientPaint(0,0, 800,800, fracs, colors, MultipleGradientPaint.CycleMethod.REPEAT);
@@ -37,8 +39,8 @@ public class Display {
         g.fill(new RoundRectangle2D.Double(10,60,80,40, 20, 20)); //AwayName
         g.fill(new RoundRectangle2D.Double(10,110,80,40, 20, 20)); //HomeName
 
-        writeText(scoreboard.awayName.substring(0,3).toUpperCase(), g,10, 90, 60,100,textColor);
-        writeText(scoreboard.homeName.substring(0,3).toUpperCase(), g,10, 90, 110, 150,textColor);
+        writeText(scoreboard.awayTeam.teamName.substring(0,3).toUpperCase(), g,10, 90, 60,100,awayColor);
+        writeText(scoreboard.homeTeam.teamName.substring(0,3).toUpperCase(), g,10, 90, 110, 150,homeColor);
 
         for (int i = 0; i < 9; i++) {
             g.setColor(Color.black);
@@ -46,19 +48,19 @@ public class Display {
             g.fill(new RoundRectangle2D.Double(100+i*50,60,40,40, 20, 20)); //AwayRuns
             g.fill(new RoundRectangle2D.Double(100+i*50,110,40,40, 20, 20)); //HomeRuns
 
-            writeText(String.valueOf(i+1),g,100+i*50, 140+i*50, 10,50,textColor); //Innings
+            writeText(String.valueOf(i+1),g,100+i*50, 140+i*50, 10,50,Color.lightGray); //Innings
             try {
                 Color c;
-                if (i == scoreboard.halfInning/2 && scoreboard.halfInning%2 == 1) c = Color.green;
-                else c = textColor;
+                if (i == scoreboard.halfInning/2 && scoreboard.halfInning%2 == 1) c = awayColor.darker();
+                else c = awayColor;
                 writeText(String.valueOf(scoreboard.awayRunsInning.get(i)),g,100+i*50, 140+i*50, 60,100,c); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
                 writeText(" ",g,100+i*50, 140+i*50, 60,100,textColor); //AwayRuns
             }
             try {
                 Color c;
-                if (i == (scoreboard.halfInning - 1)/2 && scoreboard.halfInning%2 == 0) c = Color.green;
-                else c = textColor;
+                if (i == (scoreboard.halfInning - 1)/2 && scoreboard.halfInning%2 == 0) c = homeColor.darker();
+                else c = homeColor;
                 writeText(String.valueOf(scoreboard.homeRunsInning.get(i)),g,100+i*50, 140+i*50, 110,150,c); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
                 writeText(" ",g,100+i*50, 140+i*50, 100,150,textColor); //AwayRuns
@@ -69,17 +71,37 @@ public class Display {
         g.fill(new RoundRectangle2D.Double(550,10,40,40, 20, 20)); //Inning
         g.fill(new RoundRectangle2D.Double(550,60,40,40, 20, 20)); //A
         g.fill(new RoundRectangle2D.Double(550,110,40,40, 20, 20)); //H
-        writeText("R", g, 550, 590, 10, 50, Color.green);
-        writeText(String.valueOf(scoreboard.awayRuns), g, 550, 590, 60, 100, Color.green);
-        writeText(String.valueOf(scoreboard.homeRuns), g, 550, 590, 110, 150, Color.green);
+        writeText("R", g, 550, 590, 10, 50, Color.lightGray.darker());
+        writeText(String.valueOf(scoreboard.awayRuns), g, 550, 590, 60, 100, awayColor.darker());
+        writeText(String.valueOf(scoreboard.homeRuns), g, 550, 590, 110, 150, homeColor.darker());
 
         g.setColor(Color.black);
         g.fill(new RoundRectangle2D.Double(600,10,40,40, 20, 20)); //Inning
         g.fill(new RoundRectangle2D.Double(600,60,40,40, 20, 20)); //A
         g.fill(new RoundRectangle2D.Double(600,110,40,40, 20, 20)); //H
-        writeText("H", g, 600, 640, 10, 50, Color.green);
-        writeText(String.valueOf(scoreboard.awayHits), g, 600, 640, 60, 100, Color.green);
-        writeText(String.valueOf(scoreboard.homeHits), g, 600, 640, 110, 150, Color.green);
+        writeText("H", g, 600, 640, 10, 50, Color.lightGray.darker());
+        writeText(String.valueOf(scoreboard.awayHits), g, 600, 640, 60, 100, awayColor.darker());
+        writeText(String.valueOf(scoreboard.homeHits), g, 600, 640, 110, 150, homeColor.darker());
+
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(0,160,320,60, 20, 20));
+        g.setColor(Color.black);
+        g.fill(new RoundRectangle2D.Double(10,170,200,40, 20, 20));
+        g.fill(new RoundRectangle2D.Double(220,170,40,40, 20, 20)); //A
+        g.fill(new RoundRectangle2D.Double(270,170,40,40, 20, 20)); //A
+        Player player;
+        Color color;
+        if (scoreboard.halfInning%2 ==1) {
+            player = scoreboard.awayTeam.lineup[scoreboard.awayTeam.lineupPos%9];
+            color = scoreboard.awayTeam.textColor;
+        } else {
+            player = scoreboard.homeTeam.lineup[scoreboard.homeTeam.lineupPos%9];
+            color = scoreboard.homeTeam.textColor;
+        }
+        writeText(player.name, g, 10, 210,170,210,color);
+        writeText(String.valueOf(player.contactRating), g,220, 260, 170, 210, color);
+        writeText(String.valueOf(player.powerRating), g,270, 310, 170, 210, color);
+
 
         BufferedImage fieldView = new BufferedImage(400,400,BufferedImage.TYPE_INT_ARGB);
         Graphics2D f = fieldView.createGraphics();

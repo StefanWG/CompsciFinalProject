@@ -14,7 +14,8 @@ public class Loading extends JPanel {
 
     BufferedImage[] imagesArray = {image1, image2, image3,image1, image2, image3};
     JLabel label = new JLabel("Please Select a Team");
-    Team[] teams  = new Team[] {new Team("Astronauts", "HoustonAstronauts.txt", Color.orange),
+
+    static Team[] teams  = new Team[] {new Team("Astronauts", "HoustonAstronauts.txt", Color.orange),
             new Team("Swordfish", "MiamiSwordfish.txt", Color.CYAN),
             new Team("Americans","NewyorkAmericans.txt", Color.blue),
             new Team("Rocks", "ColoradoRocks.txt", new Color(68,8,122)),

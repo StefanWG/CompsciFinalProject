@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
-public class Game extends JPanel {
+public class Game extends JPanel  {
     public Team awayTeam;
     public Team homeTeam;
     final int WIDTH = 800;
@@ -20,11 +22,13 @@ public class Game extends JPanel {
 
     public Game(Team team) {
         homeTeam = team;
-        awayTeam = new Team();
+        do {
+            awayTeam = Loading.teams[(int) (Math.random()*Loading.teams.length)];
+        } while (awayTeam.teamName.equals(homeTeam.teamName));
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setUpKeyBindings();
-        scoreboard = new Scoreboard(MAX_INNINGS, homeTeam.teamName, awayTeam.teamName);
+        scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);
 
         chargeThread.start();
     }
