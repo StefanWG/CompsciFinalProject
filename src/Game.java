@@ -39,17 +39,6 @@ public class Game extends JPanel  {
         atBatButton.setBounds(775,680, 125, 100);
     }
 
-    public void newGame() {
-        scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);
-        repaint();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        runGame();
-    }
-
     public void pauseGame() {
         //TODO pauseGame() method
     }

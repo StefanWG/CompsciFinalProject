@@ -58,7 +58,7 @@ public class Main {
         newGame.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game.newGame();
+                newGame();
             }
         });
 
