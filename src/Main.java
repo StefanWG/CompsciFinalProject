@@ -18,6 +18,7 @@ public class Main {
 
         frame.setContentPane(loading);
         frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setVisible(true);
     }
@@ -33,6 +34,20 @@ public class Main {
         t.start();
     }
 
+    public void endGame() {
+        frame.setContentPane(new GameOver(this));
+        this.frame.pack();
+        this.frame.validate();
+        this.frame.repaint();
+    }
+
+    public void pickNewTeam() {
+        frame.setContentPane(loading);
+        this.frame.pack();
+        this.frame.validate();
+        this.frame.repaint();
+    }
+
     public void setUpMenu(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
@@ -44,7 +59,16 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 game.newGame();
-                System.out.println("New Game");
+            }
+        });
+
+        JMenuItem endGame = new JMenuItem("End Game");
+        endGame.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_E, ActionEvent.META_MASK));
+        endGame.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                endGame();
             }
         });
 
@@ -54,8 +78,7 @@ public class Main {
         changePlayer.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Change Player");
-                //TODO do we want this as an option?
+                pickNewTeam();
             }
         });
 
@@ -84,6 +107,7 @@ public class Main {
 
 
         file.add(newGame);
+        file.add(endGame);
         file.add(changePlayer);
         file.add(pauseGame);
         file.add(mute);

@@ -1,17 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 public class Game extends JPanel  {
     public Team awayTeam;
     public Team homeTeam;
-    final int WIDTH = 800;
-    final int HEIGHT = 850;
+    final int WIDTH = 900;
+    final int HEIGHT = 780;
     final int MAX_INNINGS = 18;
+    boolean rules = false;
     BufferedImage fieldDrawing = Display.drawField();
     BufferedImage resultText = Display.outcomeText(7);
     Scoreboard scoreboard;
@@ -31,10 +30,24 @@ public class Game extends JPanel  {
         scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);
 
         chargeThread.start();
+        setLayout(null);
+        JButton rulesButton = Display.rulesButton(this);
+        add(rulesButton);
+        rulesButton.setBounds(650,680, 125, 100);
+        JButton atBatButton = Display.atBatButton(this);
+        add(atBatButton);
+        atBatButton.setBounds(775,680, 125, 100);
     }
 
     public void newGame() {
-        //TODO newGame() method
+        scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);
+        repaint();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        runGame();
     }
 
     public void pauseGame() {
@@ -99,10 +112,14 @@ public class Game extends JPanel  {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(fieldDrawing, 0, 50, null);
-        g.drawImage(Display.drawScoreboard(scoreboard), 0, 0, null);
+        g.setColor(Color.lightGray);
+        g.fillRect(0,0, 1000,1000);
+        g.drawImage(Display.resize(fieldDrawing,650,650), 0, 130, null);
+        g.drawImage(Display.resize(Display.drawScoreboard(scoreboard), 900, 180), 0, 0, null);
         g.drawImage(resultText, 0, 275, null);
         if (atBat != null) atBat.draw(g);
+        if (rules) g.drawImage(Display.rulesText(), 650,180,null);
+        else g.drawImage(Display.atBatOnDeck(scoreboard), 650,180,null);
     }
 
     private void setUpKeyBindings() {

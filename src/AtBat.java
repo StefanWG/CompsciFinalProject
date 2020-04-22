@@ -17,13 +17,11 @@ public class AtBat {
         contactResult = -1;
         powerResult = -1;
         currentInning = inning;
-        //TODO imporve positioning of meters
-        contactMeter = new Meter(30,650, this.g, p.contactRating); //Change location
-        powerMeter = new Meter(470,650, this.g, p.powerRating); //Change location
+        contactMeter = new Meter(175,640, this.g, p.contactRating, "C"); //Change location
+        powerMeter = new Meter(175,730, this.g, p.powerRating, "P"); //Change location
     }
 
     public int runAtBat() {
-        System.out.println(player);
         if (currentInning % 2 == 0) {
             //User At Bat
             contactResult = contactMeter.runMeter();

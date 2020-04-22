@@ -1,4 +1,7 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.font.TextLayout;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
@@ -7,7 +10,7 @@ import java.util.Random;
 public class Display {
 
     public static BufferedImage outcomeText(int outcome) {
-        BufferedImage image = new BufferedImage(800,150,BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(650,150,BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2D = image.createGraphics();
         String str;
         switch (outcome) {
@@ -19,28 +22,29 @@ public class Display {
             case 5: str = "WALK"; break;
             default: str = " "; break;
         }
-        writeText(str, g2D, 0,800,0,150,Color.orange);
+        writeText(str, g2D, 0,650,0,150,Color.orange, "Impact");
         return image;
     }
 
     public static BufferedImage drawScoreboard(Scoreboard scoreboard) {
-        BufferedImage image = new BufferedImage ( 800, 220, BufferedImage.TYPE_INT_ARGB );
+        BufferedImage image = new BufferedImage ( 800, 160, BufferedImage.TYPE_INT_ARGB );
         final Graphics2D g = image.createGraphics ();
         Color textColor = new Color(0,100,0);
-        Color homeColor = scoreboard.homeTeam.textColor;
-        Color awayColor = scoreboard.awayTeam.textColor;
+        Color homeColor = scoreboard.homeTeam.textColor.darker();
+        Color awayColor = scoreboard.awayTeam.textColor.darker();
+        String font = "Boulder";
         float[] fracs = {.25f,.75f};
         Color[] colors = {new Color(0,102,0), new Color(0,179,0)};
         LinearGradientPaint grass = new LinearGradientPaint(0,0, 800,800, fracs, colors, MultipleGradientPaint.CycleMethod.REPEAT);
 
         g.setColor(Color.darkGray);
-        g.fill(new RoundRectangle2D.Double(0,0,800,160, 50, 50));
+        g.fill(new RoundRectangle2D.Double(0,0,800,160, 0, 0));
         g.setColor(Color.BLACK);
         g.fill(new RoundRectangle2D.Double(10,60,80,40, 20, 20)); //AwayName
         g.fill(new RoundRectangle2D.Double(10,110,80,40, 20, 20)); //HomeName
 
-        writeText(scoreboard.awayTeam.teamName.substring(0,3).toUpperCase(), g,10, 90, 60,100,awayColor);
-        writeText(scoreboard.homeTeam.teamName.substring(0,3).toUpperCase(), g,10, 90, 110, 150,homeColor);
+        writeText(scoreboard.awayTeam.teamName.substring(0,3).toUpperCase(), g,10, 90, 60,100,awayColor, font);
+        writeText(scoreboard.homeTeam.teamName.substring(0,3).toUpperCase(), g,10, 90, 110, 150,homeColor,font);
 
         for (int i = 0; i < 9; i++) {
             g.setColor(Color.black);
@@ -48,22 +52,22 @@ public class Display {
             g.fill(new RoundRectangle2D.Double(100+i*50,60,40,40, 20, 20)); //AwayRuns
             g.fill(new RoundRectangle2D.Double(100+i*50,110,40,40, 20, 20)); //HomeRuns
 
-            writeText(String.valueOf(i+1),g,100+i*50, 140+i*50, 10,50,Color.lightGray); //Innings
+            writeText(String.valueOf(i+1),g,100+i*50, 140+i*50, 10,50,Color.lightGray,font); //Innings
             try {
                 Color c;
-                if (i == scoreboard.halfInning/2 && scoreboard.halfInning%2 == 1) c = awayColor.darker();
+                if (i == scoreboard.halfInning/2 && scoreboard.halfInning%2 == 1) c = awayColor.brighter();
                 else c = awayColor;
-                writeText(String.valueOf(scoreboard.awayRunsInning.get(i)),g,100+i*50, 140+i*50, 60,100,c); //AwayRuns
+                writeText(String.valueOf(scoreboard.awayRunsInning.get(i)),g,100+i*50, 140+i*50, 60,100,c,font); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
-                writeText(" ",g,100+i*50, 140+i*50, 60,100,textColor); //AwayRuns
+                writeText(" ",g,100+i*50, 140+i*50, 60,100,textColor,font); //AwayRuns
             }
             try {
                 Color c;
-                if (i == (scoreboard.halfInning - 1)/2 && scoreboard.halfInning%2 == 0) c = homeColor.darker();
+                if (i == (scoreboard.halfInning - 1)/2 && scoreboard.halfInning%2 == 0) c = homeColor.brighter();
                 else c = homeColor;
-                writeText(String.valueOf(scoreboard.homeRunsInning.get(i)),g,100+i*50, 140+i*50, 110,150,c); //AwayRuns
+                writeText(String.valueOf(scoreboard.homeRunsInning.get(i)),g,100+i*50, 140+i*50, 110,150,c,font); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
-                writeText(" ",g,100+i*50, 140+i*50, 100,150,textColor); //AwayRuns
+                writeText(" ",g,100+i*50, 140+i*50, 100,150,textColor,font); //AwayRuns
             }
         }
 
@@ -71,37 +75,17 @@ public class Display {
         g.fill(new RoundRectangle2D.Double(550,10,40,40, 20, 20)); //Inning
         g.fill(new RoundRectangle2D.Double(550,60,40,40, 20, 20)); //A
         g.fill(new RoundRectangle2D.Double(550,110,40,40, 20, 20)); //H
-        writeText("R", g, 550, 590, 10, 50, Color.lightGray.darker());
-        writeText(String.valueOf(scoreboard.awayRuns), g, 550, 590, 60, 100, awayColor.darker());
-        writeText(String.valueOf(scoreboard.homeRuns), g, 550, 590, 110, 150, homeColor.darker());
+        writeText("R", g, 550, 590, 10, 50, Color.lightGray.brighter(),font);
+        writeText(String.valueOf(scoreboard.awayRuns), g, 550, 590, 60, 100, awayColor.brighter(),font);
+        writeText(String.valueOf(scoreboard.homeRuns), g, 550, 590, 110, 150, homeColor.brighter(),font);
 
         g.setColor(Color.black);
         g.fill(new RoundRectangle2D.Double(600,10,40,40, 20, 20)); //Inning
         g.fill(new RoundRectangle2D.Double(600,60,40,40, 20, 20)); //A
         g.fill(new RoundRectangle2D.Double(600,110,40,40, 20, 20)); //H
-        writeText("H", g, 600, 640, 10, 50, Color.lightGray.darker());
-        writeText(String.valueOf(scoreboard.awayHits), g, 600, 640, 60, 100, awayColor.darker());
-        writeText(String.valueOf(scoreboard.homeHits), g, 600, 640, 110, 150, homeColor.darker());
-
-        g.setColor(Color.darkGray);
-        g.fill(new RoundRectangle2D.Double(0,160,320,60, 20, 20));
-        g.setColor(Color.black);
-        g.fill(new RoundRectangle2D.Double(10,170,200,40, 20, 20));
-        g.fill(new RoundRectangle2D.Double(220,170,40,40, 20, 20)); //A
-        g.fill(new RoundRectangle2D.Double(270,170,40,40, 20, 20)); //A
-        Player player;
-        Color color;
-        if (scoreboard.halfInning%2 ==1) {
-            player = scoreboard.awayTeam.lineup[scoreboard.awayTeam.lineupPos%9];
-            color = scoreboard.awayTeam.textColor;
-        } else {
-            player = scoreboard.homeTeam.lineup[scoreboard.homeTeam.lineupPos%9];
-            color = scoreboard.homeTeam.textColor;
-        }
-        writeText(player.name, g, 10, 210,170,210,color);
-        writeText(String.valueOf(player.contactRating), g,220, 260, 170, 210, color);
-        writeText(String.valueOf(player.powerRating), g,270, 310, 170, 210, color);
-
+        writeText("H", g, 600, 640, 10, 50, Color.lightGray.brighter(),font);
+        writeText(String.valueOf(scoreboard.awayHits), g, 600, 640, 60, 100, awayColor.brighter(),font);
+        writeText(String.valueOf(scoreboard.homeHits), g, 600, 640, 110, 150, homeColor.brighter(),font);
 
         BufferedImage fieldView = new BufferedImage(400,400,BufferedImage.TYPE_INT_ARGB);
         Graphics2D f = fieldView.createGraphics();
@@ -126,7 +110,7 @@ public class Display {
         f.setColor(Color.white);
         drawRect(f, new Point(200,400), new Point(240,360), new Point(200,320), new Point(160,360));
 
-        writeText(String.valueOf(scoreboard.outs), f, 100,300,100,300, Color.red);
+        writeText(String.valueOf(scoreboard.outs), f, 100,300,100,300, Color.red,font);
 
         fieldView = resize(fieldView,140,140);
 
@@ -136,9 +120,9 @@ public class Display {
 
     }
 
-    public static void writeText(String str, Graphics2D g, int x1, int x2, int y1, int y2, Color color) {
+    public static void writeText(String str, Graphics2D g, int x1, int x2, int y1, int y2, Color color, String f) {
         int fontSize = (int) ((y2-y1) * 0.8);
-        Font font = new Font("Impact", Font.PLAIN, fontSize);
+        Font font = new Font(f, Font.PLAIN, fontSize);
         TextLayout textLayout = new TextLayout(str, font, g.getFontRenderContext());
         float y = (y1 + y2 + textLayout.getAscent()) / 2 - textLayout.getAscent()/8;
         float x = (x1 + x2 + textLayout.getVisibleAdvance()) / 2 - textLayout.getVisibleAdvance();
@@ -406,31 +390,31 @@ public class Display {
         g.fill(new RoundRectangle2D.Double(0,0,image.getWidth(),image.getHeight(), 0, 0));
         g.setColor(Color.BLACK);
         g.fill(new RoundRectangle2D.Double(50,50,image.getWidth() - 100,60, 20, 20)); //Name
-        writeText(team.teamName.toUpperCase(), g,50, image.getWidth()-50, 50, 110,textColor);
+        writeText(team.teamName.toUpperCase(), g,50, image.getWidth()-50, 50, 110,textColor,"Boulder");
 
         g.setColor(Color.black);
-        g.fill(new RoundRectangle2D.Double(46,170,200,50, 20, 20)); //Name
-        g.fill(new RoundRectangle2D.Double(276,170,50,50, 20, 20)); //Age
-        g.fill(new RoundRectangle2D.Double(356,170,50,50, 20, 20)); //Contact
+        g.fill(new RoundRectangle2D.Double(46,170,230,50, 20, 20)); //Name
+        g.fill(new RoundRectangle2D.Double(296,170,50,50, 20, 20)); //Age
+        g.fill(new RoundRectangle2D.Double(366,170,50,50, 20, 20)); //Contact
         g.fill(new RoundRectangle2D.Double(436,170,50,50, 20, 20)); //Power
 
-        writeText("NAME",g,46, 246, 170,220,textColor); //Name
-        writeText("A",g,276, 326, 170,220,textColor); //Age
-        writeText("C",g,356, 406, 170,220,textColor); //Contact
-        writeText("P",g,436, 486, 170,220,textColor); //Power
+        writeText("NAME",g,46, 276, 170,220,textColor,"Boulder"); //Name
+        writeText("A",g,296, 346, 170,220,textColor,"Boulder"); //Age
+        writeText("C",g,366, 416, 170,220,textColor,"Boulder"); //Contact
+        writeText("P",g,436, 486, 170,220,textColor,"Boulder"); //Power
 
         //Players
         for (int i = 0; i < 9; i++) {
             g.setColor(Color.black);
-            g.fill(new RoundRectangle2D.Double(46,240+60*i,200,50, 20, 20)); //Name
-            g.fill(new RoundRectangle2D.Double(276,240+60*i,50,50, 20, 20)); //Age
-            g.fill(new RoundRectangle2D.Double(356,240+60*i,50,50, 20, 20)); //Contact
+            g.fill(new RoundRectangle2D.Double(46,240+60*i,230,50, 20, 20)); //Name
+            g.fill(new RoundRectangle2D.Double(296,240+60*i,50,50, 20, 20)); //Age
+            g.fill(new RoundRectangle2D.Double(366,240+60*i,50,50, 20, 20)); //Contact
             g.fill(new RoundRectangle2D.Double(436,240+60*i,50,50, 20, 20)); //Power
 
-            writeText(team.lineup[i].name,g,46, 246, 240+60*i,290+60*i,textColor); //Name
-            writeText(String.valueOf(team.lineup[i].age),g,276, 326, 240+60*i,290+60*i,textColor); //Age
-            writeText(String.valueOf(team.lineup[i].contactRating),g,356, 406, 240+60*i,290+60*i,textColor); //Contact
-            writeText(String.valueOf(team.lineup[i].powerRating),g,436, 486, 240+60*i,290+60*i,textColor); //Power
+            writeText(team.lineup[i].name,g,46, 276, 240+60*i,290+60*i,textColor,"Boulder"); //Name
+            writeText(String.valueOf(team.lineup[i].age),g,296, 346, 240+60*i,290+60*i,textColor,"Boulder"); //Age
+            writeText(String.valueOf(team.lineup[i].contactRating),g,366, 416, 240+60*i,290+60*i,textColor,"Boulder"); //Contact
+            writeText(String.valueOf(team.lineup[i].powerRating),g,436, 486, 240+60*i,290+60*i,textColor,"Boulder"); //Power
 
         }
 
@@ -439,6 +423,97 @@ public class Display {
 
     }
 
+    public static JButton rulesButton(Game g) {
+        BufferedImage image = new BufferedImage(125, 100, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = image.createGraphics();
+        graphics.setColor(Color.white);
+        graphics.fillRect(0,0,125,100);
+        writeText("Rules", graphics, 0, 125, 25, 75, Color.BLACK, "Boulder");
+        image = makeTransparent(Color.white, image);
+
+
+        JButton button = new JButton(new ImageIcon(image));
+        button.setPreferredSize(new Dimension(125, 100));
+        button.setFocusable(false);
+        button.setBackground(Color.darkGray);
+        button.setOpaque(true);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                g.rules = true;
+                g.repaint();
+            }
+        });
+
+        return button;
+    }
+
+    public static JButton atBatButton(Game g) {
+        BufferedImage image = new BufferedImage(125, 100, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = image.createGraphics();
+        graphics.setColor(Color.white);
+        graphics.fillRect(0,0,125,100);
+        writeText("At Bat", graphics, 0, 125, 25, 75, Color.BLACK, "Boulder");
+        image = makeTransparent(Color.white, image);
+
+        JButton button = new JButton(new ImageIcon(image));
+        button.setFocusable(false);
+        button.setBackground(Color.darkGray);
+        button.setOpaque(true);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                g.rules = false;
+                g.repaint();
+            }
+        });
+
+        return button;
+    }
+
+    public static BufferedImage rulesText() {
+        BufferedImage image = new BufferedImage ( 250, 500, BufferedImage.TYPE_INT_ARGB );
+        final Graphics2D g = image.createGraphics ();
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(0,0,250,500, 0, 0));
+        g.setColor(Color.black);
+
+        String rules = "Here is a very long  \nstring describing the rules \nwhich we cna have read in \nfrom a text file and then \nthe use will kno" +
+                "w how to play";
+
+        writeText(rules, g, 200,230, 20,50, Color.BLACK,"Boulder");
+
+        return image;
+    }
+
+    public static BufferedImage atBatOnDeck(Scoreboard scoreboard) {
+        BufferedImage image = new BufferedImage ( 250, 500, BufferedImage.TYPE_INT_ARGB );
+        final Graphics2D g = image.createGraphics ();
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(0,0,250,500, 20, 20));
+
+        for (int i = 0; i < 3; i++) {
+            g.setColor(Color.black);
+            g.fill(new RoundRectangle2D.Double(20,20+150*i,210,40, 20, 20));
+            g.fill(new RoundRectangle2D.Double(60,80+150*i,40,40, 20, 20)); //A
+            g.fill(new RoundRectangle2D.Double(150,80+150*i,40,40, 20, 20)); //A
+            Player player;
+            Color color;
+            if (scoreboard.halfInning%2 ==1) {
+                player = scoreboard.awayTeam.lineup[(scoreboard.awayTeam.lineupPos + i) % 9];
+                color = scoreboard.awayTeam.textColor;
+            } else {
+                player = scoreboard.homeTeam.lineup[(scoreboard.homeTeam.lineupPos + i) % 9];
+                color = scoreboard.homeTeam.textColor;
+            }
+            writeText(player.name, g, 20, 230,20+150*i,60+150*i,color,"Boulder");
+            writeText(String.valueOf(player.contactRating), g,60, 100, 80+150*i, 120+150*i, color,"Boulder");
+            writeText(String.valueOf(player.powerRating), g,150, 190, 80+150*i, 120+150*i, color,"Boulder");
+        }
+        return image;
+    }
 
 }
 
