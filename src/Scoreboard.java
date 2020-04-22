@@ -14,7 +14,7 @@ public class Scoreboard {
     ArrayList<Integer> homeRunsInning = new ArrayList<>();
     ArrayList<Integer> awayRunsInning = new ArrayList<>();
 
-    Audio hitball = new Audio("hitball.wav");
+    Audio hitball = new Audio("AudioFiles/hitball.wav");
     Thread hitballThread = new Thread(hitball);
 
     public Scoreboard(int maxInnings, Team homeTeam, Team awayTeam) {

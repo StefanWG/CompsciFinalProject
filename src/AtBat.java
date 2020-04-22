@@ -1,6 +1,4 @@
 import java.awt.*;
-//TODO add who is at bat
-//TODO add on deck
 public class AtBat {
     private int contactResult;
     private int powerResult;

@@ -1,8 +1,10 @@
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Audio implements Runnable {
+    static ArrayList<FloatControl> volumeControls = new ArrayList<>();
     FloatControl volumeControl;
     AudioInputStream ais;
     Clip clip;
@@ -24,6 +26,8 @@ public class Audio implements Runnable {
             clip = AudioSystem.getClip();
             clip.open(ais);
             volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControls.add(volumeControl);
+            volumeControl.setValue(volumeControl.getMaximum());
         } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
@@ -40,6 +44,15 @@ public class Audio implements Runnable {
         if (!clip.isRunning()) {
             clip.setMicrosecondPosition(0);
             clip.loop(0);
+        }
+    }
+
+    public static void toggleSound() {
+        for (FloatControl v : volumeControls) {
+            if (v.getValue() == v.getMaximum()) {
+                v.setValue(v.getMinimum());
+            }
+            else v.setValue(v.getMaximum());
         }
     }
 }

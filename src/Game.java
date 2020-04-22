@@ -16,7 +16,7 @@ public class Game extends JPanel  {
     Scoreboard scoreboard;
     AtBat atBat;
 
-    Audio charge = new Audio("charge.wav");
+    Audio charge = new Audio("AudioFiles/charge.wav");
     Thread chargeThread = new Thread(charge);
 
     public Game(Team team) {
@@ -39,23 +39,14 @@ public class Game extends JPanel  {
         atBatButton.setBounds(775,680, 125, 100);
     }
 
-    public void pauseGame() {
-        //TODO pauseGame() method
-    }
-
-    public void endGame() {
-        //TODO endGame() method
-    }
-
     public boolean gameOver() {
         if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
         else if (scoreboard.halfInning%2 == 1 && scoreboard.homeRuns == scoreboard.awayRuns) return false; //Top of any extra inning and game isn't tied
-        else if (scoreboard.halfInning%2 == 0 && scoreboard.homeRuns <= scoreboard.awayRuns) return false; //Bottom of inning and home team isn't winning
-        else return true;
+        else return scoreboard.halfInning % 2 != 0 || scoreboard.homeRuns > scoreboard.awayRuns; //Bottom of inning and home team isn't winning
     }
 
     public void runGame() {
-        //TODO END THE GAME
+        //TODO Extra innings
         //Sims half inning when
         while (!gameOver()) {
             repaint();

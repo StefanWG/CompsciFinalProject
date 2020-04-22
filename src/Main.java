@@ -82,25 +82,15 @@ public class Main {
             }
         });
 
-        JMenuItem pauseGame = new JMenuItem("Pause Game");
-        pauseGame.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_P, ActionEvent.META_MASK));
-        pauseGame.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Pause Game");
-                game.pauseGame();
-            }
-        });
-
-        JMenuItem mute = new JMenuItem("Mute Sounds");
-        mute.setAccelerator(KeyStroke.getKeyStroke(
+        JMenuItem sound = new JMenuItem("Mute Sound");
+        sound.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_M, ActionEvent.META_MASK));
-        mute.addActionListener(new AbstractAction() {
+        sound.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Mute Game");
-                //TODO write code to mute game, maybe static variable
+                Audio.toggleSound();
+                if (sound.getText().equals("Mute Sound")) sound.setText("Unmute Sound");
+                else sound.setText("Mute Sound");
             }
         });
 
@@ -109,8 +99,7 @@ public class Main {
         file.add(newGame);
         file.add(endGame);
         file.add(changePlayer);
-        file.add(pauseGame);
-        file.add(mute);
+        file.add(sound);
 
         menuBar.add(file);
         frame.setJMenuBar(menuBar);
@@ -119,7 +108,7 @@ public class Main {
     class Runner implements Runnable {
         public void run() {
             game.runGame();
-            game.endGame();
+            endGame();
         }
     }
 

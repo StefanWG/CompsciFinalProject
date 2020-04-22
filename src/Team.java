@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 public class Team {
     String teamName;
     //9 player team
-    public Player[] lineup;
+    public Player[] lineup  = new Player[9];
     //will keep track of where in the lineup we are
     int lineupPos;
     //home team (our team)
@@ -16,7 +16,6 @@ public class Team {
 
     public Team(String name, String fileName, Color color){
         teamName = name;
-        lineup = new Player[9];
         initializeTeam(fileName);
         lineupPos = 0;
         textColor = color;
@@ -42,7 +41,7 @@ public class Team {
         return names[(int)(Math.random() * names.length)];
     }
 
-    public void initializeTeam(String TeamData) {
+    public void initializeTeam(String filePath) {
         //TeamData is the text file name where the data for each team is
         //put players in the array here to fill the team
         //use input from a file
@@ -50,10 +49,11 @@ public class Team {
         Scanner scanner = null;
         //read a specified file
         try {
-            scanner = new Scanner(new File(TeamData));
+            File file = new File(filePath);
+            scanner = new Scanner(file);
         }
         catch (FileNotFoundException e){
-            System.out.println("Error: File not found: " + TeamData);
+            System.out.println("Error: File not found: " + filePath);
         }
 
         int lineNumber = 1;
@@ -80,29 +80,23 @@ public class Team {
 
     @Override
     public String toString() {
-        String toReturn = headerString() + "\n";
+        StringBuilder toReturn = new StringBuilder(headerString() + "\n");
         int count = 1;
         for (Player p : lineup) {
-            toReturn += count + ": " + p + "\n";
+            toReturn.append(count).append(": ").append(p).append("\n");
             count++;
         }
-        return toReturn;
+        return toReturn.toString();
     }
 
     public String headerString() {
-        String str = "\t   ";
-        str += "Age";
-        for (int i = 0; i < 5 - "Age".length(); i++) {
-            str += " ";
-        }
-        str += "Con";
-        for (int i = 0; i < 5 - "Con".length(); i++) {
-            str += " ";
-        }
-        str += "Pow";
-        for (int i = 0; i < 5 - "Pow".length(); i++) {
-            str += " ";
-        }
-        return str;
+        StringBuilder str = new StringBuilder("\t   ");
+        str.append("Age");
+        str.append(" ".repeat(5 - "Age".length()));
+        str.append("Con");
+        str.append(" ".repeat(5 - "Con".length()));
+        str.append("Pow");
+        str.append(" ".repeat(5 - "Pow".length()));
+        return str.toString();
     }
 }
