@@ -14,11 +14,9 @@ public class Team {
     //home team (our team)
     Color textColor;
 
-    public Team(String name, String fileName, Color color){
-        teamName = name;
+    public Team(String fileName){
         initializeTeam(fileName);
         lineupPos = 0;
-        textColor = color;
     }
     //away team (randomized)
     public Team(){
@@ -57,6 +55,24 @@ public class Team {
         }
 
         int lineNumber = 1;
+        try {
+            teamName = scanner.next();
+            for (int i = 0; i < teamName.length(); i++) {
+                if (teamName.charAt(i) == '_') teamName = teamName.substring(0,i) + " " + teamName.substring(i+1);
+            }
+            lineNumber++;
+            int red = scanner.nextInt();
+            int green = scanner.nextInt();
+            int blue = scanner.nextInt();
+            textColor = new Color(red, green, blue);
+        }
+        catch (InputMismatchException e){
+            System.out.println("Error: could not read information from line: " + lineNumber);
+        }
+        catch (NoSuchElementException f){
+            System.out.println("There is no more data to read. Check your Team Data file"+
+                    " and ensure it is complete");
+        }
         for (int i = 0; i<lineup.length; i++){
             //give each of these values from a text file
             try {

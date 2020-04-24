@@ -20,11 +20,30 @@ public class Game extends JPanel  {
     Audio charge = new Audio("AudioFiles/charge.wav");
     Thread chargeThread = new Thread(charge);
 
+    public Game(Team homeTeam, Team awayTeam) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+        setUpKeyBindings();
+        scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);
+
+        chargeThread.start();
+        setLayout(null);
+        JButton rulesButton = Display.rulesButton(this);
+        add(rulesButton);
+        rulesButton.setBounds(650,680, 125, 100);
+        JButton atBatButton = Display.atBatButton(this);
+        add(atBatButton);
+        atBatButton.setBounds(775,680, 125, 100);
+    }
+
     public Game(Team team) {
         homeTeam = team;
         do {
             awayTeam = Loading.teams[(int) (Math.random()*Loading.teams.length)];
         } while (awayTeam.teamName.equals(homeTeam.teamName));
+
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setUpKeyBindings();
@@ -47,7 +66,6 @@ public class Game extends JPanel  {
     }
 
     public void runGame() {
-        //TODO Extra innings
         //Sims half inning when
         while (!gameOver()) {
             if (gameOver) break;

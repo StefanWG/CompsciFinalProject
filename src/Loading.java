@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class Loading extends JPanel {
@@ -15,12 +13,12 @@ public class Loading extends JPanel {
     BufferedImage[] imagesArray = {image1, image2, image3,image1, image2, image3};
     JLabel label = new JLabel("Please Select a Team");
 
-    static Team[] teams  = new Team[] {new Team("Astronauts", "Rosters/HoustonAstronauts.txt", Color.orange),
-            new Team("Swordfish", "Rosters/MiamiSwordfish.txt", Color.CYAN),
-            new Team("Americans", "Rosters/NewyorkAmericans.txt", Color.blue),
-            new Team("Rocks", "Rosters/ColoradoRocks.txt", new Color(68,8,122)),
-            new Team("Red Socks", "Rosters/BostonRedsocks.txt", Color.red),
-            new Team("Angles", "Rosters/LosangelesAngles.txt", Color.red)};
+    static Team[] teams  = new Team[] {new Team("Rosters/HoustonAstronauts.txt"),
+            new Team("Rosters/MiamiSwordfish.txt"),
+            new Team("Rosters/NewyorkAmericans.txt"),
+            new Team("Rosters/ColoradoRocks.txt"),
+            new Team("Rosters/BostonRedsocks.txt"),
+            new Team("Rosters/LosangelesAngles.txt")};
 
 
     public Loading(Main main) {
