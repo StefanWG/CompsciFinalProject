@@ -24,7 +24,7 @@ public class SeasonMode extends JPanel {
         if (list != null) {
             for (int i = 0; i < 2; i++) {
                 for (File f : list) {
-                    Team t = new Team(String.valueOf(f));
+                    Team t = new Team(String.valueOf(f), false);
                     if (!t.teamName.equals(team.teamName)) {
                         SeasonGame sG = new SeasonGame(this,schedule.size() + 1, t, main);
                         schedule.add(sG);
@@ -44,7 +44,7 @@ public class SeasonMode extends JPanel {
 
     public static void main(String[] args) {
         Main main = new Main();
-        SeasonMode seasonMode = new SeasonMode(new Team("Rosters/HoustonAstronauts.txt"), main);
+        SeasonMode seasonMode = new SeasonMode(new Team("Rosters/HoustonAstronauts.txt", true), main);
     }
 }
 

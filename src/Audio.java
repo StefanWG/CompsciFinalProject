@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Audio implements Runnable {
     static ArrayList<FloatControl> volumeControls = new ArrayList<>();
+    static ArrayList<Audio> audios = new ArrayList<>();
     FloatControl volumeControl;
     AudioInputStream ais;
     Clip clip;
@@ -28,6 +29,7 @@ public class Audio implements Runnable {
             volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             volumeControls.add(volumeControl);
             volumeControl.setValue(volumeControl.getMaximum());
+            audios.add(this);
         } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
@@ -53,6 +55,12 @@ public class Audio implements Runnable {
                 v.setValue(v.getMinimum());
             }
             else v.setValue(v.getMaximum());
+        }
+    }
+
+    public static void stopAll() {
+        for (Audio a : audios) {
+            a.stop();
         }
     }
 }

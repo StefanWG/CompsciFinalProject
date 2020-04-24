@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Game extends JPanel  {
     public Team awayTeam;
@@ -40,9 +41,13 @@ public class Game extends JPanel  {
 
     public Game(Team team) {
         homeTeam = team;
-        do {
-            awayTeam = Loading.teams[(int) (Math.random()*Loading.teams.length)];
-        } while (awayTeam.teamName.equals(homeTeam.teamName));
+        String[] rosters = new File("Rosters").list();
+        if (rosters != null) {
+            do {
+                String rosterPath = "Rosters/" + rosters[(int) (Math.random()*rosters.length)];
+                awayTeam = new Team(rosterPath, false);
+            } while (awayTeam.teamName.equals(homeTeam.teamName));
+        }
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
@@ -60,15 +65,17 @@ public class Game extends JPanel  {
     }
 
     public boolean gameOver() {
-        if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
+        if (gameOver) return true;
+        else if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
         else if (scoreboard.halfInning%2 == 1 && scoreboard.homeRuns == scoreboard.awayRuns) return false; //Top of any extra inning and game isn't tied
         else return scoreboard.halfInning % 2 != 0 || scoreboard.homeRuns > scoreboard.awayRuns; //Bottom of inning and home team isn't winning
     }
 
     public void runGame() {
+        homeTeam.resetPlayerStats();
+        awayTeam.resetPlayerStats();
         //Sims half inning when
         while (!gameOver()) {
-            if (gameOver) break;
             repaint();
             try {
                 Thread.sleep(1000);
@@ -82,44 +89,21 @@ public class Game extends JPanel  {
 
                 if (scoreboard.halfInning % 2 == 0 && scoreboard.outs == 2) charge.play();
                 else charge.stop();
-                int order = team.lineupPos % 9;
-                //used for RBI calculation
-                int before;
-                if (team==awayTeam) {
-                    before = scoreboard.awayRuns;
-                }
-                else{
-                    before = scoreboard.homeRuns;
-                }
-                atBat = new AtBat(scoreboard.halfInning, this, team.lineup[order]);
+
+                atBat = new AtBat(this, team);
                 int result = atBat.runAtBat();
-                //add one to a players atbat since they just batted
-                team.lineup[order].atBats++;
-                //based on type of hit, add one to tally of given player that just batted.
-                UpdateBoxScore(result, order);
-                //advance the order so that next atBat, the next batter is shown
+                updateBoxScore(result);
+                scoreboard.updateBases(result);
+
                 team.lineupPos++;
 
-                scoreboard.updateBases(result);
-                //usd for RBI calculation
-                int after;
-                if (team==awayTeam) {
-                    after = scoreboard.awayRuns;
-                }
-                else{
-                     after = scoreboard.homeRuns;
-                }
-                //tells us how many RBI's were scored
-                int RBI = after - before;
-                //adds RBI's to the players total
-                team.lineup[order].addRBIs(RBI);
                 resultText = Display.outcomeText(result);
                 repaint();
                 try {
                     Thread.sleep(700);
                 } catch (InterruptedException ignored) {
                 }
-                resultText = Display.outcomeText(7);
+                resultText = Display.outcomeText(7); //Empty text
                 repaint();
                 try {
                     Thread.sleep(300);
@@ -152,25 +136,14 @@ public class Game extends JPanel  {
         });
     }
 
-    private void UpdateBoxScore(int result, int order){
+    private void updateBoxScore(int result){
         Team team;
         if (scoreboard.halfInning%2 == 1) team = awayTeam;
         else team = homeTeam;
-        if (result==1){
-            //single
-            team.lineup[order].Singles++;
-        }
-        else if (result == 2){
-            //double
-            team.lineup[order].Doubles++;
-        }
-        else if (result==3){
-            //triple
-            team.lineup[order].Triples++;
-        }
-        else if (result ==4){
-            //HR
-            team.lineup[order].HRs++;
-        }
+        if (result==1) team.lineup[team.lineupPos].singles++;
+        else if (result == 2) team.lineup[team.lineupPos].doubles++;
+        else if (result == 3) team.lineup[team.lineupPos].triples++;
+        else if (result == 4)  team.lineup[team.lineupPos].HRs++;
+        team.lineup[team.lineupPos].atBats++;
     }
 }

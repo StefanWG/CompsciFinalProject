@@ -538,7 +538,7 @@ public class Display {
         int AtBats = 0;
         for (int i = 0; i < 9; i++) {
             Player p = team.lineup[i];
-            int hits = p.Singles + p.Doubles + p.Triples + p.HRs;
+            int hits = p.singles + p.doubles + p.triples + p.HRs;
 
             RBIs += p.RBIs;
             HRs += p.HRs;

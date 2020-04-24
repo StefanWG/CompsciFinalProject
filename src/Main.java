@@ -35,6 +35,7 @@ public class Main {
     }
 
     public void endGame() {
+        game.gameOver = true;
         frame.setContentPane(new GameOver(this));
         this.frame.pack();
         this.frame.validate();
@@ -42,6 +43,7 @@ public class Main {
     }
 
     public void pickNewTeam() {
+        loading = new Loading(this);
         frame.setContentPane(loading);
         this.frame.pack();
         this.frame.validate();

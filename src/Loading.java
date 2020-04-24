@@ -13,12 +13,12 @@ public class Loading extends JPanel {
     BufferedImage[] imagesArray = {image1, image2, image3,Display.grass(), image2, image3};
     JLabel label = new JLabel("Please Select a Team");
 
-    static Team[] teams  = new Team[] {new Team("Rosters/HoustonAstronauts.txt"),
-            new Team("Rosters/MiamiSwordfish.txt"),
-            new Team("Rosters/NewyorkAmericans.txt"),
-            new Team("Rosters/ColoradoRocks.txt"),
-            new Team("Rosters/BostonRedsocks.txt"),
-            new Team("Rosters/LosangelesAngles.txt")};
+    static Team[] teams  = new Team[] {new Team("Rosters/HoustonAstronauts.txt", true),
+            new Team("Rosters/MiamiSwordfish.txt",true),
+            new Team("Rosters/NewyorkAmericans.txt",true),
+            new Team("Rosters/ColoradoRocks.txt",true),
+            new Team("Rosters/BostonRedsocks.txt",true),
+            new Team("Rosters/LosangelesAngles.txt",true)};
 
 
     public Loading(Main main) {

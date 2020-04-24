@@ -5,9 +5,9 @@ public class Player {
     int powerRating;
     int contactRating;
     int atBats;
-    int Singles;
-    int Doubles;
-    int Triples;
+    int singles;
+    int doubles;
+    int triples;
     int HRs;
     int RBIs;
 
@@ -18,19 +18,12 @@ public class Player {
         powerRating = PR;
         contactRating = CR;
         atBats = 0;
-        Singles = 0;
-        Doubles = 0;
-        Triples = 0;
+        singles = 0;
+        doubles = 0;
+        triples = 0;
         HRs = 0;
         RBIs= 0;
     }
-
-
-
-    public void addRBIs(int n){
-        RBIs = RBIs + n;
-    }
-
 
     @Override
     public String toString() {
@@ -42,10 +35,3 @@ public class Player {
         return str;
     }
 }
-
-
-// TO DO have an other class that extends JPanel
-// this is to have an intro screen where u can choose the planel
-// can include pictures that are not copyrighted as character models
-// move the pick player method to this new class
-

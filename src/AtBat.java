@@ -4,23 +4,23 @@ public class AtBat {
     private int powerResult;
     private Meter contactMeter;
     private Meter powerMeter;
-    private int currentInning;
     public Game g;
     public Player player;
+    public Team team;
 
 
-    public AtBat(int inning, Game g, Player p) {
+    public AtBat(Game g, Team t) {
+        team = t;
         this.g = g;
-        player = p;
+        player = team.lineup[team.lineupPos%9];
         contactResult = -1;
         powerResult = -1;
-        currentInning = inning;
-        contactMeter = new Meter(175,640, this.g, p.contactRating, "C"); //Change location
-        powerMeter = new Meter(175,730, this.g, p.powerRating, "P"); //Change location
+        contactMeter = new Meter(175,640, this.g, player.contactRating, "C"); //Change location
+        powerMeter = new Meter(175,730, this.g, player.powerRating, "P"); //Change location
     }
 
     public int runAtBat() {
-        if (currentInning % 2 == 0) {
+        if (team.humanPlayer) {
             //User At Bat
             contactResult = contactMeter.runMeter();
             powerResult = powerMeter.runMeter();

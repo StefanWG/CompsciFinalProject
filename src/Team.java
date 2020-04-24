@@ -7,14 +7,13 @@ import java.io.FileNotFoundException;
 
 public class Team {
     String teamName;
-    //9 player team
     public Player[] lineup  = new Player[9];
-    //will keep track of where in the lineup we are
     int lineupPos;
-    //home team (our team)
     Color textColor;
+    final boolean humanPlayer;
 
-    public Team(String fileName){
+    public Team(String fileName, boolean humanPlayer){
+        this.humanPlayer = humanPlayer;
         initializeTeam(fileName);
         lineupPos = 0;
     }
@@ -83,6 +82,17 @@ public class Team {
             count++;
         }
         return toReturn.toString();
+    }
+
+    public void resetPlayerStats() {
+        for (int i = 0; i < lineup.length; i++) {
+            lineup[i].atBats = 0;
+            lineup[i].HRs = 0;
+            lineup[i].singles = 0;
+            lineup[i].doubles = 0;
+            lineup[i].triples = 0;
+            lineup[i].RBIs = 0;
+        }
     }
 
     public String headerString() {
