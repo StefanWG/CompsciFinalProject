@@ -65,6 +65,13 @@ public class Game extends JPanel  {
                 if (scoreboard.halfInning % 2 == 0 && scoreboard.outs == 2) charge.play();
                 else charge.stop();
                 int order = team.lineupPos % 9;
+                int before;
+                if (team==awayTeam) {
+                    before = scoreboard.awayRuns;
+                }
+                else{
+                    before = scoreboard.homeRuns;
+                }
                 atBat = new AtBat(scoreboard.halfInning, this, team.lineup[order]);
                 int result = atBat.runAtBat();
                 //add one to a players atbat since they just batted
@@ -75,6 +82,15 @@ public class Game extends JPanel  {
                 team.lineupPos++;
 
                 scoreboard.updateBases(result);
+                int after;
+                if (team==awayTeam) {
+                    after = scoreboard.awayRuns;
+                }
+                else{
+                     after = scoreboard.homeRuns;
+                }
+                int RBI = after - before;
+                team.lineup[order].addRBIs(RBI);
                 resultText = Display.outcomeText(result);
                 repaint();
                 try {

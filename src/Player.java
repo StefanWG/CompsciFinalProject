@@ -9,6 +9,7 @@ public class Player {
     int Doubles;
     int Triples;
     int HRs;
+    int RBIs;
 
     public Player (int a, String t, int PR, String n, int CR) {
         name = n;
@@ -21,6 +22,7 @@ public class Player {
         Doubles = 0;
         Triples = 0;
         HRs = 0;
+        RBIs= 0;
     }
 
     public Player (String teamName) {
@@ -34,6 +36,11 @@ public class Player {
         Doubles = 0;
         Triples = 0;
         HRs = 0;
+        RBIs = 0;
+    }
+
+    public void addRBIs(int n){
+        RBIs = RBIs + n;
     }
 
     public String randomName() {
