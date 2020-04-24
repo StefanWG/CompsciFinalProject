@@ -18,26 +18,6 @@ public class Team {
         initializeTeam(fileName);
         lineupPos = 0;
     }
-    //away team (randomized)
-    public Team(){
-        lineupPos=0;
-        lineup = new Player[9];
-        //initialize the team with all random players
-        initializeRandTeam();
-        teamName = randTeamName();
-        textColor = new Color(0,102,0);
-    }
-
-    public void initializeRandTeam(){
-        for(int i = 0; i<lineup.length; i++){
-            lineup[i] = new Player(teamName);
-        }
-    }
-
-    public String randTeamName(){
-        String[] names = {"Hornets", "Hawks", "Mustangs", "Rams", "Lions", "Cowboys"};
-        return names[(int)(Math.random() * names.length)];
-    }
 
     public void initializeTeam(String filePath) {
         //TeamData is the text file name where the data for each team is

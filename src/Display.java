@@ -354,70 +354,6 @@ public class Display {
         return dimg;
     }
 
-    public static BufferedImage characterJosh() {
-        BufferedImage character = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = character.createGraphics();
-        g.setColor(Color.red);
-        g.fillRect(270, 450, 70, 300);
-        g.fillRect(370, 450, 70, 300);
-        g.setColor(Color.blue.brighter());
-        g.fillRect(230, 120, 225, 350);
-        g.setColor(Color.red.darker());
-        g.fillRect(300, 100, 100, 100);
-        g.setColor(Color.blue);
-        g.fillRect(310, 125, 25, 25);
-        g.fillRect(360, 125, 25, 25);
-
-        return character;
-    }
-
-    public static BufferedImage characterStefan() {
-        BufferedImage character2 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = character2.createGraphics();
-        g.setColor(Color.blue);
-        g.fillOval(250, 400, 150, 300);
-        g.fillOval(400, 400, 150, 300);
-        g.setStroke(new BasicStroke(15));
-        g.setColor(Color.black);
-        g.drawOval(250, 400, 150, 300);
-        g.drawOval(400, 400, 150, 300);
-
-
-        g.setColor(Color.BLUE.darker());
-        g.fillOval(225, 120, 350, 400);
-        g.setColor(Color.black);
-        g.drawOval(225, 120, 350, 400);
-
-        g.setColor(Color.BLUE);
-        g.fillOval(325, 50, 150, 100);
-        g.setColor(Color.black);
-        g.drawOval(325, 50, 150, 100);
-
-        g.setStroke(new BasicStroke(4));
-        for (int i = 0; i < 4; i++) {
-            g.setColor(Color.cyan);
-            g.fillOval(380, 200 + i * 60, 40, 40);
-            g.setColor(Color.black);
-            g.drawOval(380, 200 + i * 60, 40, 40);
-        }
-
-        g.setColor(Color.green.darker());
-        g.fillOval(360, 85, 30, 30);
-        g.fillOval(410, 85, 30, 30);
-        g.setColor(Color.black);
-        g.drawOval(360, 85, 30, 30);
-        g.drawOval(410, 85, 30, 30);
-
-        return character2;
-    }
-
-    public static BufferedImage characterRohil() {
-        BufferedImage character3 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = character3.createGraphics();
-        //to do make a character for rohil
-        return character3;
-    }
-
     public static BufferedImage lineupCard(Team team) {
         BufferedImage image = new BufferedImage(533, 800, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
@@ -520,7 +456,7 @@ public class Display {
         String rules = "Press Space Bar anytime along the meter to choose an Accuracy Rating. " +
                 "\n Press space bar for the second meter to choose the Power Level." +
                 "\n The closer to the middle the better (Tip: Aim for the Green!!)";
-        
+
         Font font = new Font("Boulder", Font.PLAIN, 23);
         g.setFont(font);
         ArrayList<String> splitString = new ArrayList<>(Arrays.asList(rules.split(" ")));
@@ -568,6 +504,77 @@ public class Display {
             writeText(String.valueOf(player.powerRating), g, 150, 190, 80 + 150 * i, 120 + 150 * i, color, "Boulder");
         }
         return image;
+    }
+
+    public static BufferedImage boxScore(Team team) {
+        BufferedImage image = new BufferedImage(450, 700, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = image.createGraphics();
+        Color textColor = team.textColor.darker();
+
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(0, 0, image.getWidth(), image.getHeight(), 0, 0));
+        g.setColor(Color.BLACK);
+        g.fill(new RoundRectangle2D.Double(50, 30, image.getWidth() - 100, 60, 20, 20)); //Name
+        writeText(team.teamName.toUpperCase(), g, 50, image.getWidth() - 50, 23, 90, textColor, "Boulder");
+
+        g.setColor(Color.black);
+        g.fill(new RoundRectangle2D.Double(15, 120, 200, 40, 20, 20)); //Name
+        g.fill(new RoundRectangle2D.Double(230, 120, 40, 40, 20, 20)); //AB
+        g.fill(new RoundRectangle2D.Double(285, 120, 40, 40, 20, 20)); //H
+        g.fill(new RoundRectangle2D.Double(340, 120, 40, 40, 20, 20)); //RBI
+        g.fill(new RoundRectangle2D.Double(395, 120, 40, 40, 20, 20)); //HR
+
+        writeText("NAME", g, 15, 215, 120, 160, textColor, "Boulder"); //Name
+        writeText("AB", g, 230, 270, 120, 160, textColor, "Boulder"); //AB
+        writeText("H", g, 285, 325, 120, 160, textColor, "Boulder"); //H
+        writeText("RBI", g, 340, 380, 120, 160, textColor, "Boulder"); //RBI
+        writeText("HR", g, 395, 435, 120, 160, textColor, "Boulder"); //HR
+
+
+        //Players
+        int totalHits = 0;
+        int RBIs = 0;
+        int HRs = 0;
+        int AtBats = 0;
+        for (int i = 0; i < 9; i++) {
+            Player p = team.lineup[i];
+            int hits = p.Singles + p.Doubles + p.Triples + p.HRs;
+
+            RBIs += p.RBIs;
+            HRs += p.HRs;
+            totalHits += hits;
+            AtBats += p.atBats;
+
+            g.setColor(Color.black);
+            g.fill(new RoundRectangle2D.Double(15, 190+i*50, 200, 40, 20, 20)); //Name
+            g.fill(new RoundRectangle2D.Double(230, 190+i*50, 40, 40, 20, 20)); //AB
+            g.fill(new RoundRectangle2D.Double(285, 190+i*50, 40, 40, 20, 20)); //H
+            g.fill(new RoundRectangle2D.Double(340, 190+i*50, 40, 40, 20, 20)); //RBI
+            g.fill(new RoundRectangle2D.Double(395, 190+i*50, 40, 40, 20, 20)); //HR
+
+            writeText(p.name, g, 15, 215, 190+i*50, 230+i*50, textColor, "Boulder"); //Name
+            writeText(String.valueOf(p.atBats), g, 230, 270, 190+i*50, 230+i*50, textColor, "Boulder"); //AB
+            writeText(String.valueOf(hits), g, 285, 325, 190+i*50, 230+i*50, textColor, "Boulder"); //H
+            writeText(String.valueOf(p.RBIs), g, 340, 380, 190+i*50, 230+i*50, textColor, "Boulder"); //RBI
+            writeText(String.valueOf(p.HRs), g, 395, 435, 190+i*50, 230+i*50, textColor, "Boulder"); //HR
+        }
+
+        g.setColor(Color.black);
+        g.fill(new RoundRectangle2D.Double(15, 640, 200, 40, 20, 20)); //Name
+        g.fill(new RoundRectangle2D.Double(230, 640, 40, 40, 20, 20)); //AB
+        g.fill(new RoundRectangle2D.Double(285, 640, 40, 40, 20, 20)); //H
+        g.fill(new RoundRectangle2D.Double(340, 640, 40, 40, 20, 20)); //RBI
+        g.fill(new RoundRectangle2D.Double(395, 640, 40, 40, 20, 20)); //HR
+
+        writeText("Totals", g, 15, 215, 640, 680, textColor.brighter(), "Boulder"); //Name
+        writeText(String.valueOf(AtBats), g, 230, 270, 640, 680, textColor.brighter(), "Boulder"); //AB
+        writeText(String.valueOf(totalHits), g, 285, 325, 640, 680, textColor.brighter(), "Boulder"); //H
+        writeText(String.valueOf(RBIs), g, 340, 380, 640, 680, textColor.brighter(), "Boulder"); //RBI
+        writeText(String.valueOf(HRs), g, 395, 435, 640, 680, textColor.brighter(), "Boulder"); //HR
+
+        image = makeTransparent(Color.lightGray, image);
+        return image;
+
     }
 
 }

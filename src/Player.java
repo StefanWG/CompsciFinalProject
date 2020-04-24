@@ -25,37 +25,12 @@ public class Player {
         RBIs= 0;
     }
 
-    public Player (String teamName) {
-        name = randomName();
-        age = randomInt(18,40);
-        team = teamName;
-        powerRating = randomInt(60,100);
-        contactRating = randomInt(60,100);
-        atBats = 0;
-        Singles = 0;
-        Doubles = 0;
-        Triples = 0;
-        HRs = 0;
-        RBIs = 0;
-    }
+
 
     public void addRBIs(int n){
         RBIs = RBIs + n;
     }
 
-    public String randomName() {
-        String[] names = {"James", "Martin", "Nate", "Sirus", "Beyonce", "Alex", "Sasha"};
-        return names[(int)(Math.random() * names.length)];
-    }
-
-    public String randomTeam(){
-        String[] teams = {"ASTRONAUTS", "RED SOCKS", "MARLINS", "PIRATES", "RANGERS"};
-        return teams[(int)(Math.random() * teams.length)];
-    }
-
-    public int randomInt(int min, int max ){
-        return ((int) (min + (Math.random() * (max-min))));
-    }
 
     @Override
     public String toString() {

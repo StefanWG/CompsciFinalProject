@@ -1,8 +1,9 @@
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 //TODO end/ pause game what happens?
 //TODO sim other games in season
-public class SeasonMode {
+public class SeasonMode extends JPanel {
     Team team;
     int gamesPlayed = 0;
     int wins = 0;
@@ -13,11 +14,11 @@ public class SeasonMode {
     public SeasonMode(Team team, Main main) {
         this.main = main;
         this.team = team;
-        readInSchedule();
+        createSchedule();
         System.out.println(schedule);
     }
 
-    private void readInSchedule() {
+    private void createSchedule() {
         File rosters = new File("Rosters");
         File[] list = rosters.listFiles();
         if (list != null) {
@@ -36,6 +37,8 @@ public class SeasonMode {
 
     public void playSeasonGame() {
         schedule.get(gamesPlayed).playSeasonGame();
+        if (schedule.get(gamesPlayed).homeRuns > schedule.get(gamesPlayed).awayRuns) wins++;
+        else loses++;
         gamesPlayed++;
     }
 

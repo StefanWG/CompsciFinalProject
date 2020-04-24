@@ -6,11 +6,11 @@ public class Loading extends JPanel {
     public Team team;
     final int WIDTH = 900;
     final int HEIGHT = 780;
-    BufferedImage image1 = Display.characterJosh();
-    BufferedImage image2 = Display.characterStefan();
-    BufferedImage image3 = Display.characterRohil();
+    BufferedImage image1 = TeamImages.astronauts();
+    BufferedImage image2 = TeamImages.characterStefan();
+    BufferedImage image3 = TeamImages.characterRohil();
 
-    BufferedImage[] imagesArray = {image1, image2, image3,image1, image2, image3};
+    BufferedImage[] imagesArray = {image1, image2, image3,Display.grass(), image2, image3};
     JLabel label = new JLabel("Please Select a Team");
 
     static Team[] teams  = new Team[] {new Team("Rosters/HoustonAstronauts.txt"),
