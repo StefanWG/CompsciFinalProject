@@ -11,6 +11,7 @@ public class Game extends JPanel  {
     final int HEIGHT = 780;
     final int MAX_INNINGS = 18;
     boolean rules = false;
+    boolean gameOver = false;
     BufferedImage fieldDrawing = Display.drawField();
     BufferedImage resultText = Display.outcomeText(7);
     Scoreboard scoreboard;
@@ -49,6 +50,7 @@ public class Game extends JPanel  {
         //TODO Extra innings
         //Sims half inning when
         while (!gameOver()) {
+            if (gameOver) break;
             repaint();
             try {
                 Thread.sleep(1000);
