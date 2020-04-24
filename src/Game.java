@@ -65,6 +65,7 @@ public class Game extends JPanel  {
                 if (scoreboard.halfInning % 2 == 0 && scoreboard.outs == 2) charge.play();
                 else charge.stop();
                 int order = team.lineupPos % 9;
+                //used for RBI calculation
                 int before;
                 if (team==awayTeam) {
                     before = scoreboard.awayRuns;
@@ -82,6 +83,7 @@ public class Game extends JPanel  {
                 team.lineupPos++;
 
                 scoreboard.updateBases(result);
+                //usd for RBI calculation
                 int after;
                 if (team==awayTeam) {
                     after = scoreboard.awayRuns;
@@ -89,7 +91,9 @@ public class Game extends JPanel  {
                 else{
                      after = scoreboard.homeRuns;
                 }
+                //tells us how many RBI's were scored
                 int RBI = after - before;
+                //adds RBI's to the players total
                 team.lineup[order].addRBIs(RBI);
                 resultText = Display.outcomeText(result);
                 repaint();
