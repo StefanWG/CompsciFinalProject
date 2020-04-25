@@ -577,6 +577,40 @@ public class Display {
 
     }
 
+    public static BufferedImage scheduleBox(SeasonGame s) {
+        BufferedImage image = new BufferedImage(175, 175, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = image.createGraphics();
+
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(0, 0, image.getWidth(), image.getHeight(), 0, 0));
+        g.setColor(Color.BLACK);
+        g.fill(new RoundRectangle2D.Double(5, 20, image.getWidth() - 55, 20, 20, 20)); //AwayName
+        g.fill(new RoundRectangle2D.Double(5, 50, image.getWidth() - 55, 20, 20, 20)); //HomeName
+        g.fill(new RoundRectangle2D.Double(130, 20, 40, 20, 20, 20)); //AwayScore
+        g.fill(new RoundRectangle2D.Double(130, 50, 40, 20, 20, 20)); //HomeScore
+
+        writeText(s.awayTeam.teamName.toUpperCase(), g, 5, image.getWidth() - 50, 20, 40, s.awayTeam.textColor, "Boulder"); //AwayName
+        writeText(s.homeTeam.teamName.toUpperCase(), g, 5, image.getWidth() - 50, 50, 70, s.homeTeam.textColor, "Boulder"); //HomeName
+
+        if (s.played) {
+            writeText(String.valueOf(s.awayRuns), g, 130, 170, 20, 40, s.awayTeam.textColor, "Boulder"); //AwayScore
+            writeText(String.valueOf(s.homeRuns), g, 130, 170, 50, 70, s.homeTeam.textColor, "Boulder"); //HomeScore
+        } else {
+            g.setColor(Color.black);
+            g.fillRect(50,115,75, 10);
+        }
+        if (s.played && s.homeRuns > s.awayRuns) {
+            if (s.season.team.teamName.equals(s.homeTeam)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
+            else writeText("L", g, 50, image.getWidth() - 50, 80,160, Color.red.darker(), "Impact");
+        } else if (s.played && s.awayRuns > s.homeRuns) {
+            if (s.season.team.teamName.equals(s.awayTeam)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
+            else writeText("L", g, 50, image.getWidth() - 50, 80,160, Color.red.darker(), "Impact");
+        }
+
+        return image;
+
+    }
+
 }
 
 //class Ball {

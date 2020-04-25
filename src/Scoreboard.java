@@ -38,7 +38,7 @@ public class Scoreboard {
         int inning = (halfInning - 1) / 2;
         //this is the home team
         if (this.halfInning % 2 == 0) {
-            this.homeTeam.lineup[homeTeam.lineupPos].RBIs += numRuns;
+            this.homeTeam.lineup[homeTeam.lineupPos%9].RBIs += numRuns;
             this.homeRuns += numRuns;
             int runs = this.homeRunsInning.get(inning);
             this.homeRunsInning.remove(inning);
@@ -46,7 +46,7 @@ public class Scoreboard {
         }
         //this is the away team
         else {
-            this.awayTeam.lineup[awayTeam.lineupPos].RBIs += numRuns;
+            this.awayTeam.lineup[awayTeam.lineupPos%9].RBIs += numRuns;
             this.awayRuns += numRuns;
             int runs = this.awayRunsInning.get(inning);
             this.awayRunsInning.remove(inning);

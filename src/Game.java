@@ -87,7 +87,7 @@ public class Game extends JPanel  {
                 if (scoreboard.halfInning%2 == 1) team = awayTeam;
                 else team = homeTeam;
 
-                if (scoreboard.halfInning % 2 == 0 && scoreboard.outs == 2) charge.play();
+                if (team.humanPlayer && scoreboard.outs == 2) charge.play();
                 else charge.stop();
 
                 atBat = new AtBat(this, team);
@@ -140,10 +140,10 @@ public class Game extends JPanel  {
         Team team;
         if (scoreboard.halfInning%2 == 1) team = awayTeam;
         else team = homeTeam;
-        if (result==1) team.lineup[team.lineupPos].singles++;
-        else if (result == 2) team.lineup[team.lineupPos].doubles++;
-        else if (result == 3) team.lineup[team.lineupPos].triples++;
-        else if (result == 4)  team.lineup[team.lineupPos].HRs++;
-        team.lineup[team.lineupPos].atBats++;
+        if (result==1) team.lineup[team.lineupPos%9].singles++;
+        else if (result == 2) team.lineup[team.lineupPos%9].doubles++;
+        else if (result == 3) team.lineup[team.lineupPos%9].triples++;
+        else if (result == 4)  team.lineup[team.lineupPos%9].HRs++;
+        team.lineup[team.lineupPos%9].atBats++;
     }
 }

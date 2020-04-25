@@ -6,15 +6,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Team {
+    String filePath;
     String teamName;
     public Player[] lineup  = new Player[9];
     int lineupPos;
     Color textColor;
     final boolean humanPlayer;
 
-    public Team(String fileName, boolean humanPlayer){
+    public Team(String filePath, boolean humanPlayer){
+        this.filePath = filePath;
         this.humanPlayer = humanPlayer;
-        initializeTeam(fileName);
+        initializeTeam(filePath);
         lineupPos = 0;
     }
 
