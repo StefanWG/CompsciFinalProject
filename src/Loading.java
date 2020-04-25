@@ -9,9 +9,9 @@ public class Loading extends JPanel {
     BufferedImage astronauts = TeamImages.astronauts();
     BufferedImage americans = TeamImages.characterStefan();
     BufferedImage redSocks = TeamImages.redSocks();
-    BufferedImage rocks = TeamImages.Rocks();
+    BufferedImage Mountains = TeamImages.Mountains();
 
-    BufferedImage[] imagesArray = {astronauts, rocks, Display.dirt(), rocks, redSocks, Display.grass()};
+    BufferedImage[] imagesArray = {astronauts, Mountains, Display.dirt(), Mountains, redSocks, Display.grass()};
     JLabel label = new JLabel("Please Select a Team");
 
     static Team[] teams  = new Team[] {new Team("Rosters/HoustonAstronauts.txt", true),

@@ -58,35 +58,31 @@ public class SeasonMode extends JPanel {
                 if (!t.teamName.equals(team.teamName)) teams.add(t);
             }
         }
-        while (!((Math.log(teams.size()) / Math.log(2)) % 1 == 0)) {
+        if (teams.size() / 2 == 1) {
             teams.add(new SeasonTeam("Rosters/emptyTeam.txt", false));
         }
     }
 
     private void createSchedule(ArrayList<SeasonTeam> teams) {
-        if (teams.size() == 2) {
-            teams.get(0).schedule.add(new SeasonGame(this, teams.get(0), teams.get(1), main));
-            teams.get(1).schedule.add(new SeasonGame(this, teams.get(0), teams.get(1), main));
-            teams.get(0).schedule.add(new SeasonGame(this, teams.get(1), teams.get(0), main));
-            teams.get(1).schedule.add(new SeasonGame(this, teams.get(1), teams.get(0), main));
-        } else {
-            ArrayList<SeasonTeam> teams1 = new ArrayList<>();
-            ArrayList<SeasonTeam> teams2 = new ArrayList<>();
-            for (int i = 0; i < teams.size() / 2; i++) {
-                teams1.add(teams.get(i));
-                teams2.add(teams.get(i + teams.size() / 2));
-            }
+        int[] arr = new int[teams.size()];
+        for (int i = 0; i < teams.size(); i++) {
+            arr[i] = i;
+        }
+        int size = arr.length;
 
-            for (SeasonTeam seasonTeam1 : teams1) {
-                for (SeasonTeam seasonTeam2 : teams2) {
-                    seasonTeam1.schedule.add(new SeasonGame(this, seasonTeam1, seasonTeam2, main));
-                    seasonTeam2.schedule.add(new SeasonGame(this, seasonTeam1, seasonTeam2, main));
-                    seasonTeam1.schedule.add(new SeasonGame(this, seasonTeam2, seasonTeam1, main));
-                    seasonTeam2.schedule.add(new SeasonGame(this, seasonTeam2, seasonTeam1, main));
-                }
+        for (int j = 0; j < size - 1; j++) {
+            //TODO arrr[i] for all
+            new SeasonGame(this, teams.get(arr[0]), teams.get(1), main);
+            new SeasonGame(this, teams.get(1), teams.get(0), main);
+            for (int i = 2; i < size / 2 + 1; i++) {
+                new SeasonGame(this, teams.get(i), teams.get(size+1-i), main);
+                new SeasonGame(this, teams.get(size+1-i), teams.get(i), main);
             }
-            createSchedule(teams1);
-            createSchedule(teams2);
+            int temp = arr[1];
+            for (int i = 1; i < size-1; i++) {
+                arr[i] = arr[i+1];
+            }
+            arr[size-1] = temp;
         }
     }
 
@@ -135,6 +131,8 @@ class SeasonGame {
         this.homeTeam = awayTeam;
         this.awayTeam = homeTeam;
         this.main = main;
+        awayTeam.schedule.add(this);
+        homeTeam.schedule.add(this);
     }
 
     public void endGame() {

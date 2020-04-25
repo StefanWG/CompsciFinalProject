@@ -85,18 +85,45 @@ public class TeamImages {
         return character3;
     }
 
-    public static BufferedImage Rocks() {
+    public static BufferedImage Mountains() {
         BufferedImage character3 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = character3.createGraphics();
         Random rand = new Random();
-        g.setColor(Color.GREEN.darker());
-        g.fillRect(0, 600, 1000, 400);
-        g.setColor(Color.darkGray);
-        for (int i = 0; i < 800; i += 50){
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1600, 1600);
+        g.setColor(Color.GRAY);
+        for (int i = 0; i < 800; i += 10){
             int width = rand.nextInt(170);
             int height = rand.nextInt(170);
-            g.fillOval(i, 700-height, width, height);
+            g.fillOval(i, 650-height, width, height);
         }
+        for(int x = 100; x<700; x+=10){
+            int width = rand.nextInt(170);
+            int height = rand.nextInt(170);
+            g.fillOval(x, 550-height, width, height);
+        }
+        for(int z = 200; z<600; z+=10){
+            int width = rand.nextInt(170);
+            int height = rand.nextInt(170);
+            g.fillOval(z, 450-height, width, height);
+        }
+        for(int y = 300; y<500; y+=10){
+            int width = rand.nextInt(170);
+            int height = rand.nextInt(170);
+            g.fillOval(y, 350-height, width, height);
+        }
+        for(int x = 390; x<410; x+=1){
+            int width = rand.nextInt(170);
+            int height = rand.nextInt(170);
+            g.fillOval(x, 250-height, width, height);
+        }
+        g.setColor(Color.GREEN.darker());
+        g.fillRect(0, 600, 1000, 400);
+        Font f = new Font("Boulder", 1, 300);
+        g.setFont(f);
+        g.setColor(new Color(102, 0, 153));
+        g.drawString("C", 70, 240);
+        g.drawString("M", 550, 240);
             return character3;
     }
 }
