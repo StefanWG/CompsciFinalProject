@@ -72,11 +72,11 @@ public class SeasonMode extends JPanel {
 
         for (int j = 0; j < size - 1; j++) {
             //TODO arrr[i] for all
-            new SeasonGame(this, teams.get(arr[0]), teams.get(1), main);
-            new SeasonGame(this, teams.get(1), teams.get(0), main);
+            new SeasonGame(this, teams.get(arr[0]), teams.get(arr[1]), main);
+            new SeasonGame(this, teams.get(arr[1]), teams.get(arr[0]), main);
             for (int i = 2; i < size / 2 + 1; i++) {
-                new SeasonGame(this, teams.get(i), teams.get(size+1-i), main);
-                new SeasonGame(this, teams.get(size+1-i), teams.get(i), main);
+                new SeasonGame(this, teams.get(arr[i]), teams.get(arr[size+1-i]), main);
+                new SeasonGame(this, teams.get(arr[size+1-i]), teams.get(arr[i]), main);
             }
             int temp = arr[1];
             for (int i = 1; i < size-1; i++) {
