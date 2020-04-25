@@ -93,7 +93,9 @@ public class TeamImages {
         g.fillRect(0, 600, 1000, 400);
         g.setColor(Color.darkGray);
         for (int i = 0; i < 800; i += 50){
-            g.fillOval(i, 550-i, rand.nextInt(170), rand.nextInt(170));
+            int width = rand.nextInt(170);
+            int height = rand.nextInt(170);
+            g.fillOval(i, 700-height, width, height);
         }
             return character3;
     }
