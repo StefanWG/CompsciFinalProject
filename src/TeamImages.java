@@ -1,21 +1,30 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class TeamImages {
     public static BufferedImage astronauts() {
         BufferedImage character = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = character.createGraphics();
-        g.setColor(Color.red);
-        g.fillRect(270, 450, 70, 300);
-        g.fillRect(370, 450, 70, 300);
-        g.setColor(Color.blue.brighter());
-        g.fillRect(230, 120, 225, 350);
-        g.setColor(Color.red.darker());
-        g.fillRect(300, 100, 100, 100);
-        g.setColor(Color.blue);
-        g.fillRect(310, 125, 25, 25);
-        g.fillRect(360, 125, 25, 25);
-
+        g.setColor(Color.BLUE.darker());
+        g.fillRect(0, 0, 1600, 1600);
+        g.setColor(Color.ORANGE);
+        g.setStroke(new BasicStroke(10));
+        g.drawOval(0, 0, 800, 800);
+        g.fillOval(200, 175, 450, 450);
+        g.setStroke(new BasicStroke(50));
+        g.drawLine(425, 200, 425, 50);
+        g.drawLine(425, 200, 425, 750);
+        g.drawLine(425, 400, 50, 400);
+        g.drawLine(425, 400, 750, 400);
+        g.drawLine(400, 400, 150, 150);
+        g.drawLine(400, 400, 650, 150);
+        g.drawLine(400, 400, 150, 650);
+        g.drawLine(400, 400, 650, 650);
+        Font f = new Font("Boulder", 1, 650);
+        g.setFont(f);
+        g.setColor(Color.BLACK);
+        g.drawString("A", 190, 600);
         return character;
     }
 
@@ -59,10 +68,33 @@ public class TeamImages {
         return character2;
     }
 
-    public static BufferedImage characterRohil() {
+    public static BufferedImage redSocks() {
         BufferedImage character3 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = character3.createGraphics();
-        //to do make a character for rohil
+        g.setColor(Color.RED);
+        g.fillOval(100, 20, 300, 780);
+        g.fillRect(150, 20, 200, 100);
+        g.fillOval(145, 550, 650, 250);
+        g.setColor(Color.WHITE);
+        g.setStroke(new BasicStroke(15));
+        for (int i = 0; i < 160; i = i + 30) {
+            g.drawLine(170 + i, 20, 170 + i, 120);
+        }
+        g.fillOval(185, 680, 150, 100);
+        g.fillOval(680, 610, 100, 130);
         return character3;
+    }
+
+    public static BufferedImage Rocks() {
+        BufferedImage character3 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = character3.createGraphics();
+        Random rand = new Random();
+        g.setColor(Color.GREEN.darker());
+        g.fillRect(0, 600, 1000, 400);
+        g.setColor(Color.darkGray);
+        for (int i = 0; i < 800; i += 50){
+            g.fillOval(i, 550-i, rand.nextInt(170), rand.nextInt(170));
+        }
+            return character3;
     }
 }
