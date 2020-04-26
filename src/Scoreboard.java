@@ -180,8 +180,8 @@ public class Scoreboard {
         }
     }
 
-    public void updateBases(int n) {
-        hitball.play();
+    public void updateBases(int n, boolean human) {
+        if (human) hitball.play();
         switch (n) {
             //out
             case 0:

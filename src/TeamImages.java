@@ -85,7 +85,7 @@ public class TeamImages {
         return character3;
     }
 
-    public static BufferedImage Mountains() {
+    public static BufferedImage mountains() {
         BufferedImage character3 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = character3.createGraphics();
         Random rand = new Random();

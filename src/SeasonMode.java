@@ -2,50 +2,90 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 //TODO end/ pause game what happens?
 public class SeasonMode extends JPanel {
     SeasonTeam team;
-    int gamesPlayed = 0;
-    int wins = 0;
-    int loses = 0;
     Main main;
     ArrayList<SeasonTeam> teams = new ArrayList<>();
+    JLabel standingsLabel = new JLabel();
     ArrayList<JLabel> labels = new ArrayList<>();
+    int gameNumber = 0;
 
-    public SeasonMode(Team team, Main main) {
+    public SeasonMode(Team user, Main main) {
         setPreferredSize(new Dimension(900, 780));
 
         this.main = main;
-        this.team = new SeasonTeam(team);
+        this.team = new SeasonTeam(user);
         createTeams();
         createSchedule(teams);
 
         JPanel schedulePanel = new JPanel();
-        schedulePanel.setLayout(new GridLayout(0, 5, 5, 5));
+        schedulePanel.setLayout(new GridLayout(0, 3, 3, 3));
 
         JScrollPane scrollPane = new JScrollPane(schedulePanel);
+        scrollPane.setBackground(Color.lightGray);
+        scrollPane.setOpaque(true);
 
         for (SeasonGame s : this.team.schedule) {
-            if (!s.awayTeam.teamName.equals("Empty Team") && !s.homeTeam.teamName.equals("Empty Team")) {
-                JLabel label = new JLabel(new ImageIcon(Display.scheduleBox(s)));
-                labels.add(label);
-                schedulePanel.add(label);
-            }
+            BufferedImage image = Display.resize(Display.scheduleBox(s), 159, 159);
+            JLabel label = new JLabel(new ImageIcon(image));
+            labels.add(label);
+            schedulePanel.add(label);
         }
 
-        this.add(scrollPane);
+        sortStandings();
+        JScrollPane standingsPane = new JScrollPane(standingsLabel);
+        standingsLabel.setIcon(new ImageIcon(Display.seasonModeStandings(teams)));
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, standingsPane,scrollPane);
+        splitPane.setDividerLocation(395);
+        splitPane.setDividerSize(0);
+        splitPane.setPreferredSize(new Dimension(900,700));
+        this.add(splitPane);
 
         JButton playGame = new JButton("Play Next Game");
         playGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                playSeasonGame();
+                team.schedule.get(gameNumber).playSeasonGame(true);
+            }
+        });
+
+        JButton simGame = new JButton("Sim Next Game");
+        simGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                team.schedule.get(gameNumber).playSeasonGame(false);
             }
         });
         this.add(playGame);
+        this.add(simGame);
+    }
+
+    public void simGames() {
+        for (SeasonTeam t : teams) {
+            if (!t.schedule.get(gameNumber).played) t.schedule.get(gameNumber).playSeasonGame(false);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        gameNumber++;
+    }
+
+    public void sortStandings() {
+        for (int j = 0; j < teams.size() - 1; j++) {
+            for (int i = teams.size() - 1; i > 0; i--) {
+                if (teams.get(i).wins > teams.get(i - 1).wins) Collections.swap(teams, i, i - 1);
+            }
+        }
     }
 
     private void createTeams() {
@@ -58,9 +98,6 @@ public class SeasonMode extends JPanel {
                 if (!t.teamName.equals(team.teamName)) teams.add(t);
             }
         }
-        if (teams.size() / 2 == 1) {
-            teams.add(new SeasonTeam("Rosters/emptyTeam.txt", false));
-        }
     }
 
     private void createSchedule(ArrayList<SeasonTeam> teams) {
@@ -71,26 +108,18 @@ public class SeasonMode extends JPanel {
         int size = arr.length;
 
         for (int j = 0; j < size - 1; j++) {
-            //TODO arrr[i] for all
-            new SeasonGame(this, teams.get(arr[0]), teams.get(arr[1]), main);
-            new SeasonGame(this, teams.get(arr[1]), teams.get(arr[0]), main);
+            new SeasonGame(this, teams.get(arr[0]), teams.get(arr[1]), main, j + 1);
+            new SeasonGame(this, teams.get(arr[1]), teams.get(arr[0]), main, j + 1);
             for (int i = 2; i < size / 2 + 1; i++) {
-                new SeasonGame(this, teams.get(arr[i]), teams.get(arr[size+1-i]), main);
-                new SeasonGame(this, teams.get(arr[size+1-i]), teams.get(arr[i]), main);
+                new SeasonGame(this, teams.get(arr[i]), teams.get(arr[size + 1 - i]), main, j + 1);
+                new SeasonGame(this, teams.get(arr[size + 1 - i]), teams.get(arr[i]), main, j + 1);
             }
             int temp = arr[1];
-            for (int i = 1; i < size-1; i++) {
-                arr[i] = arr[i+1];
+            for (int i = 1; i < size - 1; i++) {
+                arr[i] = arr[i + 1];
             }
-            arr[size-1] = temp;
+            arr[size - 1] = temp;
         }
-    }
-
-    public void playSeasonGame() {
-        team.schedule.get(gamesPlayed).playSeasonGame();
-        if (team.schedule.get(gamesPlayed).homeRuns > team.schedule.get(gamesPlayed).awayRuns) wins++;
-        else loses++;
-        gamesPlayed++;
     }
 
     public static void main(String[] args) {
@@ -105,6 +134,8 @@ public class SeasonMode extends JPanel {
 
 class SeasonTeam extends Team {
     ArrayList<SeasonGame> schedule = new ArrayList<>();
+    int wins = 0;
+    int losses = 0;
 
     public SeasonTeam(String filePath, boolean humanPlayer) {
         super(filePath, humanPlayer);
@@ -120,46 +151,61 @@ class SeasonGame {
     boolean played = false;
     int homeRuns = 0;
     int awayRuns = 0;
-    String score;
     SeasonTeam awayTeam;
     SeasonTeam homeTeam;
     Main main;
     Game game;
+    int gameNumber;
+    Thread play = new Thread(new Play());
+    Thread sim = new Thread(new Sim());
 
-    public SeasonGame(SeasonMode season, SeasonTeam homeTeam, SeasonTeam awayTeam, Main main) {
+    public SeasonGame(SeasonMode season, SeasonTeam homeTeam, SeasonTeam awayTeam, Main main, int gameNumber) {
         this.season = season;
         this.homeTeam = awayTeam;
         this.awayTeam = homeTeam;
         this.main = main;
+        this.gameNumber = gameNumber;
         awayTeam.schedule.add(this);
         homeTeam.schedule.add(this);
     }
 
     public void endGame() {
+        if (homeRuns > awayRuns) {
+            homeTeam.wins++;
+            awayTeam.losses++;
+        } else {
+            homeTeam.losses++;
+            awayTeam.wins++;
+        }
         int count = 0;
         for (JLabel label : season.labels) {
-            label.setIcon(new ImageIcon(Display.scheduleBox(season.team.schedule.get(count))));
+            BufferedImage image = Display.resize(Display.scheduleBox(season.team.schedule.get(count)), 162, 162);
+            label.setIcon(new ImageIcon(image));
             count++;
         }
+        season.sortStandings();
+        season.standingsLabel.setIcon(new ImageIcon(Display.seasonModeStandings(season.teams)));
 
         main.frame.setContentPane(season);
         main.frame.pack();
         main.frame.validate();
         main.frame.repaint();
         season.repaint();
+        if (homeTeam.teamName.equals(season.team.teamName) || awayTeam.teamName.equals(season.team.teamName)) {
+            season.simGames();
+        }
     }
 
-    public void playSeasonGame() {
-        System.out.print("h1");
+    public void playSeasonGame(boolean playGame) {
+        if (played) return;
+        played = true;
         game = new Game(homeTeam, awayTeam);
-        main.frame.setContentPane(game);
-        main.frame.pack();
-        main.frame.validate();
-        main.frame.repaint();
-        System.out.print("h1");
+        if (playGame) {
+            play.start();
+        } else {
+            sim.start();
+        }
 
-        Thread t = new Thread(new Runner());
-        t.start();
     }
 
     @Override
@@ -167,13 +213,25 @@ class SeasonGame {
         return awayTeam.teamName + " vs " + homeTeam.teamName;
     }
 
-    class Runner implements Runnable {
+    class Play implements Runnable {
         public void run() {
+            main.frame.setContentPane(game);
+            main.frame.pack();
+            main.frame.validate();
+            main.frame.repaint();
+
             game.runGame();
             homeRuns = game.scoreboard.homeRuns;
             awayRuns = game.scoreboard.awayRuns;
-            score = homeRuns + " - " + awayRuns;
-            played = true;
+            endGame();
+        }
+    }
+
+    class Sim implements Runnable {
+        public void run() {
+            game.simGame();
+            homeRuns = game.scoreboard.homeRuns;
+            awayRuns = game.scoreboard.awayRuns;
             endGame();
         }
     }

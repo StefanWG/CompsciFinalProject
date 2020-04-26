@@ -19,8 +19,8 @@ public class AtBat {
         powerMeter = new Meter(175,730, this.g, player.powerRating, "P"); //Change location
     }
 
-    public int runAtBat() {
-        if (team.humanPlayer) {
+    public int runAtBat(boolean play) {
+        if (play) {
             //User At Bat
             contactResult = contactMeter.runMeter();
             powerResult = powerMeter.runMeter();

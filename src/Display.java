@@ -582,7 +582,7 @@ public class Display {
         final Graphics2D g = image.createGraphics();
 
         g.setColor(Color.darkGray);
-        g.fill(new RoundRectangle2D.Double(0, 0, image.getWidth(), image.getHeight(), 0, 0));
+        g.fill(new RoundRectangle2D.Double(0, 0, image.getWidth(), image.getHeight(), 20, 20));
         g.setColor(Color.BLACK);
         g.fill(new RoundRectangle2D.Double(5, 20, image.getWidth() - 55, 20, 20, 20)); //AwayName
         g.fill(new RoundRectangle2D.Double(5, 50, image.getWidth() - 55, 20, 20, 20)); //HomeName
@@ -600,11 +600,51 @@ public class Display {
             g.fillRect(50,115,75, 10);
         }
         if (s.played && s.homeRuns > s.awayRuns) {
-            if (s.season.team.teamName.equals(s.homeTeam)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
+            if (s.season.team.teamName.equals(s.homeTeam.teamName)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
             else writeText("L", g, 50, image.getWidth() - 50, 80,160, Color.red.darker(), "Impact");
         } else if (s.played && s.awayRuns > s.homeRuns) {
-            if (s.season.team.teamName.equals(s.awayTeam)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
+            if (s.season.team.teamName.equals(s.awayTeam.teamName)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
             else writeText("L", g, 50, image.getWidth() - 50, 80,160, Color.red.darker(), "Impact");
+        }
+
+        return image;
+
+    }
+
+    public static BufferedImage seasonModeStandings(ArrayList<SeasonTeam> teams) {
+        BufferedImage image = new BufferedImage(395, 230+teams.size()*50, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = image.createGraphics();
+
+        g.setColor(Color.darkGray);
+        g.fill(new RoundRectangle2D.Double(0, 0, image.getWidth(), image.getHeight(), 0, 0));
+        g.setColor(Color.BLACK);
+        g.fill(new RoundRectangle2D.Double(50, 50, image.getWidth() - 100, 60, 20, 20)); //Name
+        writeText("Standings", g, 50, image.getWidth() - 50, 50, 110, Color.lightGray, "Boulder");
+
+        g.setColor(Color.black);
+        g.fill(new RoundRectangle2D.Double(15, 150, 200, 40, 20, 20)); //Name
+        g.fill(new RoundRectangle2D.Double(230, 150, 40, 40, 20, 20)); //Age
+        g.fill(new RoundRectangle2D.Double(285, 150, 40, 40, 20, 20)); //Contact
+        g.fill(new RoundRectangle2D.Double(340, 150, 40, 40, 20, 20)); //Power
+
+        writeText("NAME", g, 15, 215, 150, 190, Color.lightGray, "Boulder"); //Name
+        writeText("W", g, 230, 270, 150, 190, Color.lightGray, "Boulder"); //Age
+        writeText("L", g, 285, 325, 150, 190, Color.lightGray, "Boulder"); //Contact
+        writeText("GB", g, 340, 380, 150, 190, Color.lightGray, "Boulder"); //Power
+
+        int i = 0;
+        for (SeasonTeam team : teams) {
+            g.setColor(Color.black);
+            g.fill(new RoundRectangle2D.Double(15, 215 + 50 * i, 200, 40, 20, 20)); //Name
+            g.fill(new RoundRectangle2D.Double(230, 215 + 50 * i, 40, 40, 20, 20)); //Wins
+            g.fill(new RoundRectangle2D.Double(285, 215 + 50 * i, 40, 40, 20, 20)); //Losses
+            g.fill(new RoundRectangle2D.Double(340, 215 + 50 * i, 40, 40, 20, 20)); //GB
+
+            writeText(team.teamName,g, 15, 200, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Name
+            writeText(String.valueOf(team.wins), g, 230, 270, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Age
+            writeText(String.valueOf(team.losses), g, 285, 325, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Contact
+            //writeText(String.valueOf(team.lineup[i].powerRating), g, 340, 380, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Power
+            i++;
         }
 
         return image;

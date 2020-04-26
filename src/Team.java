@@ -11,7 +11,7 @@ public class Team {
     public Player[] lineup  = new Player[9];
     int lineupPos;
     Color textColor;
-    final boolean humanPlayer;
+    boolean humanPlayer;
 
     public Team(String filePath, boolean humanPlayer){
         this.filePath = filePath;

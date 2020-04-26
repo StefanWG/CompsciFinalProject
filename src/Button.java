@@ -11,7 +11,7 @@ public class Button extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    loading.team = loading.teams[finalI];
+                    loading.team = Loading.teams.get(finalI);
                     loading.label.setIcon(new ImageIcon(Display.lineupCard(loading.team)));
                 } catch (Exception ignored) {}
             }

@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Game extends JPanel  {
+public class Game extends JPanel {
     public Team awayTeam;
     public Team homeTeam;
     final int WIDTH = 900;
@@ -33,10 +33,10 @@ public class Game extends JPanel  {
         setLayout(null);
         JButton rulesButton = Display.rulesButton(this);
         add(rulesButton);
-        rulesButton.setBounds(650,680, 125, 100);
+        rulesButton.setBounds(650, 680, 125, 100);
         JButton atBatButton = Display.atBatButton(this);
         add(atBatButton);
-        atBatButton.setBounds(775,680, 125, 100);
+        atBatButton.setBounds(775, 680, 125, 100);
     }
 
     public Game(Team team) {
@@ -44,7 +44,7 @@ public class Game extends JPanel  {
         String[] rosters = new File("Rosters").list();
         if (rosters != null) {
             do {
-                String rosterPath = "Rosters/" + rosters[(int) (Math.random()*rosters.length)];
+                String rosterPath = "Rosters/" + rosters[(int) (Math.random() * rosters.length)];
                 awayTeam = new Team(rosterPath, false);
             } while (awayTeam.teamName.equals(homeTeam.teamName));
         }
@@ -58,22 +58,25 @@ public class Game extends JPanel  {
         setLayout(null);
         JButton rulesButton = Display.rulesButton(this);
         add(rulesButton);
-        rulesButton.setBounds(650,680, 125, 100);
+        rulesButton.setBounds(650, 680, 125, 100);
         JButton atBatButton = Display.atBatButton(this);
         add(atBatButton);
-        atBatButton.setBounds(775,680, 125, 100);
+        atBatButton.setBounds(775, 680, 125, 100);
     }
 
     public boolean gameOver() {
         if (gameOver) return true;
         else if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
-        else if (scoreboard.halfInning%2 == 1 && scoreboard.homeRuns == scoreboard.awayRuns) return false; //Top of any extra inning and game isn't tied
-        else return scoreboard.halfInning % 2 != 0 || scoreboard.homeRuns > scoreboard.awayRuns; //Bottom of inning and home team isn't winning
+        else if (scoreboard.halfInning % 2 == 1 && scoreboard.homeRuns == scoreboard.awayRuns)
+            return false; //Top of any extra inning and game isn't tied
+        else
+            return scoreboard.halfInning % 2 != 0 || scoreboard.homeRuns > scoreboard.awayRuns; //Bottom of inning and home team isn't winning
     }
 
     public void runGame() {
         homeTeam.resetPlayerStats();
         awayTeam.resetPlayerStats();
+        boolean human = homeTeam.humanPlayer || awayTeam.humanPlayer;
         //Sims half inning when
         while (!gameOver()) {
             repaint();
@@ -81,19 +84,18 @@ public class Game extends JPanel  {
                 Thread.sleep(1000);
             } catch (InterruptedException ignored) {
             }
-
-            while (scoreboard.outs < 3  && !gameOver()) {
+            while (scoreboard.outs < 3 && !gameOver()) {
                 Team team;
-                if (scoreboard.halfInning%2 == 1) team = awayTeam;
+                if (scoreboard.halfInning % 2 == 1) team = awayTeam;
                 else team = homeTeam;
 
                 if (team.humanPlayer && scoreboard.outs == 2) charge.play();
                 else charge.stop();
 
                 atBat = new AtBat(this, team);
-                int result = atBat.runAtBat();
+                int result = atBat.runAtBat(team.humanPlayer);
                 updateBoxScore(result);
-                scoreboard.updateBases(result);
+                scoreboard.updateBases(result, human);
 
                 team.lineupPos++;
 
@@ -109,6 +111,28 @@ public class Game extends JPanel  {
                     Thread.sleep(300);
                 } catch (InterruptedException ignored) {
                 }
+
+            }
+            scoreboard.newInning();
+        }
+    }
+
+    public void simGame() {
+        homeTeam.resetPlayerStats();
+        awayTeam.resetPlayerStats();
+        //Sims half inning when
+        while (!gameOver()) {
+            while (scoreboard.outs < 3 && !gameOver()) {
+                Team team;
+                if (scoreboard.halfInning % 2 == 1) team = awayTeam;
+                else team = homeTeam;
+
+                atBat = new AtBat(this, team);
+                int result = atBat.runAtBat(false);
+                updateBoxScore(result);
+                scoreboard.updateBases(result, false);
+
+                team.lineupPos++;
             }
             scoreboard.newInning();
         }
@@ -117,13 +141,13 @@ public class Game extends JPanel  {
     @Override
     public void paintComponent(Graphics g) {
         g.setColor(Color.lightGray);
-        g.fillRect(0,0, 1000,1000);
-        g.drawImage(Display.resize(fieldDrawing,650,650), 0, 130, null);
+        g.fillRect(0, 0, 1000, 1000);
+        g.drawImage(Display.resize(fieldDrawing, 650, 650), 0, 130, null);
         g.drawImage(Display.resize(Display.drawScoreboard(scoreboard), 900, 180), 0, 0, null);
         g.drawImage(resultText, 0, 275, null);
         if (atBat != null) atBat.draw(g);
-        if (rules) g.drawImage(Display.rulesText(), 650,180,null);
-        else g.drawImage(Display.atBatOnDeck(scoreboard), 650,180,null);
+        if (rules) g.drawImage(Display.rulesText(), 650, 180, null);
+        else g.drawImage(Display.atBatOnDeck(scoreboard), 650, 180, null);
     }
 
     private void setUpKeyBindings() {
@@ -136,14 +160,14 @@ public class Game extends JPanel  {
         });
     }
 
-    private void updateBoxScore(int result){
+    private void updateBoxScore(int result) {
         Team team;
-        if (scoreboard.halfInning%2 == 1) team = awayTeam;
+        if (scoreboard.halfInning % 2 == 1) team = awayTeam;
         else team = homeTeam;
-        if (result==1) team.lineup[team.lineupPos%9].singles++;
-        else if (result == 2) team.lineup[team.lineupPos%9].doubles++;
-        else if (result == 3) team.lineup[team.lineupPos%9].triples++;
-        else if (result == 4)  team.lineup[team.lineupPos%9].HRs++;
-        team.lineup[team.lineupPos%9].atBats++;
+        if (result == 1) team.lineup[team.lineupPos % 9].singles++;
+        else if (result == 2) team.lineup[team.lineupPos % 9].doubles++;
+        else if (result == 3) team.lineup[team.lineupPos % 9].triples++;
+        else if (result == 4) team.lineup[team.lineupPos % 9].HRs++;
+        team.lineup[team.lineupPos % 9].atBats++;
     }
 }
