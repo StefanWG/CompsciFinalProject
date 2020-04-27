@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
+//TODO WOrk on commands
+//TODO make WIDTH and HEIGHT static for all classes
 public class Main {
     JFrame frame = new JFrame("Baseball");
-    Game game;
+    Game game = null;
     Loading loading = new Loading(this);
+    SeasonMode season = null;
 
     public static void main(String[] args) {
         new Main();
@@ -23,6 +25,14 @@ public class Main {
         frame.setVisible(true);
     }
 
+    public void newSeason() {
+        season = new SeasonMode(loading.team, this);
+        this.frame.setContentPane(this.season);
+        this.frame.pack();
+        this.frame.validate();
+        this.frame.repaint();
+    }
+
     public void newGame() {
         game = new Game(loading.team);
         this.frame.setContentPane(this.game);
@@ -35,11 +45,18 @@ public class Main {
     }
 
     public void endGame() {
-        game.gameOver = true;
-        frame.setContentPane(new GameOver(this));
-        this.frame.pack();
-        this.frame.validate();
-        this.frame.repaint();
+        if (game != null) {
+            game.gameOver = true;
+            frame.setContentPane(new GameOver(this));
+            this.frame.pack();
+            this.frame.validate();
+            this.frame.repaint();
+        } else if (season != null) {
+            frame.setContentPane(season);
+            this.frame.pack();
+            this.frame.validate();
+            this.frame.repaint();
+        }
     }
 
     public void pickNewTeam() {

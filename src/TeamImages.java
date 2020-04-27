@@ -1,11 +1,122 @@
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class TeamImages {
+    static BufferedImage[] teamImages = new BufferedImage[] {
+            mountains(), reeds(), Display.dirt(),swordfish(), Display.dirt(),
+            siblings(), redSocks(), americans(), astronauts(), angles()
+    };
+
+    public static BufferedImage americans() {
+        BufferedImage americans = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = americans.createGraphics();
+        g.setColor(Color.lightGray);
+        g.fillRect(0, 0, americans.getWidth(), americans.getHeight());
+        g.setPaint(Color.red.darker());
+        g.setStroke(new BasicStroke(40));
+        g.drawOval(200,200,400,400);
+        g.drawArc(475, -100, 1000,1000,161, 38);
+        g.drawArc(-675, -100, 1000,1000,341, 38);
+
+        Font font = new Font("TimesRoman", Font.ITALIC, 95);
+        g.setFont(font);
+        g.setPaint(Color.blue.darker().darker());
+        g.drawString("Americans", 197, 435);
+        return americans;
+    }
+
+    public static BufferedImage reeds() {
+        BufferedImage reeds = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = reeds.createGraphics();
+        g.setColor(Color.red.darker());
+        g.fillRect(0, 0, reeds.getWidth(), reeds.getHeight());
+        g.setStroke(new BasicStroke(40));
+        g.setPaint(Color.BLACK);
+        g.drawOval(210,310, 400, 200);
+        g.setPaint(Color.WHITE);
+        g.drawOval(200,300, 400, 200);
+        g.setColor(Color.red.darker());
+        g.fillRect(400,350, 400,100);
+        g.setPaint(Color.BLACK);
+
+        Font font = new Font("Impact", Font.PLAIN, 95);
+        g.setFont(font);
+        g.drawString("REEDS", 280, 455);
+        g.setPaint(Color.WHITE);
+        g.drawString("REEDS", 280, 445);
+        return reeds;
+    }
+
+    public static BufferedImage siblings() {
+        BufferedImage siblings = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = siblings.createGraphics();
+        g.setColor(Color.blue.darker());
+        g.fillRect(0, 0, siblings.getWidth(), siblings.getHeight());
+        g.setPaint(Color.red.darker());
+        g.setStroke(new BasicStroke(80));
+        g.drawLine(250,200,400,450);
+        g.drawLine(550,200,400,450);
+        g.setPaint(Color.red.darker().darker());
+        g.drawLine(120, 80, 680, 80);
+        g.drawLine(120, 720, 680, 720);
+        g.drawLine(120, 80, 120, 400);
+        g.drawLine(680, 400, 680, 720);
+        g.drawLine(120,400,680,400);
+        g.setPaint(Color.red.darker());
+        g.drawLine(250,200,250,600);
+        g.drawLine(550,200,550,600);
+        return siblings;
+    }
+
+    public static BufferedImage angles() {
+        BufferedImage angles = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = angles.createGraphics();
+        g.setColor(Color.red.darker().darker());
+        g.fillRect(0, 0, angles.getWidth(), angles.getHeight());
+        g.setPaint(Color.black);
+        g.setStroke(new BasicStroke(10));
+        g.drawLine(200,600,600,600);
+        g.drawLine(200,200,200,600);
+        g.drawArc(50,450,300,300,10,70);
+
+        g.fillPolygon(new int[]{310,370,340}, new int[]{550,550,600},3);
+        g.fillPolygon(new int[]{250,250,200}, new int[]{430,490,460},3);
+        return angles;
+    }
+
+    public static BufferedImage swordfish() {
+        BufferedImage swordfish = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = swordfish.createGraphics();
+        g.setColor(Color.blue.darker().darker());
+        g.fillRect(0, 0, swordfish.getWidth(), swordfish.getHeight());
+        GradientPaint yellowBlue = new GradientPaint(200,200,Color.yellow, 200, 400, Color.blue);
+        g.setPaint(yellowBlue);
+        g.fill(new Ellipse2D.Double(150,360, 450,80));
+        g.fillPolygon(new int[]{150, 250, 90}, new int[]{400,400,520},3);//Back Fins
+        g.fillPolygon(new int[]{150, 250, 80}, new int[]{400,400,280},3);
+        g.fillPolygon(new int[]{400, 520, 370}, new int[]{400,400,210},3);//Top Fins
+        g.fillPolygon(new int[]{270, 320, 270}, new int[]{400,400,300},3);
+        g.fillPolygon(new int[]{350, 490, 290}, new int[]{400,400,570},3);//Bottom fin
+        //Eye
+        g.setPaint(Color.black);
+        g.fillOval(560,380,20,20);
+        g.setPaint(Color.white);
+        g.fillOval(564,386,6,6);
+        //Gills
+        g.setPaint(Color.black);
+        g.setStroke(new BasicStroke(3));
+        g.drawArc(400, 380, 10,40, 280, 160);
+        g.drawArc(420, 380, 10,40, 280, 160);
+        g.drawArc(440, 380, 10,40, 280, 160);
+
+        return swordfish;
+    }
+
     public static BufferedImage astronauts() {
-        BufferedImage character = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = character.createGraphics();
+        BufferedImage astronauts = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = astronauts.createGraphics();
         g.setColor(Color.BLUE.darker());
         g.fillRect(0, 0, 1600, 1600);
         g.setColor(Color.ORANGE);
@@ -25,52 +136,12 @@ public class TeamImages {
         g.setFont(f);
         g.setColor(Color.BLACK);
         g.drawString("A", 190, 600);
-        return character;
-    }
-
-    public static BufferedImage characterStefan() {
-        BufferedImage character2 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = character2.createGraphics();
-        g.setColor(Color.blue);
-        g.fillOval(250, 400, 150, 300);
-        g.fillOval(400, 400, 150, 300);
-        g.setStroke(new BasicStroke(15));
-        g.setColor(Color.black);
-        g.drawOval(250, 400, 150, 300);
-        g.drawOval(400, 400, 150, 300);
-
-
-        g.setColor(Color.BLUE.darker());
-        g.fillOval(225, 120, 350, 400);
-        g.setColor(Color.black);
-        g.drawOval(225, 120, 350, 400);
-
-        g.setColor(Color.BLUE);
-        g.fillOval(325, 50, 150, 100);
-        g.setColor(Color.black);
-        g.drawOval(325, 50, 150, 100);
-
-        g.setStroke(new BasicStroke(4));
-        for (int i = 0; i < 4; i++) {
-            g.setColor(Color.cyan);
-            g.fillOval(380, 200 + i * 60, 40, 40);
-            g.setColor(Color.black);
-            g.drawOval(380, 200 + i * 60, 40, 40);
-        }
-
-        g.setColor(Color.green.darker());
-        g.fillOval(360, 85, 30, 30);
-        g.fillOval(410, 85, 30, 30);
-        g.setColor(Color.black);
-        g.drawOval(360, 85, 30, 30);
-        g.drawOval(410, 85, 30, 30);
-
-        return character2;
+        return astronauts;
     }
 
     public static BufferedImage redSocks() {
-        BufferedImage character3 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = character3.createGraphics();
+        BufferedImage redSocks = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = redSocks.createGraphics();
         g.setColor(Color.RED);
         g.fillOval(100, 20, 300, 780);
         g.fillRect(150, 20, 200, 100);
@@ -82,12 +153,12 @@ public class TeamImages {
         }
         g.fillOval(185, 680, 150, 100);
         g.fillOval(680, 610, 100, 130);
-        return character3;
+        return redSocks;
     }
 
     public static BufferedImage mountains() {
-        BufferedImage character3 = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = character3.createGraphics();
+        BufferedImage mountains = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = mountains.createGraphics();
         Random rand = new Random();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1600, 1600);
@@ -124,6 +195,6 @@ public class TeamImages {
         g.setColor(new Color(102, 0, 153));
         g.drawString("C", 70, 240);
         g.drawString("M", 550, 240);
-            return character3;
+            return mountains;
     }
 }

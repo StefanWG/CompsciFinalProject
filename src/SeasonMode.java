@@ -1,14 +1,11 @@
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
-//TODO end/ pause game what happens?
 public class SeasonMode extends JPanel {
     SeasonTeam team;
     Main main;
@@ -26,14 +23,22 @@ public class SeasonMode extends JPanel {
         createSchedule(teams);
 
         JPanel schedulePanel = new JPanel();
-        schedulePanel.setLayout(new GridLayout(0, 3, 3, 3));
+        schedulePanel.setLayout(new GridLayout(0, 3, 4, 4));
+        schedulePanel.setBackground(Color.gray);
+        schedulePanel.setOpaque(true);
 
         JScrollPane scrollPane = new JScrollPane(schedulePanel);
-        scrollPane.setBackground(Color.lightGray);
-        scrollPane.setOpaque(true);
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(8,10));
+        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.black;
+                this.trackColor = Color.darkGray;
+            }
+        });
 
         for (SeasonGame s : this.team.schedule) {
-            BufferedImage image = Display.resize(Display.scheduleBox(s), 159, 159);
+            BufferedImage image = Display.resize(Display.scheduleBox(s), 156, 156);
             JLabel label = new JLabel(new ImageIcon(image));
             labels.add(label);
             schedulePanel.add(label);
@@ -41,10 +46,20 @@ public class SeasonMode extends JPanel {
 
         sortStandings();
         JScrollPane standingsPane = new JScrollPane(standingsLabel);
+        standingsPane.getVerticalScrollBar().setPreferredSize(new Dimension(8,10));
+        standingsPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.black;
+                this.trackColor = Color.darkGray;
+            }
+        });
+
+        standingsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         standingsLabel.setIcon(new ImageIcon(Display.seasonModeStandings(teams)));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, standingsPane,scrollPane);
-        splitPane.setDividerLocation(395);
+        splitPane.setDividerLocation(405);
         splitPane.setDividerSize(0);
         splitPane.setPreferredSize(new Dimension(900,700));
         this.add(splitPane);
@@ -64,8 +79,13 @@ public class SeasonMode extends JPanel {
                 team.schedule.get(gameNumber).playSeasonGame(false);
             }
         });
-        this.add(playGame);
-        this.add(simGame);
+
+        JSplitPane buttonSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, playGame, simGame);
+        buttonSplitPane.setPreferredSize(new Dimension(900,72));
+        buttonSplitPane.setDividerLocation(450);
+        buttonSplitPane.setDividerSize(0);
+
+        this.add(buttonSplitPane);
     }
 
     public void simGames() {
@@ -121,15 +141,6 @@ public class SeasonMode extends JPanel {
             arr[size - 1] = temp;
         }
     }
-
-    public static void main(String[] args) {
-        Main main = new Main();
-        SeasonMode seasonMode = new SeasonMode(new Team("Rosters/HoustonAstronauts.txt", true), main);
-        main.frame.setContentPane(seasonMode);
-        main.frame.pack();
-        main.frame.validate();
-        main.frame.repaint();
-    }
 }
 
 class SeasonTeam extends Team {
@@ -179,7 +190,7 @@ class SeasonGame {
         }
         int count = 0;
         for (JLabel label : season.labels) {
-            BufferedImage image = Display.resize(Display.scheduleBox(season.team.schedule.get(count)), 162, 162);
+            BufferedImage image = Display.resize(Display.scheduleBox(season.team.schedule.get(count)), 156, 156);
             label.setIcon(new ImageIcon(image));
             count++;
         }

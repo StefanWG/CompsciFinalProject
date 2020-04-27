@@ -8,18 +8,14 @@ public class Loading extends JPanel {
     public Team team;
     final int WIDTH = 900;
     final int HEIGHT = 780;
-    BufferedImage astronauts = TeamImages.astronauts();
-    BufferedImage americans = TeamImages.characterStefan();
-    BufferedImage redSocks = TeamImages.redSocks();
-    BufferedImage mountains = TeamImages.mountains();
 
-    BufferedImage[] imagesArray = {astronauts, mountains, Display.dirt(), mountains, redSocks, Display.grass(),astronauts, mountains, Display.dirt(), mountains, redSocks, Display.grass()};
+    BufferedImage[] imagesArray;
     JLabel label = new JLabel("Please Select a Team");
 
     static ArrayList<Team> teams  = new ArrayList<>();
 
-
     public Loading(Main main) {
+        imagesArray = TeamImages.teamImages;
 
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -32,12 +28,21 @@ public class Loading extends JPanel {
             }
         }
 
-        JButton advance = new JButton("Advance");
-        advance.setPreferredSize(new Dimension(100,100));
+        JButton advance = new JButton("Single Game");
+        advance.setPreferredSize(new Dimension(100,380));
         advance.addActionListener(e -> {
             if (team != null)  {
                 team.humanPlayer = true;
                 main.newGame();
+            }
+        });
+
+        JButton season = new JButton("Full Season");
+        season.setPreferredSize(new Dimension(100,380));
+        season.addActionListener(e -> {
+            if (team != null)  {
+                team.humanPlayer = true;
+                main.newSeason();
             }
         });
 
@@ -51,12 +56,16 @@ public class Loading extends JPanel {
             teamPanel.add(new Button(imagesArray[i], this, i));
         }
 
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.add(advance);
+        buttonsPanel.add(season);
+
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, label);
         splitPane.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         splitPane.setDividerLocation(266);
         splitPane.setDividerSize(0);
 
-        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane, advance);
+        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane, buttonsPanel);
         splitPane2.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         splitPane2.setDividerLocation(790);
         splitPane2.setDividerSize(0);
