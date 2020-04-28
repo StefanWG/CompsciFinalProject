@@ -1,5 +1,4 @@
 
-//import
 import java.util.ArrayList;
 
 public class Scoreboard {

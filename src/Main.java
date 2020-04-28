@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 //TODO WOrk on commands
-//TODO make WIDTH and HEIGHT static for all classes
+//TODO make everything public or private, make things private that can be private
 public class Main {
-    JFrame frame = new JFrame("Baseball");
-    Game game = null;
-    Loading loading = new Loading(this);
-    SeasonMode season = null;
+    public static int WIDTH = 900; //DO NOT CHANGE
+    public static int HEIGHT = 780; //DO NOT CHANGE
+    public JFrame frame = new JFrame("Baseball");
+    public Game game = null;
+    public Loading loading = new Loading(this);
+    public SeasonMode season = null;
 
     public static void main(String[] args) {
         new Main();
@@ -45,18 +47,18 @@ public class Main {
     }
 
     public void endGame() {
+        Audio.stopAll();
         if (game != null) {
             game.gameOver = true;
-            frame.setContentPane(new GameOver(this));
-            this.frame.pack();
-            this.frame.validate();
-            this.frame.repaint();
-        } else if (season != null) {
-            frame.setContentPane(season);
-            this.frame.pack();
-            this.frame.validate();
-            this.frame.repaint();
         }
+        if (season != null) {
+            frame.setContentPane(season);
+        } else {
+            frame.setContentPane(new GameOver(this));
+        }
+        this.frame.pack();
+        this.frame.validate();
+        this.frame.repaint();
     }
 
     public void pickNewTeam() {
@@ -70,16 +72,6 @@ public class Main {
     public void setUpMenu(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
-
-        JMenuItem newGame = new JMenuItem("New Game");
-        newGame.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_N, ActionEvent.META_MASK));
-        newGame.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                newGame();
-            }
-        });
 
         JMenuItem endGame = new JMenuItem("End Game");
         endGame.setAccelerator(KeyStroke.getKeyStroke(
@@ -113,9 +105,6 @@ public class Main {
             }
         });
 
-
-
-        file.add(newGame);
         file.add(endGame);
         file.add(changePlayer);
         file.add(sound);

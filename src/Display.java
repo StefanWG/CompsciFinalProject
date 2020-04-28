@@ -1,13 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.font.TextLayout;
-import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.awt.event.*;
+import java.awt.font.*;
+import java.awt.geom.*;
+import java.awt.image.*;
+import java.util.*;
 
 public class Display {
 
@@ -61,19 +58,22 @@ public class Display {
 
         writeText(scoreboard.awayTeam.teamName.substring(0, 3).toUpperCase(), g, 10, 90, 60, 100, awayColor, font);
         writeText(scoreboard.homeTeam.teamName.substring(0, 3).toUpperCase(), g, 10, 90, 110, 150, homeColor, font);
-
         for (int i = 0; i < 9; i++) {
             g.setColor(Color.black);
             g.fill(new RoundRectangle2D.Double(100 + i * 50, 10, 40, 40, 20, 20)); //Inning
             g.fill(new RoundRectangle2D.Double(100 + i * 50, 60, 40, 40, 20, 20)); //AwayRuns
             g.fill(new RoundRectangle2D.Double(100 + i * 50, 110, 40, 40, 20, 20)); //HomeRuns
+            int n = i;
+            if ((scoreboard.halfInning - 1) / 2 >= 9) {
+                n += (scoreboard.halfInning - 1) / 2 - 8;
+            }
 
-            writeText(String.valueOf(i + 1), g, 100 + i * 50, 140 + i * 50, 10, 50, Color.lightGray, font); //Innings
+            writeText(String.valueOf(n + 1), g, 100 + i * 50, 140 + i * 50, 10, 50, Color.lightGray, font); //Innings
             try {
                 Color c;
                 if (i == scoreboard.halfInning / 2 && scoreboard.halfInning % 2 == 1) c = awayColor.brighter();
                 else c = awayColor;
-                writeText(String.valueOf(scoreboard.awayRunsInning.get(i)), g, 100 + i * 50, 140 + i * 50, 60, 100, c, font); //AwayRuns
+                writeText(String.valueOf(scoreboard.awayRunsInning.get(n)), g, 100 + i * 50, 140 + i * 50, 60, 100, c, font); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
                 writeText(" ", g, 100 + i * 50, 140 + i * 50, 60, 100, textColor, font); //AwayRuns
             }
@@ -81,7 +81,7 @@ public class Display {
                 Color c;
                 if (i == (scoreboard.halfInning - 1) / 2 && scoreboard.halfInning % 2 == 0) c = homeColor.brighter();
                 else c = homeColor;
-                writeText(String.valueOf(scoreboard.homeRunsInning.get(i)), g, 100 + i * 50, 140 + i * 50, 110, 150, c, font); //AwayRuns
+                writeText(String.valueOf(scoreboard.homeRunsInning.get(n)), g, 100 + i * 50, 140 + i * 50, 110, 150, c, font); //AwayRuns
             } catch (IndexOutOfBoundsException e) {
                 writeText(" ", g, 100 + i * 50, 140 + i * 50, 100, 150, textColor, font); //AwayRuns
             }
@@ -652,71 +652,3 @@ public class Display {
     }
 
 }
-
-//class Ball {
-//    int rotation = 0;
-//
-//    public void update() {
-//        rotation += 1;
-//    }
-//
-//
-//    public BufferedImage draw(int diameter) {
-//        BufferedImage seams = new BufferedImage(200,628,BufferedImage.TYPE_INT_ARGB);
-//        Graphics2D s = seams.createGraphics();
-//        s.setPaint(Color.black);
-//        s.fillRect(0,0,200,628);
-//        s.setPaint(Color.red);
-//        s.setStroke(new BasicStroke(5));
-//        s.drawArc(0,0,200,200, 330,240);
-//        s.drawArc(0,240,200,200,150,240);
-//        s.drawArc(208-40, 120-40,280,280,150,60);
-//        s.drawArc(-208-40, 120-40,280,280,330,60);
-//
-//        BufferedImage image = new BufferedImage(220,220,BufferedImage.TYPE_INT_ARGB);
-//        Graphics2D g = image.createGraphics();
-//        g.setColor(Color.black);
-//        g.fillRect(0,0,220,220);
-//        g.setPaint(Color.lightGray);
-//        g.fillOval(0,0,220,220);
-//        for (int i = 0; i < 200; i++) {
-//            for (int j = 0; j < 200; j++) {
-//                Color color = new Color(seams.getRGB(i,(j+rotation)%628));
-//                Color current = new Color(image.getRGB(i+10,220 - j - 10));
-//                if (!color.equals(Color.black) && current.equals(Color.lightGray)) image.setRGB(i+10,220 - j - 10,color.getRGB());
-//            }
-//        }
-//        image = Display.makeTransparent(Color.black,image);
-//        image = Display.resize(image, diameter,diameter);
-//
-//
-//        //TODO modify size so it looks like coming forward
-//
-//        return image;
-//    }
-//    Code for running ball
-//    public void runBall() {
-//        DIAMETER = 20;
-//        int count = 1;
-//        yPosition = 124;
-//        xPosition = 400;
-//        while (true) {
-//            DIAMETER += (double) 1/ (double) count;
-//            yPosition += .5;
-//            count++;
-//            ball.update();
-//            repaint();
-//            try {
-//                Thread.sleep(1);
-//            } catch (InterruptedException ignored) {}
-//        }
-//    }
-//    Code for drawing ball and shadow
-//    BufferedImage ballImage = ball.draw((int) DIAMETER);
-//    int realX = xPosition - ballImage.getWidth()/2;
-//    int realY = (int) yPosition - ballImage.getHeight()/2;
-//
-//    g.drawImage(ballImage,realX, realY,null);
-//    g.setColor(new Color(0,0,0, 80));
-//    g.fillOval(realX-80, realY+40, ballImage.getWidth(),ballImage.getHeight());
-//}

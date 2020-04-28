@@ -1,13 +1,61 @@
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class TeamImages {
     static BufferedImage[] teamImages = new BufferedImage[] {
-            mountains(), reeds(), Display.dirt(),swordfish(), Display.dirt(),
+            mountains(), reeds(), barves(), swordfish(), cubbies(),
             siblings(), redSocks(), americans(), astronauts(), angles()
     };
+
+    public static BufferedImage barves() {
+        BufferedImage barves = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = barves.createGraphics();
+        g.setColor(new Color (0,0,102));
+        g.fillRect(0, 0, barves.getWidth(), barves.getHeight());
+        g.setColor(new Color(120, 0,0));
+        g.fill(new RoundRectangle2D.Double(80,360, 640, 80, 80, 80)); //Stick
+        g.fillPolygon(new int[]{500,700, 600}, new int[]{500,500,200}, 3); //Triangle
+        g.setColor(Color.black);
+        g.fill(new RoundRectangle2D.Double(90,370, 620, 60, 60, 60));
+        g.setColor(new Color(120, 0,0));
+        g.fill(new RoundRectangle2D.Double(100,380, 600, 40, 50, 50));
+
+        g.setColor(Color.black);
+        g.fillPolygon(new int[]{510,690, 600}, new int[]{490,490,220}, 3);
+        g.setColor(new Color(120, 0,0));
+        g.fillPolygon(new int[]{520,680, 600}, new int[]{480,480,240}, 3);
+
+        g.fill(new RoundRectangle2D.Double(100,380, 600, 40, 50, 50));
+
+        g.setColor(new Color(179, 140, 0));
+        g.setStroke(new BasicStroke(5));
+        g.drawArc(450, 360, 10,80, 280, 160);
+        g.drawArc(470, 360, 10,80, 280, 160);
+        g.drawArc(490, 360, 10,80, 280, 160);
+
+        g.setColor(new Color(120, 0,0));
+        g.setFont(new Font("TimesRoman", Font.ITALIC | Font.BOLD, 100));
+        g.drawString("Barves", 170, 352);
+
+        return barves;
+    }
+
+    public static BufferedImage cubbies() {
+        BufferedImage cubbies = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = cubbies.createGraphics();
+        g.setColor(Color.lightGray);
+        g.fillRect(0, 0, cubbies.getWidth(), cubbies.getHeight());
+        g.setPaint(new Color(0, 184, 255));
+        g.fillRect(0,225,800,350);
+        g.setPaint(Color.blue.darker());
+        g.fillRect(0,250,800,300);
+
+        Display.writeText("CUBBIES", g, 0, 800, 300, 525, Color.red.darker(), "Impact");
+        return cubbies;
+    }
 
     public static BufferedImage americans() {
         BufferedImage americans = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);

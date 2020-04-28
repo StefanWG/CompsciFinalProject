@@ -40,8 +40,10 @@ public class Meter {
     }
 
     public void stop() {
-        running = false;
-        done = true;
+        if (running) {
+            running = false;
+            done = true;
+        }
     }
 
     public boolean isRunning() {

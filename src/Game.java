@@ -8,8 +8,6 @@ import java.io.File;
 public class Game extends JPanel {
     public Team awayTeam;
     public Team homeTeam;
-    final int WIDTH = 900;
-    final int HEIGHT = 780;
     final int MAX_INNINGS = 18;
     boolean rules = false;
     boolean gameOver = false;
@@ -24,7 +22,7 @@ public class Game extends JPanel {
     public Game(Team homeTeam, Team awayTeam) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 
         setUpKeyBindings();
         scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);
@@ -49,7 +47,7 @@ public class Game extends JPanel {
             } while (awayTeam.teamName.equals(homeTeam.teamName));
         }
 
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 
         setUpKeyBindings();
         scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);

@@ -5,7 +5,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
-
+//TODO handle ending in the middle of game
+//TODO season ends?
 public class SeasonMode extends JPanel {
     SeasonTeam team;
     Main main;
@@ -15,7 +16,7 @@ public class SeasonMode extends JPanel {
     int gameNumber = 0;
 
     public SeasonMode(Team user, Main main) {
-        setPreferredSize(new Dimension(900, 780));
+        setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 
         this.main = main;
         this.team = new SeasonTeam(user);
@@ -61,7 +62,7 @@ public class SeasonMode extends JPanel {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, standingsPane,scrollPane);
         splitPane.setDividerLocation(405);
         splitPane.setDividerSize(0);
-        splitPane.setPreferredSize(new Dimension(900,700));
+        splitPane.setPreferredSize(new Dimension(Main.WIDTH,Main.HEIGHT-80));
         this.add(splitPane);
 
         JButton playGame = new JButton("Play Next Game");
@@ -81,7 +82,7 @@ public class SeasonMode extends JPanel {
         });
 
         JSplitPane buttonSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, playGame, simGame);
-        buttonSplitPane.setPreferredSize(new Dimension(900,72));
+        buttonSplitPane.setPreferredSize(new Dimension(Main.WIDTH,72));
         buttonSplitPane.setDividerLocation(450);
         buttonSplitPane.setDividerSize(0);
 
@@ -212,11 +213,11 @@ class SeasonGame {
         played = true;
         game = new Game(homeTeam, awayTeam);
         if (playGame) {
+            main.game = game;
             play.start();
         } else {
             sim.start();
         }
-
     }
 
     @Override

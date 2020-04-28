@@ -6,23 +6,19 @@ import java.util.ArrayList;
 
 public class Loading extends JPanel {
     public Team team;
-    final int WIDTH = 900;
-    final int HEIGHT = 780;
-
-    BufferedImage[] imagesArray;
-    JLabel label = new JLabel("Please Select a Team");
-
-    static ArrayList<Team> teams  = new ArrayList<>();
+    public BufferedImage[] imagesArray;
+    public JLabel label = new JLabel("Please Select a Team");
+    public static ArrayList<Team> teams  = new ArrayList<>();
 
     public Loading(Main main) {
         imagesArray = TeamImages.teamImages;
 
-        setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        setPreferredSize(new Dimension(Main.WIDTH,Main.HEIGHT));
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
         File rosters = new File("Rosters");
         File[] list = rosters.listFiles();
-        if (list != null) {
+        if (list != null && teams.size() == 0) {
             for (File f : list) {
                 teams.add(new Team(String.valueOf(f), false));
             }
@@ -51,7 +47,7 @@ public class Loading extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(teamPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-
+;
         for (int i = 0; i < teams.size(); i++) {
             teamPanel.add(new Button(imagesArray[i], this, i));
         }
@@ -61,12 +57,11 @@ public class Loading extends JPanel {
         buttonsPanel.add(season);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, label);
-        splitPane.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         splitPane.setDividerLocation(266);
         splitPane.setDividerSize(0);
 
         JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane, buttonsPanel);
-        splitPane2.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
+        splitPane2.setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
         splitPane2.setDividerLocation(790);
         splitPane2.setDividerSize(0);
 
