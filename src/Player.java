@@ -4,6 +4,8 @@
  **/
 
 public class Player {
+    //these variable names are exactly what they sound like
+    //each store data about the specific player
     String name;
     int age;
     String team;

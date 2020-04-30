@@ -5,7 +5,7 @@
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-
+/** This class extends JButton so that we can create instances of Button (individual buttons) throughout*/
 public class Button extends JButton {
     public Button(BufferedImage image, Loading loading, int finalI) {
         image = Display.resize(image, 228,228);

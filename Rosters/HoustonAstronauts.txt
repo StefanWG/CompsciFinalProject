@@ -1,11 +1,11 @@
 Astronauts
 230 138 0
-GDinger 30 80 80
-JTuve 29 57 99
-MBrant 32 53 90
-ABregie 26 70 93
-YuliGuli 35 53 78
-YordoA 22 97 92
-Correr 25 71 89
-JReady 33 54 80
-MMald 33 57 49
+G_Dinger 30 80 80
+J_Tuve 29 57 99
+M_Brant 32 53 90
+A_Bregie 26 70 93
+Yuli_Guli 35 53 78
+Yordo_A 22 97 92
+Cor_rer 25 71 89
+J_Ready 33 54 80
+M_Mald 33 57 49

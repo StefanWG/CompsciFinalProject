@@ -35,7 +35,7 @@ public class Meter {
         game = g;
         title = t;
 
-        //Create the color gradient for the meter
+        /** Create the color gradient for the meter */
         float single = (float) 11250/(float) (rating + 50) / 200;
         single = single - single * .2f;
         if (single >= 0.5) single = .49f;
@@ -44,7 +44,7 @@ public class Meter {
         float[] fractions = {0.02f, single, 0.5f, 1-single, 0.98f};
         color = new LinearGradientPaint(xPosition,yPosition, xPosition+WIDTH,yPosition, fractions, colors);
     }
-
+/** This method is called when the space bar is pressed*/
     public void stop() {
         if (running) {
             running = false;
@@ -55,7 +55,7 @@ public class Meter {
     public boolean isRunning() {
         return running;
     }
-
+/** This is the code that moves the black bar within the meter graphic allowing it to move back and forth*/
     void update() {
         meterLocation += meterSpeed;
         if (meterLocation > WIDTH) {
@@ -68,14 +68,14 @@ public class Meter {
     }
 
     void draw(Graphics gOri) {
-        //Create Graphics2D for color gradient
+        /** Create Graphics2D for color gradient */
         Graphics2D g = (Graphics2D) gOri;
 
-        //Draw the meter
+        /** Draw the meter */
         g.setPaint(color);
         g.fillRect(xPosition, yPosition, WIDTH, HEIGHT);
 
-        //Draw the bar that is moving back and forth
+        /** Draw the bar that is moving back and forth */
         g.setColor(Color.black);
         g.setStroke(new BasicStroke(3)); //Sets thickness of line
         g.drawLine(xPosition + meterLocation, yPosition, xPosition + meterLocation, yPosition + HEIGHT);
@@ -84,6 +84,8 @@ public class Meter {
         if (done) { writeText(String.valueOf(result), g, xPosition+WIDTH+20, xPosition+WIDTH+70, yPosition,  yPosition + HEIGHT); }
     }
 
+
+   /** This centers the text given the passed in x and y values and the string*/
     public static void writeText(String str, Graphics2D g, int x1, int x2, int y1, int y2) {
         Font font = new Font("Impact", Font.PLAIN, 50);
         TextLayout textLayout = new TextLayout(str, font, g.getFontRenderContext());
@@ -95,14 +97,15 @@ public class Meter {
         textLayout.draw(g, x, y);
     }
 
-
+/** Runs the meter and return the result of the user input */
+/** The thread.sleep is the speed of the meter and can be adjusted */
     public int runMeter() {
         running = true;
         while (running) {
             update();
             game.repaint();
             try {
-                Thread.sleep(1000/(WIDTH*speed)); //200 can be changed to change speed... lower it is slower meter goes
+                Thread.sleep(1000/(WIDTH*speed));
             } catch (InterruptedException ignored) {}
         }
         result = 100 - (int) (Math.abs((double) (meterLocation - WIDTH/2) / (double) (WIDTH/2) * 100));

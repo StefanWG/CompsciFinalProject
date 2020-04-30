@@ -10,6 +10,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
+
+/**
+ * Loading extends Jpanel so that this class is displayed separately from when the game is run
+ **/
+
 public class Loading extends JPanel {
     public Team team;
     public BufferedImage[] imagesArray;
@@ -30,6 +35,8 @@ public class Loading extends JPanel {
             }
         }
 
+        /** This creates the button that allows the user to select the single game mode */
+
         JButton advance = new JButton("Single Game");
         advance.setPreferredSize(new Dimension(100,380));
         advance.addActionListener(e -> {
@@ -38,7 +45,9 @@ public class Loading extends JPanel {
                 main.newGame();
             }
         });
-//This creates the button that allows the user to select the season mode
+
+    /** This creates the button that allows the user to select the season mode */
+
         JButton season = new JButton("Full Season");
         season.setPreferredSize(new Dimension(100,380));
         season.addActionListener(e -> {
@@ -47,6 +56,8 @@ public class Loading extends JPanel {
                 main.newSeason();
             }
         });
+
+        /** Creates buttons, the scroll pane, and the split panes. */
 
         JPanel teamPanel = new JPanel();
         teamPanel.setLayout(new GridLayout(teams.size(),1));

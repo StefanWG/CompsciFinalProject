@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 //TODO final score on end screen
-//TODO WOrk on commands
 //TODO make everything public or private, make things private that can be private
 public class Main {
     public static int WIDTH = 900; //DO NOT CHANGE
@@ -38,6 +37,10 @@ public class Main {
         frame.setVisible(true);
     }
 
+    /**
+     * Switches contentPane to SeasonMode.
+     **/
+
     public void newSeason() {
         season = new SeasonMode(loading.team, this);
         this.frame.setContentPane(this.season);
@@ -45,6 +48,10 @@ public class Main {
         this.frame.validate();
         this.frame.repaint();
     }
+
+    /**
+     * Switches contentPane to Game and runs it.
+     **/
 
     public void newGame() {
         game = new Game(loading.team);
@@ -56,6 +63,11 @@ public class Main {
         Thread t = new Thread(new Runner());
         t.start();
     }
+
+    /**
+     * Method is called when the end game command is pressed. Ends the game and changes the contentPane
+     * depending on game mode.
+     **/
 
     public void endGame() {
         Audio.stopAll();
@@ -72,6 +84,10 @@ public class Main {
         this.frame.repaint();
     }
 
+    /**
+     * Resets the contant pane to the loading screen so the user can pick a new team.
+     **/
+
     public void pickNewTeam() {
         loading = new Loading(this);
         frame.setContentPane(loading);
@@ -79,6 +95,10 @@ public class Main {
         this.frame.validate();
         this.frame.repaint();
     }
+
+    /**
+     * Sets up the menu to be placed in the menuBar.
+     **/
 
     public void setUpMenu(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
@@ -123,6 +143,10 @@ public class Main {
         menuBar.add(file);
         frame.setJMenuBar(menuBar);
     }
+
+    /**
+     * Creates new thread for the game to be run on so it doesn't interfere with commands.
+     **/
 
     class Runner implements Runnable {
         public void run() {

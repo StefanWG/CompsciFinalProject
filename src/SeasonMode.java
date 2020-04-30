@@ -19,7 +19,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
 
-//TODO handle ending in the middle of game -- SIM the rest
 //TODO season ends?
 
 public class SeasonMode extends JPanel {
@@ -32,7 +31,7 @@ public class SeasonMode extends JPanel {
 
 
     /**
-     * Constructor for SeasonMode. Creates teams from files in Rosters folder, creates the schdeule
+     * Constructor for SeasonMode. Creates teams from files in Rosters folder, creates the schedule
      * and sets up the graphics for the JPanel.
      **/
     public SeasonMode(Team user, Main main) {
@@ -79,7 +78,7 @@ public class SeasonMode extends JPanel {
         });
 
         standingsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        standingsLabel.setIcon(new ImageIcon(Display.seasonModeStandings(teams)));
+        standingsLabel.setIcon(new ImageIcon(Display.seasonModeStandings(teams, this)));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, standingsPane,scrollPane);
         splitPane.setDividerLocation(405);
@@ -241,7 +240,7 @@ class SeasonGame {
             count++;
         }
         season.sortStandings();
-        season.standingsLabel.setIcon(new ImageIcon(Display.seasonModeStandings(season.teams)));
+        season.standingsLabel.setIcon(new ImageIcon(Display.seasonModeStandings(season.teams, season)));
 
         main.frame.setContentPane(season);
         main.frame.pack();

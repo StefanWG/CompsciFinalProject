@@ -224,9 +224,6 @@ public class Scoreboard {
 
     /**
      * this method combines the single/double/etc. methods into one method.
-     * this method calls
-     * @param n
-     * @param human
      */
 
     public void updateBases(int n, boolean human) {

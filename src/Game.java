@@ -37,6 +37,7 @@ public class Game extends JPanel {
         setUpKeyBindings();
         scoreboard = new Scoreboard(MAX_INNINGS, homeTeam, awayTeam);
 
+        /** The chargeThread allows the game to run simultaneously as the audio runs*/
         chargeThread.start();
         setLayout(null);
         JButton rulesButton = Display.rulesButton(this);

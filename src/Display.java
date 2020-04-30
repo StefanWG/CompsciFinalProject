@@ -13,6 +13,8 @@ import java.util.*;
 
 public class Display {
 
+
+ /** passed in the number from the atBat result and displays the type of hit based on that number*/
     public static BufferedImage outcomeText(int outcome) {
         BufferedImage image = new BufferedImage(650, 150, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2D = image.createGraphics();
@@ -43,7 +45,7 @@ public class Display {
         writeText(str, g2D, 0, 650, 0, 150, Color.orange, "Impact");
         return image;
     }
-
+/** draws a scoreboard from the passed from the scoreboard class */
     public static BufferedImage drawScoreboard(Scoreboard scoreboard) {
         BufferedImage image = new BufferedImage(800, 160, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
@@ -140,7 +142,7 @@ public class Display {
         return image;
 
     }
-
+/** centers the passed in string using the passed in x and y values */
     public static void writeText(String str, Graphics2D g, int x1, int x2, int y1, int y2, Color color, String f) {
         int fontSize = (int) ((y2 - y1) * 0.8);
         Font font = new Font(f, Font.PLAIN, fontSize);
@@ -163,6 +165,7 @@ public class Display {
         g.fillPolygon(tXR, tYR, 3);
     }
 
+   /** makes different backgrounds transparent so that different buffered images do not stick out: a more cohesive graphic */
     public static BufferedImage makeTransparent(Color c, BufferedImage image) {
         BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         int transparent = new Color(0, 0, 0, 0).getRGB();
@@ -202,6 +205,8 @@ public class Display {
         return tile;
     }
 
+
+    /** uses randomization to adds texture using different colors*/
     public static BufferedImage dirt() {
         BufferedImage tile = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         Random rand = new Random();
@@ -229,6 +234,7 @@ public class Display {
         return tile;
     }
 
+ /** takes a random number which then changes the color of each pixel: adds texture to the fence*/
     public static BufferedImage fence() {
         BufferedImage image = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         Random rand = new Random();
@@ -270,7 +276,7 @@ public class Display {
         Color infield = new Color(181, 107, 23);
         Color mound = new Color(158, 94, 21);
 
-        //Background
+        /** Background */
         g.drawImage(grass(), 0, 0, null);
         //Outside the field
         g.setPaint(Color.lightGray);
@@ -280,7 +286,7 @@ public class Display {
             g.drawArc(-1400, y, 3600, 3600, 0, 360);
             y -= 5;
         }
-        //OUTFIELD WALL
+        /** OUTFIELD WALL */
         g.setColor(Color.red);
         g.setStroke(new BasicStroke(5));
         g.drawArc(-1400, 90, 3600, 3600, 0, 360);
@@ -288,12 +294,13 @@ public class Display {
         g.setStroke(new BasicStroke(15));
         g.drawArc(-1400, 97, 3600, 3600, 0, 360);
 
-        //HOME PLATE DIRT AND BASELINES
+        /** HOME PLATE DIRT AND BASELINES */
         g.setPaint(infield);
         g.fillOval(-200, 350, 1200, 800);
         g.fillPolygon(new int[]{240, 0, 0}, new int[]{500, 210, 500}, 3);
         g.fillPolygon(new int[]{560, 800, 800}, new int[]{500, 210, 500}, 3);
-        //INFIELD DIRT
+
+        /** INFIELD DIRT */
         g.setStroke(new BasicStroke(4));
         g.drawArc(330, 116, 140, 10, 20, 140);
         g.setStroke(new BasicStroke(6));
@@ -308,18 +315,21 @@ public class Display {
         g.drawArc(-760, 116, 760 + 1600, 2200, 5, 85);
 
 
-        //MOUND
+        /** MOUND */
         g.setPaint(mound);
         g.fillOval(320, 122, 160, 20);
-        //FOUL LINES
+
+        /** FOUL LINES */
         g.setPaint(new Color(255, 230, 204));
         g.setStroke(new BasicStroke(5));
         g.drawLine(0, 260, 190, 500);
         g.drawLine(800, 260, 610, 500);
-        //BATTERS BOXES
+
+        /** BATTERS BOXES */
         g.drawPolygon(new int[]{820, 520, 470, 700}, new int[]{790, 790, 500, 500}, 4);
         g.drawPolygon(new int[]{-20, 280, 330, 100}, new int[]{790, 790, 500, 500}, 4);
-        //HOME PLATE AND PITCHING RUBBER
+
+        /** HOME PLATE AND PITCHING RUBBER */
         g.setColor(Color.darkGray);
         g.fillPolygon(new int[]{347, 453, 456, 400, 344}, new int[]{550, 550, 583, 613, 583}, 5);
         g.setPaint(new Color(215, 193, 142));
@@ -329,7 +339,7 @@ public class Display {
         BufferedImage dirtImage = dirt();
         BufferedImage fenceImage = fence();
 
-        //MAKE DIRT
+        /** MAKE DIRT */
         for (int i = 0; i < 800; i++) {
             for (int j = 0; j < 800; j++) {
                 if (image.getRGB(i, j) == infield.getRGB()) {
@@ -348,7 +358,7 @@ public class Display {
         return image;
 
     }
-
+/** This methods resizes the buffered images to fit within the different sections displayed: You pass in a new height and new width */
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -359,6 +369,8 @@ public class Display {
         return dimg;
     }
 
+
+/** This displays the rosters for a specific team and their stats*/
     public static BufferedImage lineupCard(Team team) {
         BufferedImage image = new BufferedImage(533, 800, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
@@ -400,7 +412,7 @@ public class Display {
         return image;
 
     }
-
+/** This creates a clickable button that is titled Rules   */
     public static JButton rulesButton(Game g) {
         BufferedImage image = new BufferedImage(125, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = image.createGraphics();
@@ -425,7 +437,7 @@ public class Display {
     }
 
 
-    // this method creates the clickable button which allows the user to then see the buffered image of the next people at bat
+    /** this method creates the clickable button which allows the user to then see the buffered image of the next people at bat */
     public static JButton atBatButton(Game g) {
         BufferedImage image = new BufferedImage(125, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = image.createGraphics();
@@ -447,7 +459,7 @@ public class Display {
         return button;
     }
 
-    //This is a method which essentially prints the rules
+    /** This is a method which essentially prints the rules */
     public static BufferedImage rulesText() {
         BufferedImage image = new BufferedImage(250, 500, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
@@ -457,8 +469,8 @@ public class Display {
 
         String rules = "Press Space Bar anytime along the meter to choose an Accuracy Rating. " +
                 "\n Press space bar for the second meter to choose the Power Level." +
-                "\n The closer to the middle the better (Tip: Aim for the Green!!)   " + "Press Command+M/E/N/P \n to Mute, End the game," +
-                "\n start a New game, or Pick a new team.";
+                "\n The closer to the middle the better (Tip: Aim for the Green!!)   " + "Press Command+M/E/P \n to Mute, End the game," +
+                "\n or Pick a new team.";
 
         Font font = new Font("Boulder", Font.PLAIN, 23);
         g.setFont(font);
@@ -511,6 +523,7 @@ public class Display {
         return image;
     }
 
+ /** it displays the stats of the game when the game ends*/
     public static BufferedImage boxScore(Team team) {
         BufferedImage image = new BufferedImage(450, 700, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
@@ -581,7 +594,7 @@ public class Display {
         return image;
 
     }
-
+/** In the season mode it is each box for the games that can be played or simulated. It projects the outcome W or L  */
     public static BufferedImage scheduleBox(SeasonGame s) {
         BufferedImage image = new BufferedImage(175, 175, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
@@ -617,8 +630,9 @@ public class Display {
         return image;
 
     }
+/** This displays the current standings given a specific state in the season */
 
-    public static BufferedImage seasonModeStandings(ArrayList<SeasonTeam> teams) {
+    public static BufferedImage seasonModeStandings(ArrayList<SeasonTeam> teams, SeasonMode season) {
         BufferedImage image = new BufferedImage(395, 230 + teams.size() * 50, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
 
@@ -641,16 +655,17 @@ public class Display {
 
         int i = 0;
         for (SeasonTeam team : teams) {
-            g.setColor(Color.black);
+            if (team.teamName.equals(season.team.teamName)) g.setColor(Color.lightGray);
+            else g.setColor(Color.black);
             g.fill(new RoundRectangle2D.Double(15, 215 + 50 * i, 200, 40, 20, 20)); //Name
             g.fill(new RoundRectangle2D.Double(230, 215 + 50 * i, 40, 40, 20, 20)); //Wins
             g.fill(new RoundRectangle2D.Double(285, 215 + 50 * i, 40, 40, 20, 20)); //Losses
             g.fill(new RoundRectangle2D.Double(340, 215 + 50 * i, 40, 40, 20, 20)); //GB
-
+            int gamesBack = teams.get(0).wins - team.wins;
             writeText(team.teamName, g, 15, 200, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Name
-            writeText(String.valueOf(team.wins), g, 230, 270, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Age
-            writeText(String.valueOf(team.losses), g, 285, 325, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Contact
-            //writeText(String.valueOf(team.lineup[i].powerRating), g, 340, 380, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Power
+            writeText(String.valueOf(team.wins), g, 230, 270, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Wins
+            writeText(String.valueOf(team.losses), g, 285, 325, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //losses
+            writeText(String.valueOf(gamesBack), g, 340, 380, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //GB
             i++;
         }
 
