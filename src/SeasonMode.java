@@ -31,6 +31,7 @@ public class SeasonMode extends JPanel {
     int gameNumber = 0;
 
 
+
  //  Creates the graphics for the season mode
  // Creates a grid which is the schedule for the team for that season
     public SeasonMode(Team user, Main main) {
@@ -103,7 +104,7 @@ public class SeasonMode extends JPanel {
         for (SeasonTeam t : teams) {
             if (!t.schedule.get(gameNumber).played) t.schedule.get(gameNumber).playSeasonGame(false);
             try {
-                Thread.sleep(50);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -194,6 +195,7 @@ class SeasonGame {
     }
 
     public void endGame() {
+        //game.simGame();
         if (homeRuns > awayRuns) {
             homeTeam.wins++;
             awayTeam.losses++;

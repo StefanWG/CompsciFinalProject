@@ -7,6 +7,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+//TODO final score on end screen
 //TODO WOrk on commands
 //TODO make everything public or private, make things private that can be private
 public class Main {

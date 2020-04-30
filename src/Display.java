@@ -482,7 +482,7 @@ public class Display {
         return image;
     }
 
-    /* this is a method which is called to print the team members (a buffered image) that are next to bat */
+    /** this is a method which is called to print the team members (a buffered image) that are next to bat */
 
     public static BufferedImage atBatOnDeck(Scoreboard scoreboard) {
         BufferedImage image = new BufferedImage(250, 500, BufferedImage.TYPE_INT_ARGB);

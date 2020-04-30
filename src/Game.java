@@ -69,8 +69,7 @@ public class Game extends JPanel {
     }
 
     public boolean gameOver() {
-        if (gameOver) return true;
-        else if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
+        if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
         else if (scoreboard.halfInning % 2 == 1 && scoreboard.homeRuns == scoreboard.awayRuns)
             return false; //Top of any extra inning and game isn't tied
         else
@@ -82,13 +81,13 @@ public class Game extends JPanel {
         awayTeam.resetPlayerStats();
         boolean human = homeTeam.humanPlayer || awayTeam.humanPlayer;
         //Sims half inning when
-        while (!gameOver()) {
+        while (!gameOver() && !gameOver) {
             repaint();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ignored) {
             }
-            while (scoreboard.outs < 3 && !gameOver()) {
+            while (scoreboard.outs < 3 && !gameOver() && !gameOver) {
                 Team team;
                 if (scoreboard.halfInning % 2 == 1) team = awayTeam;
                 else team = homeTeam;
@@ -122,8 +121,6 @@ public class Game extends JPanel {
     }
 
     public void simGame() {
-        homeTeam.resetPlayerStats();
-        awayTeam.resetPlayerStats();
         //Sims half inning when
         while (!gameOver()) {
             while (scoreboard.outs < 3 && !gameOver()) {

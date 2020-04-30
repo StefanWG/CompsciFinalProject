@@ -24,7 +24,9 @@ public class Team {
     Color textColor;
     //checks for which team is being played with
     boolean humanPlayer;
-//constructor asking for thee file name and the boolean asking if the human is playing or comp
+    /**constructor asking for thee file name and the boolean asking if the human is playing or comp
+     *
+     */
     public Team(String filePath, boolean humanPlayer){
         //given the argument documents the fil path
         this.filePath = filePath;
@@ -36,6 +38,10 @@ public class Team {
         lineupPos = 0;
     }
 
+    /**This file takes in the file name and uses that to create a scanner and
+     *then read in each of the players data.
+     * @param filePath
+     */
     public void initializeTeam(String filePath) {
         //TeamData is the text file name where the data for each team is
         //put players in the array here to fill the team
@@ -102,7 +108,11 @@ public class Team {
             lineNumber++;
         }
     }
-//toString method to display each player in a team
+
+    /**toString method to display each player in a team
+     *
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder toReturn = new StringBuilder(headerString() + "\n");
@@ -113,8 +123,10 @@ public class Team {
         }
         return toReturn.toString();
     }
-//this method initializes all of th players and their stats (member variables) to 0.
-    //will be called when a new game is started
+
+    /**this method initializes all of th players and their stats (member variables) to 0.
+     * will be called when a new game is started
+     */
     public void resetPlayerStats() {
         for (Player player : lineup) {
             player.atBats = 0;
@@ -125,7 +137,11 @@ public class Team {
             player.RBIs = 0;
         }
     }
-//this method displays the titles for each of the things displayed on the loading screen
+
+    /**this method displays the titles for each of the things displayed on the loading screen
+     *
+     * @return
+     */
     public String headerString() {
         return "\t   " + "Age" +
                 " ".repeat(5 - "Age".length()) +

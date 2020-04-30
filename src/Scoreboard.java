@@ -51,7 +51,10 @@ public class Scoreboard {
         hitballThread.start();
     }
 
-//this method adds runs tot he totals based on which half inning we are in
+    /**this method adds runs tot he totals based on which half inning we are in
+     *
+     * @param numRuns
+     */
     private void addRuns(int numRuns) {
         //tells us which inning we are in.
         int inning = (halfInning - 1) / 2;
@@ -80,6 +83,9 @@ public class Scoreboard {
         }
     }
 
+    /** This method updates the bases and adds runs for when a single is hit
+     *
+     */
     private void Single() {
         //find initial state of bases
         boolean first = this.bases[0];
@@ -111,6 +117,9 @@ public class Scoreboard {
         }
     }
 
+    /** This method updates the bases and adds runs for when a double is hit
+     *
+     */
     private void Double() {
         //find initial state of bases
         boolean first = this.bases[0];
@@ -138,6 +147,9 @@ public class Scoreboard {
         }
     }
 
+    /** This method updates the bases and adds runs for when a triple is hit
+     *
+     */
     private void Triple() {
         //very similar to home run. clears all bases and adds run accordingly
         //however at the end, third base gets occupied.
@@ -152,6 +164,9 @@ public class Scoreboard {
         this.bases[2] = true;
     }
 
+    /** This method updates adds runs for when a home run is hit
+     *
+     */
     private void HomeRun() {
         //starts at one since at least one run scores from HR
         int numBases = 1;
@@ -175,6 +190,9 @@ public class Scoreboard {
         }
     }
 
+    /** This method updates the bases and adds runs for when a walk is hit
+     *
+     */
     private void Walk() {
         //here runs only score if bases are loaded
         boolean first = this.bases[0];
@@ -203,6 +221,13 @@ public class Scoreboard {
             }
         }
     }
+
+    /**
+     * this method combines the single/double/etc. methods into one method.
+     * this method calls
+     * @param n
+     * @param human
+     */
 
     public void updateBases(int n, boolean human) {
         if (human) hitball.play();
@@ -234,6 +259,9 @@ public class Scoreboard {
         }
     }
 
+    /** This method advances the inning (resets bases, adds the counter for which inning we are in)
+     *
+     */
     public void newInning() {
         //resets outs
         this.outs = 0;
@@ -250,7 +278,11 @@ public class Scoreboard {
             homeRunsInning.add(0);
         }
     }
-//to String method to print out thee scoreboard in thee terminal and also to display.
+
+    /**to String method to print out thee scoreboard in thee terminal and also to display.
+     *
+     * @return
+     */
     public String toString() {
         String str;
         String i = (halfInning / 2) + " ";
