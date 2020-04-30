@@ -195,7 +195,6 @@ class SeasonGame {
     }
 
     public void endGame() {
-        //game.simGame();
         if (homeRuns > awayRuns) {
             homeTeam.wins++;
             awayTeam.losses++;

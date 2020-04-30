@@ -118,6 +118,9 @@ public class Game extends JPanel {
             }
             scoreboard.newInning();
         }
+        if (!gameOver()) {
+            simGame();
+        }
     }
 
     public void simGame() {
