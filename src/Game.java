@@ -25,6 +25,10 @@ public class Game extends JPanel {
     Audio charge = new Audio("AudioFiles/charge.wav");
     Thread chargeThread = new Thread(charge);
 
+    /**
+     * Constructors
+     **/
+
     public Game(Team homeTeam, Team awayTeam) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -68,6 +72,10 @@ public class Game extends JPanel {
         atBatButton.setBounds(775, 680, 125, 100);
     }
 
+    /**
+     * Checks if the game is over.
+     **/
+
     public boolean gameOver() {
         if (scoreboard.halfInning < scoreboard.maxInnings) return false; //Top 9th or earlier
         else if (scoreboard.halfInning % 2 == 1 && scoreboard.homeRuns == scoreboard.awayRuns)
@@ -75,6 +83,10 @@ public class Game extends JPanel {
         else
             return scoreboard.halfInning % 2 != 0 || scoreboard.homeRuns > scoreboard.awayRuns; //Bottom of inning and home team isn't winning
     }
+
+    /**
+     * This is the code for the game if the player is playing the game.
+     **/
 
     public void runGame() {
         homeTeam.resetPlayerStats();
@@ -123,6 +135,10 @@ public class Game extends JPanel {
         }
     }
 
+    /**
+     * This is the code for the game if it is being simulated.
+     **/
+
     public void simGame() {
         //Sims half inning when
         while (!gameOver()) {
@@ -142,6 +158,10 @@ public class Game extends JPanel {
         }
     }
 
+
+    /**
+     * Paints the JPanel by drawing the desired buffered images.
+     **/
     @Override
     public void paintComponent(Graphics g) {
         g.setColor(Color.lightGray);
@@ -154,6 +174,10 @@ public class Game extends JPanel {
         else g.drawImage(Display.atBatOnDeck(scoreboard), 650, 180, null);
     }
 
+    /**
+     * Sets up the keybindings for this class (only Spacebar for playing the game)
+     **/
+
     private void setUpKeyBindings() {
         getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "STOP");
         getActionMap().put("STOP", new AbstractAction() {
@@ -163,6 +187,10 @@ public class Game extends JPanel {
             }
         });
     }
+
+    /**
+     * Given an outcome, this method updates the boxscore.
+     **/
 
     private void updateBoxScore(int result) {
         Team team;

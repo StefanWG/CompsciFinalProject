@@ -31,9 +31,10 @@ public class SeasonMode extends JPanel {
     int gameNumber = 0;
 
 
-
- //  Creates the graphics for the season mode
- // Creates a grid which is the schedule for the team for that season
+    /**
+     * Constructor for SeasonMode. Creates teams from files in Rosters folder, creates the schdeule
+     * and sets up the graphics for the JPanel.
+     **/
     public SeasonMode(Team user, Main main) {
         setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 
@@ -100,6 +101,10 @@ public class SeasonMode extends JPanel {
         this.add(buttonSplitPane);
     }
 
+    /**
+     *Simulates all the games between the teams not controlled by users.
+     **/
+
     public void simGames() {
         for (SeasonTeam t : teams) {
             if (!t.schedule.get(gameNumber).played) t.schedule.get(gameNumber).playSeasonGame(false);
@@ -113,7 +118,9 @@ public class SeasonMode extends JPanel {
     }
 
 
- //Method that sorts the standings of the all the different teams (first to last place)
+    /**
+     * Sorts the standings by wins from first to last place
+     **/
     public void sortStandings() {
         for (int j = 0; j < teams.size() - 1; j++) {
             for (int i = teams.size() - 1; i > 0; i--) {
@@ -122,6 +129,10 @@ public class SeasonMode extends JPanel {
         }
     }
 
+
+    /**
+     * Cycles through the files in /Rosters to create the teams
+     **/
     private void createTeams() {
         File rosters = new File("Rosters");
         File[] list = rosters.listFiles();
@@ -133,6 +144,10 @@ public class SeasonMode extends JPanel {
             }
         }
     }
+
+    /**
+     * Given an ArrayList of SeasonTeams, it generate the schedule.
+     **/
 
     private void createSchedule(ArrayList<SeasonTeam> teams) {
         int[] arr = new int[teams.size()];
@@ -157,6 +172,10 @@ public class SeasonMode extends JPanel {
     }
 }
 
+/**
+ * SeasonTeam extends Team with a few extra fields.
+ **/
+
 class SeasonTeam extends Team {
     ArrayList<SeasonGame> schedule = new ArrayList<>();
     int wins = 0;
@@ -171,6 +190,10 @@ class SeasonTeam extends Team {
     }
 }
 
+/**
+ * Stores each SeasonGame, with information about the game, and the Game variable as well.
+ **/
+
 class SeasonGame {
     SeasonMode season;
     boolean played = false;
@@ -184,6 +207,10 @@ class SeasonGame {
     Thread play = new Thread(new Play());
     Thread sim = new Thread(new Sim());
 
+    /**
+     * Constructor. Creates the game and adds it to the schedules of both teams involved.
+     **/
+
     public SeasonGame(SeasonMode season, SeasonTeam homeTeam, SeasonTeam awayTeam, Main main, int gameNumber) {
         this.season = season;
         this.homeTeam = awayTeam;
@@ -193,6 +220,11 @@ class SeasonGame {
         awayTeam.schedule.add(this);
         homeTeam.schedule.add(this);
     }
+
+    /**
+     * This is the code for when the game ends. Determines the outcome, redoes the display and changes
+     * the content pane back the season home screen.
+     **/
 
     public void endGame() {
         if (homeRuns > awayRuns) {
@@ -221,6 +253,10 @@ class SeasonGame {
         }
     }
 
+    /**
+     * Starts the season game, either allowing the user to play it or simulating it.
+     **/
+
     public void playSeasonGame(boolean playGame) {
         if (played) return;
         played = true;
@@ -237,6 +273,10 @@ class SeasonGame {
     public String toString() {
         return awayTeam.teamName + " vs " + homeTeam.teamName;
     }
+
+    /**
+     * Threads for the game to run on so it doesn't interfere with commands and other things.
+     **/
 
     class Play implements Runnable {
         public void run() {

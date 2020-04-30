@@ -138,9 +138,8 @@ public class Team {
         }
     }
 
-    /**this method displays the titles for each of the things displayed on the loading screen
-     *
-     * @return
+    /**
+     * this method displays the titles for each of the things displayed on the loading screen
      */
     public String headerString() {
         return "\t   " + "Age" +

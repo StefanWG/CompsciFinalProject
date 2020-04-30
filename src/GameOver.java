@@ -13,12 +13,16 @@ public class GameOver extends JPanel {
         main = m;
         setPreferredSize(new Dimension(Main.WIDTH,Main.HEIGHT));
         setLayout(null);
-
+        //Button to pick a new team
         JButton pickNewTeam = new JButton("Pick New Team");
         pickNewTeam.addActionListener(e -> m.pickNewTeam());
         pickNewTeam.setBounds(0,Main.HEIGHT - 80 ,Main.WIDTH,80);
         add(pickNewTeam);
     }
+
+    /**
+     * Draws the box scores
+     **/
     @Override
     public void paintComponent(Graphics g) {
         g.drawImage(Display.boxScore(main.game.awayTeam), 0,0,null);

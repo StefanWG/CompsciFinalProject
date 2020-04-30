@@ -22,6 +22,10 @@ public class Audio implements Runnable {
         this.string = string;
     }
 
+    /**
+     * Opens the audio clip.
+     **/
+
     public void run() {
         try {
             file = new File(string).getAbsoluteFile();
@@ -41,6 +45,10 @@ public class Audio implements Runnable {
         }
     }
 
+    /**
+     * Stops the clip.
+     **/
+
     public void stop() {
         try {
             clip.stop();
@@ -48,12 +56,20 @@ public class Audio implements Runnable {
         } catch (Exception ignored) {}
     }
 
+    /**
+     * If the clip isn't playing, this method plays it.
+     **/
+
     public void play() {
         if (!clip.isRunning()) {
             clip.setMicrosecondPosition(0);
             clip.loop(0);
         }
     }
+
+    /**
+     * Allows the user to mute or unmute all the sound clips.
+     **/
 
     public static void toggleSound() {
         for (FloatControl v : volumeControls) {
@@ -63,6 +79,10 @@ public class Audio implements Runnable {
             else v.setValue(v.getMaximum());
         }
     }
+
+    /**
+     * Stops all the sound clips.
+     **/
 
     public static void stopAll() {
         for (Audio a : audios) {

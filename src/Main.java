@@ -22,6 +22,10 @@ public class Main {
         new Main();
     }
 
+    /**
+     * Constructor, sets up JFrame.
+     **/
+
     public Main() {
         System.setProperty("apple.laf.useScreenMenuBar", "true");
 

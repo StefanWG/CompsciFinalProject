@@ -15,6 +15,9 @@ public class AtBat {
     public Player player;
     public Team team;
 
+    /**
+     * Constructor
+     **/
 
     public AtBat(Game g, Team t) {
         team = t;
@@ -22,9 +25,13 @@ public class AtBat {
         player = team.lineup[team.lineupPos%9];
         contactResult = -1;
         powerResult = -1;
-        contactMeter = new Meter(175,640, this.g, player.contactRating, "C"); //Change location
-        powerMeter = new Meter(175,730, this.g, player.powerRating, "P"); //Change location
+        contactMeter = new Meter(175,640, this.g, player.contactRating, "C");
+        powerMeter = new Meter(175,730, this.g, player.powerRating, "P");
     }
+
+    /**
+     * Initializes the meters or randomly generates an outcome for the computer.
+     **/
 
     public int runAtBat(boolean play) {
         if (play) {
@@ -32,16 +39,25 @@ public class AtBat {
             contactResult = contactMeter.runMeter();
             powerResult = powerMeter.runMeter();
         } else {
+            //Computer At Bat
             contactResult = (int) (Math.random() * 51) + 50;
             powerResult = (int) (Math.random() * 51) + 50;
         }
         return determineOutcome();
     }
 
+    /**
+     * Draws the meters.
+     **/
+
     public void draw(Graphics g) {
         if (contactMeter != null) contactMeter.draw(g);
         if (powerMeter != null) powerMeter.draw(g);
     }
+
+    /**
+     * Stops the meters, called when the spacebar is pressed.
+     **/
 
     public void stop() {
         if (contactMeter.isRunning()) {
@@ -50,6 +66,10 @@ public class AtBat {
             powerMeter.stop();
         }
     }
+
+    /**
+     * Calls findResult() method and then returns a 0-4 for the outcome
+     **/
 
     private int determineOutcome() {
         //this gives us a number between 0 and 100
@@ -66,6 +86,10 @@ public class AtBat {
         else if (result > 80) return 1;
         else return 0;
     }
+
+    /**
+     * Given the contact and power results, converts to a single value from 0-100;
+     **/
 
     private int findResult() {
         //this is where we determine how we want contact and power to be handled
@@ -88,6 +112,11 @@ public class AtBat {
         return result;
     }
 
+    /**
+     * Uses contact rating and contact results to create an updated
+     * number representing the contact score.
+     **/
+
     private int calculateConRes(){
         //Using the rating and meter result it will return an update contact result
         int meterResult = contactResult;
@@ -100,6 +129,11 @@ public class AtBat {
         //this returns a value between 50 and 150
         return contactResult;
     }
+
+    /**
+     * Uses power rating and power results to create an updated
+     * number representing the power score.
+     **/
 
     private int calculatePowRes(){
         //Using the rating and meter result it will return an update power result
