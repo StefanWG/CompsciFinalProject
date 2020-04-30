@@ -1,12 +1,27 @@
+/**
+ * This file contains three classes: SeasonMode, SeasonTeam, and SeasonGame, all of which
+ * are used during season mode.
+ *
+ * SeasonMode is the home page when a user chooses to play a season. They can see the
+ * standings, schedule and opt to sim/play the next game.
+ *
+ * SeasonTeam is an extension of team specific for seasons. It contains a few extra variables
+ * including their schedule, wins, and losses.
+ *
+ * SeasonGame stores all the information for each individual game, including the two teams
+ * and the results. Both teams that are playing have a reference to the game.
+ **/
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
-//TODO handle ending in the middle of game
+
+//TODO handle ending in the middle of game -- SIM the rest
 //TODO season ends?
+
 public class SeasonMode extends JPanel {
     SeasonTeam team;
     Main main;
@@ -66,20 +81,10 @@ public class SeasonMode extends JPanel {
         this.add(splitPane);
 
         JButton playGame = new JButton("Play Next Game");
-        playGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                team.schedule.get(gameNumber).playSeasonGame(true);
-            }
-        });
+        playGame.addActionListener(e -> team.schedule.get(gameNumber).playSeasonGame(true));
 
         JButton simGame = new JButton("Sim Next Game");
-        simGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                team.schedule.get(gameNumber).playSeasonGame(false);
-            }
-        });
+        simGame.addActionListener(e -> team.schedule.get(gameNumber).playSeasonGame(false));
 
         JSplitPane buttonSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, playGame, simGame);
         buttonSplitPane.setPreferredSize(new Dimension(Main.WIDTH,72));

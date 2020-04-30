@@ -1,3 +1,9 @@
+/**
+ * This class is used for when a user is at bat. It has a bar that is running back
+ * and forth across the meter, and when stopped, determines the relative location
+ * so that the at bat result can be calculated. It is called from the AtBat class.
+ **/
+
 import java.awt.*;
 import java.awt.font.TextLayout;
 

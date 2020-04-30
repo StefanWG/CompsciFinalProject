@@ -1,3 +1,8 @@
+/**
+ * All of the images that appear on the buttons in the loading screen
+ * are drawn in this class. They are all referenced from a static context.
+ **/
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
@@ -180,7 +185,7 @@ public class TeamImages {
         g.drawLine(400, 400, 650, 150);
         g.drawLine(400, 400, 150, 650);
         g.drawLine(400, 400, 650, 650);
-        Font f = new Font("Boulder", 1, 650);
+        Font f = new Font("Boulder", Font.BOLD, 650);
         g.setFont(f);
         g.setColor(Color.BLACK);
         g.drawString("A", 190, 600);
@@ -238,7 +243,7 @@ public class TeamImages {
         }
         g.setColor(Color.GREEN.darker());
         g.fillRect(0, 600, 1000, 400);
-        Font f = new Font("Boulder", 1, 300);
+        Font f = new Font("Boulder", Font.BOLD, 300);
         g.setFont(f);
         g.setColor(new Color(102, 0, 153));
         g.drawString("C", 70, 240);

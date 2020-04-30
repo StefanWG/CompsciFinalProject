@@ -1,3 +1,9 @@
+/**
+ * All of the audio clips that are played are controlled by this class.
+ * This class has static methods than can stop/mute all audio clips
+ * or instance methods that can control individual sound clips.
+ **/
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;

@@ -1,3 +1,9 @@
+/**
+ * This class has the code that controls the JFrame. All the changes in the
+ * content frame and some of the keyboard commands happen in this class.
+ * The project is also beings in the main methods in this class.
+ **/
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

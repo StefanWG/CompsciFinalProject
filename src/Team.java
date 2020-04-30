@@ -1,3 +1,9 @@
+/**
+ * The Team class reads in the information for each player from a text file.
+ * It stores the nine players on the team, where they are in the lineup
+ * and other relevant information.
+ **/
+
 import java.awt.*;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
@@ -62,17 +68,15 @@ public class Team {
             int blue = scanner.nextInt();
             //using these inputs creates their color.
             textColor = new Color(red, green, blue);
-        }
-        //catching exception if the data does not exist/is in wrong type
-        catch (InputMismatchException e){
+        } catch (InputMismatchException e){ //catching exception if the data does not exist/is in wrong type
             System.out.println("Error: could not read information from line: " + lineNumber);
-        }
-        //catching exception if there does not exist any data where we specify
-        catch (NoSuchElementException f){
+        } catch (NoSuchElementException | NullPointerException f){ //catching exception if there does not exist any data where we specify
             System.out.println("There is no more data to read. Check your Team Data file"+
                     " and ensure it is complete");
         }
-        //heree we will initialize every individual player inside the team
+
+
+        //here we will initialize every individual player inside the team
         for (int i = 0; i<lineup.length; i++){
             //give each of these values from a text file
             try {
@@ -112,24 +116,22 @@ public class Team {
 //this method initializes all of th players and their stats (member variables) to 0.
     //will be called when a new game is started
     public void resetPlayerStats() {
-        for (int i = 0; i < lineup.length; i++) {
-            lineup[i].atBats = 0;
-            lineup[i].HRs = 0;
-            lineup[i].singles = 0;
-            lineup[i].doubles = 0;
-            lineup[i].triples = 0;
-            lineup[i].RBIs = 0;
+        for (Player player : lineup) {
+            player.atBats = 0;
+            player.HRs = 0;
+            player.singles = 0;
+            player.doubles = 0;
+            player.triples = 0;
+            player.RBIs = 0;
         }
     }
 //this method displays the titles for each of the things displayed on the loading screen
     public String headerString() {
-        StringBuilder str = new StringBuilder("\t   ");
-        str.append("Age");
-        str.append(" ".repeat(5 - "Age".length()));
-        str.append("Con");
-        str.append(" ".repeat(5 - "Con".length()));
-        str.append("Pow");
-        str.append(" ".repeat(5 - "Pow".length()));
-        return str.toString();
+        return "\t   " + "Age" +
+                " ".repeat(5 - "Age".length()) +
+                "Con" +
+                " ".repeat(5 - "Con".length()) +
+                "Pow" +
+                " ".repeat(5 - "Pow".length());
     }
 }

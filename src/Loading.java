@@ -1,3 +1,9 @@
+/**
+ * This class controls the screen that users see when they are picking a team and game mode.
+ * It contains a scrollpane filled with buttons for each team, a image area for the
+ * lineup to be displayed, and buttons to select the game mode.
+ **/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;

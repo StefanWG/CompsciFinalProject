@@ -1,3 +1,8 @@
+/**
+ * The player class stores all the necessary information about each individual player
+ * in the game. A team is made up of 9 distinct players.
+ **/
+
 public class Player {
     String name;
     int age;

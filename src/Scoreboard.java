@@ -1,31 +1,36 @@
+/**
+ * The Scoreboard class stores all the information about the state the game is in.
+ * It also is responsible for updating the game state given specific results.
+ **/
 
 import java.util.ArrayList;
 
 public class Scoreboard {
     //tracks outs
     int outs;
-    //this array is what controld the diamond for the bases and who is on which base
+    //this array is what keeps track of who is one what base
     boolean[] bases = new boolean[3];
-    //thesee track hits and hom runs for both teams
+    //these track hits and runs for both teams
     int homeRuns;
     int awayRuns;
     int awayHits;
     int homeHits;
-    //counting in half innings (so 18 innings total) ach time 3 outs ar hit this advances
+    //counting in half innings (so 18 innings total), Each time 3 outs ar hit this advances
     int halfInning;
     //how many inning we want to play
     int maxInnings;
-    //th two teams to play and be on the scoreboard
+    //the two teams to play
     Team homeTeam;
     Team awayTeam;
-    //to kep track of the number of runs in each inning
+    //to keep track of the number of runs in each inning
     ArrayList<Integer> homeRunsInning = new ArrayList<>();
     ArrayList<Integer> awayRunsInning = new ArrayList<>();
-//the audio file
+
+    //the audio file and thread that plays hit audio
     Audio hitball = new Audio("AudioFiles/hitball.wav");
-    //thread required for when you hit
     Thread hitballThread = new Thread(hitball);
-//constructor
+
+    //constructor
     public Scoreboard(int maxInnings, Team homeTeam, Team awayTeam) {
         //initializing the variable using inputs from constructor or initializing to 0
         this.homeTeam = homeTeam;
@@ -111,22 +116,13 @@ public class Scoreboard {
         boolean first = this.bases[0];
         boolean second = this.bases[1];
         boolean third = this.bases[2];
-        //clear second and third and add 1 or 2 runs.
-        //if either second or third is occupied
-        if (third || second) {
-            //if both are occupied
-            if (third && second) {
-                addRuns(2);
-                this.bases[1] = false;
-                this.bases[2] = false;
-            }
-            //this means only one of the 2 bases to clear are occupied
-            else {
-                addRuns(1);
-                this.bases[1] = false;
-                this.bases[2] = false;
-            }
-        }
+
+        //Add run for if runners are on 2nd and 2rd
+        if (second) addRuns(1);
+        if (third) addRuns(1);
+        //Clear Bases
+        this.bases[1] = false;
+        this.bases[2] = false;
         //send first to third
         if (first) {
             this.bases[0] = false;
@@ -160,7 +156,7 @@ public class Scoreboard {
         //starts at one since at least one run scores from HR
         int numBases = 1;
         //checking how many people are on base and for each person on each base, adding to numruns
-        //will add numruns to total since all of thm score after a home run.
+        //will add numRuns to total since all of thm score after a home run.
         for (int i = 0; i < this.bases.length; i++) {
             boolean result = this.bases[i];
             if (result) {

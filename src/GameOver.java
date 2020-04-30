@@ -1,3 +1,9 @@
+/**
+ * The GameOver class contains the code for the screen that is shown when the game is over.
+ * It displays the box score and allows the user to return to the main screen
+ * when the user finishes an individual game, not in season mode.
+ **/
+
 import javax.swing.*;
 import java.awt.*;
 

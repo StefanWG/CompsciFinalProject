@@ -1,6 +1,11 @@
+/**
+ * This class contains only static methods. All the drawing except the meter
+ * and the team images are done in this class, and then referenced when necessary
+ * for organizational purposes.
+ **/
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.font.*;
 import java.awt.geom.*;
 import java.awt.image.*;
@@ -411,12 +416,9 @@ public class Display {
         button.setBackground(Color.darkGray);
         button.setOpaque(true);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                g.rules = true;
-                g.repaint();
-            }
+        button.addActionListener(e -> {
+            g.rules = true;
+            g.repaint();
         });
 
         return button;
@@ -435,12 +437,9 @@ public class Display {
         button.setBackground(Color.darkGray);
         button.setOpaque(true);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                g.rules = false;
-                g.repaint();
-            }
+        button.addActionListener(e -> {
+            g.rules = false;
+            g.repaint();
         });
 
         return button;
@@ -461,20 +460,20 @@ public class Display {
         g.setFont(font);
         ArrayList<String> splitString = new ArrayList<>(Arrays.asList(rules.split(" ")));
 
-        String toDraw = "";
+        StringBuilder toDraw = new StringBuilder();
         int count = 0;
         while (splitString.size() > 0) {
             if (splitString.get(0).length() + toDraw.length() < 20) {
-                toDraw += splitString.get(0) + " ";
+                toDraw.append(splitString.get(0)).append(" ");
                 splitString.remove(0);
             } else {
-                g.drawString(toDraw, 20, 50 + font.getSize()*count);
-                toDraw = "";
+                g.drawString(toDraw.toString(), 20, 50 + font.getSize()*count);
+                toDraw = new StringBuilder();
                 count++;
             }
         }
 
-        g.drawString(toDraw, 20, 50 + font.getSize()*count);
+        g.drawString(toDraw.toString(), 20, 50 + font.getSize()*count);
 
         return image;
     }

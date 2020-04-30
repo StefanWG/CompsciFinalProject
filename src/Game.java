@@ -1,3 +1,9 @@
+/**
+ * This class controls the game when it is in progress. It displays the current state
+ * of the game, as well as advances through the at bats. The spacebar control occurs
+ * in this class.
+ **/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

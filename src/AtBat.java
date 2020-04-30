@@ -1,3 +1,10 @@
+/**
+ * This class handles each at bat. It is called exclusively from the game class.
+ * A new instance is created for each at bat.
+ * This class creates the meters if the a human is batting,
+ * or simulates an at bat for the computer.
+ **/
+
 import java.awt.*;
 public class AtBat {
     private int contactResult;
