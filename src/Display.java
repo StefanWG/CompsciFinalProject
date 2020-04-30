@@ -424,6 +424,8 @@ public class Display {
         return button;
     }
 
+
+    // this method creates the clickable button which allows the user to then see the buffered image of the next people at bat
     public static JButton atBatButton(Game g) {
         BufferedImage image = new BufferedImage(125, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = image.createGraphics();
@@ -445,6 +447,7 @@ public class Display {
         return button;
     }
 
+    //This is a method which essentially prints the rules
     public static BufferedImage rulesText() {
         BufferedImage image = new BufferedImage(250, 500, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
@@ -454,7 +457,8 @@ public class Display {
 
         String rules = "Press Space Bar anytime along the meter to choose an Accuracy Rating. " +
                 "\n Press space bar for the second meter to choose the Power Level." +
-                "\n The closer to the middle the better (Tip: Aim for the Green!!)";
+                "\n The closer to the middle the better (Tip: Aim for the Green!!)   " + "Press Command+M/E/N/P \n to Mute, End the game," +
+                "\n start a New game, or Pick a new team.";
 
         Font font = new Font("Boulder", Font.PLAIN, 23);
         g.setFont(font);
@@ -467,16 +471,18 @@ public class Display {
                 toDraw.append(splitString.get(0)).append(" ");
                 splitString.remove(0);
             } else {
-                g.drawString(toDraw.toString(), 20, 50 + font.getSize()*count);
+                g.drawString(toDraw.toString(), 20, 50 + font.getSize() * count);
                 toDraw = new StringBuilder();
                 count++;
             }
         }
 
-        g.drawString(toDraw.toString(), 20, 50 + font.getSize()*count);
+        g.drawString(toDraw.toString(), 20, 50 + font.getSize() * count);
 
         return image;
     }
+
+    /* this is a method which is called to print the team members (a buffered image) that are next to bat */
 
     public static BufferedImage atBatOnDeck(Scoreboard scoreboard) {
         BufferedImage image = new BufferedImage(250, 500, BufferedImage.TYPE_INT_ARGB);
@@ -545,17 +551,17 @@ public class Display {
             AtBats += p.atBats;
 
             g.setColor(Color.black);
-            g.fill(new RoundRectangle2D.Double(15, 190+i*50, 200, 40, 20, 20)); //Name
-            g.fill(new RoundRectangle2D.Double(230, 190+i*50, 40, 40, 20, 20)); //AB
-            g.fill(new RoundRectangle2D.Double(285, 190+i*50, 40, 40, 20, 20)); //H
-            g.fill(new RoundRectangle2D.Double(340, 190+i*50, 40, 40, 20, 20)); //RBI
-            g.fill(new RoundRectangle2D.Double(395, 190+i*50, 40, 40, 20, 20)); //HR
+            g.fill(new RoundRectangle2D.Double(15, 190 + i * 50, 200, 40, 20, 20)); //Name
+            g.fill(new RoundRectangle2D.Double(230, 190 + i * 50, 40, 40, 20, 20)); //AB
+            g.fill(new RoundRectangle2D.Double(285, 190 + i * 50, 40, 40, 20, 20)); //H
+            g.fill(new RoundRectangle2D.Double(340, 190 + i * 50, 40, 40, 20, 20)); //RBI
+            g.fill(new RoundRectangle2D.Double(395, 190 + i * 50, 40, 40, 20, 20)); //HR
 
-            writeText(p.name, g, 15, 215, 190+i*50, 230+i*50, textColor, "Boulder"); //Name
-            writeText(String.valueOf(p.atBats), g, 230, 270, 190+i*50, 230+i*50, textColor, "Boulder"); //AB
-            writeText(String.valueOf(hits), g, 285, 325, 190+i*50, 230+i*50, textColor, "Boulder"); //H
-            writeText(String.valueOf(p.RBIs), g, 340, 380, 190+i*50, 230+i*50, textColor, "Boulder"); //RBI
-            writeText(String.valueOf(p.HRs), g, 395, 435, 190+i*50, 230+i*50, textColor, "Boulder"); //HR
+            writeText(p.name, g, 15, 215, 190 + i * 50, 230 + i * 50, textColor, "Boulder"); //Name
+            writeText(String.valueOf(p.atBats), g, 230, 270, 190 + i * 50, 230 + i * 50, textColor, "Boulder"); //AB
+            writeText(String.valueOf(hits), g, 285, 325, 190 + i * 50, 230 + i * 50, textColor, "Boulder"); //H
+            writeText(String.valueOf(p.RBIs), g, 340, 380, 190 + i * 50, 230 + i * 50, textColor, "Boulder"); //RBI
+            writeText(String.valueOf(p.HRs), g, 395, 435, 190 + i * 50, 230 + i * 50, textColor, "Boulder"); //HR
         }
 
         g.setColor(Color.black);
@@ -596,14 +602,16 @@ public class Display {
             writeText(String.valueOf(s.homeRuns), g, 130, 170, 50, 70, s.homeTeam.textColor, "Boulder"); //HomeScore
         } else {
             g.setColor(Color.black);
-            g.fillRect(50,115,75, 10);
+            g.fillRect(50, 115, 75, 10);
         }
         if (s.played && s.homeRuns > s.awayRuns) {
-            if (s.season.team.teamName.equals(s.homeTeam.teamName)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
-            else writeText("L", g, 50, image.getWidth() - 50, 80,160, Color.red.darker(), "Impact");
+            if (s.season.team.teamName.equals(s.homeTeam.teamName))
+                writeText("W", g, 50, image.getWidth() - 50, 80, 160, Color.green.darker(), "Impact");
+            else writeText("L", g, 50, image.getWidth() - 50, 80, 160, Color.red.darker(), "Impact");
         } else if (s.played && s.awayRuns > s.homeRuns) {
-            if (s.season.team.teamName.equals(s.awayTeam.teamName)) writeText("W", g, 50, image.getWidth() - 50, 80,160, Color.green.darker(), "Impact");
-            else writeText("L", g, 50, image.getWidth() - 50, 80,160, Color.red.darker(), "Impact");
+            if (s.season.team.teamName.equals(s.awayTeam.teamName))
+                writeText("W", g, 50, image.getWidth() - 50, 80, 160, Color.green.darker(), "Impact");
+            else writeText("L", g, 50, image.getWidth() - 50, 80, 160, Color.red.darker(), "Impact");
         }
 
         return image;
@@ -611,7 +619,7 @@ public class Display {
     }
 
     public static BufferedImage seasonModeStandings(ArrayList<SeasonTeam> teams) {
-        BufferedImage image = new BufferedImage(395, 230+teams.size()*50, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(395, 230 + teams.size() * 50, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
 
         g.setColor(Color.darkGray);
@@ -639,7 +647,7 @@ public class Display {
             g.fill(new RoundRectangle2D.Double(285, 215 + 50 * i, 40, 40, 20, 20)); //Losses
             g.fill(new RoundRectangle2D.Double(340, 215 + 50 * i, 40, 40, 20, 20)); //GB
 
-            writeText(team.teamName,g, 15, 200, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Name
+            writeText(team.teamName, g, 15, 200, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Name
             writeText(String.valueOf(team.wins), g, 230, 270, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Age
             writeText(String.valueOf(team.losses), g, 285, 325, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Contact
             //writeText(String.valueOf(team.lineup[i].powerRating), g, 340, 380, 215 + 50 * i, 255 + 50 * i, team.textColor, "Boulder"); //Power

@@ -38,7 +38,7 @@ public class Loading extends JPanel {
                 main.newGame();
             }
         });
-
+//This creates the button that allows the user to select the season mode
         JButton season = new JButton("Full Season");
         season.setPreferredSize(new Dimension(100,380));
         season.addActionListener(e -> {

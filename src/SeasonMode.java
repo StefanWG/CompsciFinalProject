@@ -30,6 +30,9 @@ public class SeasonMode extends JPanel {
     ArrayList<JLabel> labels = new ArrayList<>();
     int gameNumber = 0;
 
+
+ //  Creates the graphics for the season mode
+ // Creates a grid which is the schedule for the team for that season
     public SeasonMode(Team user, Main main) {
         setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 
@@ -60,6 +63,8 @@ public class SeasonMode extends JPanel {
             schedulePanel.add(label);
         }
 
+
+ //Graphics for the standings, includes the clickable buttons for simulation or next game
         sortStandings();
         JScrollPane standingsPane = new JScrollPane(standingsLabel);
         standingsPane.getVerticalScrollBar().setPreferredSize(new Dimension(8,10));
@@ -106,6 +111,8 @@ public class SeasonMode extends JPanel {
         gameNumber++;
     }
 
+
+ //Method that sorts the standings of the all the different teams (first to last place)
     public void sortStandings() {
         for (int j = 0; j < teams.size() - 1; j++) {
             for (int i = teams.size() - 1; i > 0; i--) {
