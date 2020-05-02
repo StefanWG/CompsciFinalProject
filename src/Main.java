@@ -7,8 +7,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-//TODO final score on end screen
-//TODO make everything public or private, make things private that can be private
 public class Main {
     public static int WIDTH = 900; //DO NOT CHANGE
     public static int HEIGHT = 780; //DO NOT CHANGE
@@ -18,6 +16,9 @@ public class Main {
     public SeasonMode season = null;
 
     public static void main(String[] args) {
+        System.out.println("Note: The JFrame takes a few seconds to load.");
+        System.out.println("There are instructions once you pick a team under the rules tab on the bottom right.");
+        System.out.println("Have fun and good luck!");
         new Main();
     }
 
