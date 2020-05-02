@@ -114,10 +114,10 @@ public class Main {
             }
         });
 
-        JMenuItem changePlayer = new JMenuItem("Change Player");
-        changePlayer.setAccelerator(KeyStroke.getKeyStroke(
+        JMenuItem changeTeam = new JMenuItem("Change Team");
+        changeTeam.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_C, ActionEvent.META_MASK));
-        changePlayer.addActionListener(new AbstractAction() {
+        changeTeam.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pickNewTeam();
@@ -137,7 +137,7 @@ public class Main {
         });
 
         file.add(endGame);
-        file.add(changePlayer);
+        file.add(changeTeam);
         file.add(sound);
 
         menuBar.add(file);
