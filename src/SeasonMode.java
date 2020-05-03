@@ -19,8 +19,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
 
-//TODO season ends?
-
 public class SeasonMode extends JPanel {
     SeasonTeam team;
     Main main;

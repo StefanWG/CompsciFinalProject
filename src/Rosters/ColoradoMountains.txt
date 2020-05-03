@@ -1,0 +1,11 @@
+Mountains
+68 8 122
+Trev_Story 26 85 90
+Char_man 32 75 95
+Nola_Nado 27 96 90
+Dan_Murph 34 60 85
+Ian_Dessie 33 78 83
+Davi_Dahl 25 66 88
+Rya_McMa 24 63 68
+Gar_Hamp 24 45 59
+Ton_Wolt 26 34 50
