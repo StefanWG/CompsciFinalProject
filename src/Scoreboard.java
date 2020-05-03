@@ -51,7 +51,7 @@ public class Scoreboard {
         hitballThread.start();
     }
 
-    /**this method adds runs tot he totals based on which half inning we are in
+    /**this method adds runs to the totals based on which half inning we are in
      *
      * @param numRuns
      */
@@ -276,7 +276,7 @@ public class Scoreboard {
         }
     }
 
-    /**to String method to print out thee scoreboard in thee terminal and also to display.
+    /**to String method to print out thee scoreboard in the terminal and also to display.
      *
      * @return
      */
