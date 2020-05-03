@@ -56,7 +56,7 @@ public class Meter {
         return running;
     }
 /** This is the code that moves the black bar within the meter graphic allowing it to move back and forth*/
-    void update() {
+    public void update() {
         meterLocation += meterSpeed;
         if (meterLocation > WIDTH) {
             meterLocation = WIDTH;
@@ -67,7 +67,7 @@ public class Meter {
         }
     }
 
-    void draw(Graphics gOri) {
+    public void draw(Graphics gOri) {
         /** Create Graphics2D for color gradient */
         Graphics2D g = (Graphics2D) gOri;
 
@@ -102,6 +102,7 @@ public class Meter {
     public int runMeter() {
         running = true;
         while (running) {
+            if (game.gameOver) return 0;
             update();
             game.repaint();
             try {
