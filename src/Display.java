@@ -45,7 +45,7 @@ public class Display {
         writeText(str, g2D, 0, 650, 0, 150, Color.orange, "Impact");
         return image;
     }
-/** draws a scoreboard from the passed from the scoreboard class */
+/** draws a scoreboard from the passed in arguments from the scoreboard class */
     public static BufferedImage drawScoreboard(Scoreboard scoreboard) {
         BufferedImage image = new BufferedImage(800, 160, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();

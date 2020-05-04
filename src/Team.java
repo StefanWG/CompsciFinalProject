@@ -28,11 +28,10 @@ public class Team {
      *
      */
     public Team(String filePath, boolean humanPlayer){
-        //given the argument documents the fil path
         this.filePath = filePath;
         //input from argument being stored and initializing boolean variable
         this.humanPlayer = humanPlayer;
-        //calls on initializeteam method to create the team based on thee file input
+        //calls on initialize team method to create the team based on thee file input
         initializeTeam(filePath);
         //starts at 0 since no one has batted
         lineupPos = 0;
@@ -52,9 +51,7 @@ public class Team {
         try {
             File file = new File(filePath);
             scanner = new Scanner(file);
-        }
-        //catch if the file isn't found
-        catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) { //catch if the file isn't found
             System.out.println("Error: File not found: " + filePath);
         }
         //keeps track fo what linenumber we are on for debugging purposes

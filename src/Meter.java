@@ -56,7 +56,7 @@ public class Meter {
         return running;
     }
 /** This is the code that moves the black bar within the meter graphic allowing it to move back and forth*/
-    public void update() {
+    private void update() {
         meterLocation += meterSpeed;
         if (meterLocation > WIDTH) {
             meterLocation = WIDTH;

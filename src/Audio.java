@@ -15,11 +15,11 @@ public class Audio implements Runnable {
     FloatControl volumeControl;
     AudioInputStream ais;
     Clip clip;
-    String string;
+    String filePath;
     File file;
 
-    public Audio(String string) {
-        this.string = string;
+    public Audio(String filePath) {
+        this.filePath = filePath;
     }
 
     /**
@@ -28,7 +28,7 @@ public class Audio implements Runnable {
 
     public void run() {
         try {
-            file = new File(string).getAbsoluteFile();
+            file = new File(filePath).getAbsoluteFile();
             ais = AudioSystem.getAudioInputStream(file);
         } catch (Exception ex){
             ex.printStackTrace();
