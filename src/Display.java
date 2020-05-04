@@ -468,9 +468,9 @@ public class Display {
         g.setColor(Color.black);
 
         String rules = "Press Space Bar anytime along the meter to choose an Accuracy Rating. " +
-                "\n Press space bar for the second meter to choose the Power Level." +
-                "\n The closer to the middle the better (Tip: Aim for the Green!!)   " + "Press Command+M/E/P \n to Mute, End the game," +
-                "\n or Pick a new team.";
+                "Press space bar for the second meter to choose the Power Level. " +
+                "The closer to the middle the better (Tip: Aim for the Green!!) " + "Press Command+ M/E/C to mute, end the game, " +
+                "or pick a new team.";
 
         Font font = new Font("Boulder", Font.PLAIN, 23);
         g.setFont(font);
