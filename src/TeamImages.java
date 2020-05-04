@@ -212,42 +212,31 @@ public class TeamImages {
     public static BufferedImage mountains() {
         BufferedImage mountains = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = mountains.createGraphics();
-        Random rand = new Random();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 1600, 1600);
+
+        g.setPaint(new GradientPaint(0,0, new Color(30,0,80), 0,500, new Color(60,10,10)));
+        g.fillRect(0, 0, 800, 800);
         g.setColor(Color.GRAY);
-        for (int i = 0; i < 800; i += 10){
-            int width = rand.nextInt(170);
-            int height = rand.nextInt(170);
-            g.fillOval(i, 650-height, width, height);
-        }
-        for(int x = 100; x<700; x+=10){
-            int width = rand.nextInt(170);
-            int height = rand.nextInt(170);
-            g.fillOval(x, 550-height, width, height);
-        }
-        for(int z = 200; z<600; z+=10){
-            int width = rand.nextInt(170);
-            int height = rand.nextInt(170);
-            g.fillOval(z, 450-height, width, height);
-        }
-        for(int y = 300; y<500; y+=10){
-            int width = rand.nextInt(170);
-            int height = rand.nextInt(170);
-            g.fillOval(y, 350-height, width, height);
-        }
-        for(int x = 390; x<410; x+=1){
-            int width = rand.nextInt(170);
-            int height = rand.nextInt(170);
-            g.fillOval(x, 250-height, width, height);
-        }
-        g.setColor(Color.GREEN.darker());
-        g.fillRect(0, 600, 1000, 400);
-        Font f = new Font("Boulder", Font.BOLD, 300);
-        g.setFont(f);
-        g.setColor(new Color(102, 0, 153));
-        g.drawString("C", 70, 240);
-        g.drawString("M", 550, 240);
-            return mountains;
+        g.fillPolygon(new int[]{0,200,400}, new int[]{700,300,700},3);
+        g.fillPolygon(new int[]{200,450,700}, new int[]{700,100,700},3);
+        g.fillPolygon(new int[]{550,650,750}, new int[]{700,400,700},3);
+        g.setColor(Color.white);
+        g.fillPolygon(new int[]{150,200,250}, new int[]{400,300,400},3);
+        g.fillPolygon(new int[]{387,450,513}, new int[]{250,100,250},3);
+        g.fillPolygon(new int[]{625,650,675}, new int[]{475,400,475},3);
+        g.setColor(Color.black);
+        g.setStroke(new BasicStroke(3));
+        g.drawLine(150, 400, 0, 700);
+        g.drawLine(250, 400, 400, 700);
+
+        g.drawLine(625, 475, 550, 700);
+        g.drawLine(675, 475, 750, 700);
+
+        g.setPaint(new GradientPaint(0,0, new Color(245, 148, 7), 0,400, new Color(255, 221, 26).darker()));
+        g.fillOval(625, 25, 150, 150);
+
+        g.setPaint(new GradientPaint(0,600, new Color(0,80,40), 0,800, new Color(60,150,10)));
+        g.fillRect(0, 600, 800, 200);
+        Display.writeText("C M", g, 50,300,0,240,new Color(102, 0, 153), "Impact");
+        return mountains;
     }
 }

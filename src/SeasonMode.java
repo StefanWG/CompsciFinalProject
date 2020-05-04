@@ -88,7 +88,11 @@ public class SeasonMode extends JPanel {
         playGame.addActionListener(e -> team.schedule.get(gameNumber).playSeasonGame(true));
 
         JButton simGame = new JButton("Sim Next Game");
-        simGame.addActionListener(e -> team.schedule.get(gameNumber).playSeasonGame(false));
+        simGame.addActionListener(e -> {
+                if (gameNumber < teams.size()*2-2) {
+                    team.schedule.get(gameNumber).playSeasonGame(false);
+                }
+        });
 
         JSplitPane buttonSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, playGame, simGame);
         buttonSplitPane.setPreferredSize(new Dimension(Main.WIDTH,72));

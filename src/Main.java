@@ -90,6 +90,7 @@ public class Main {
      **/
 
     public void pickNewTeam() {
+        season = null;
         loading = new Loading(this);
         frame.setContentPane(loading);
         this.frame.pack();

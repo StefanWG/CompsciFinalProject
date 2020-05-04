@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Audio implements Runnable {
+    static boolean maxVolume = true;
     static ArrayList<FloatControl> volumeControls = new ArrayList<>();
     static ArrayList<Audio> audios = new ArrayList<>();
     FloatControl volumeControl;
@@ -38,7 +39,8 @@ public class Audio implements Runnable {
             clip.open(ais);
             volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             volumeControls.add(volumeControl);
-            volumeControl.setValue(volumeControl.getMaximum());
+            if (maxVolume) volumeControl.setValue(volumeControl.getMaximum());
+            else volumeControl.setValue(volumeControl.getMinimum());
             audios.add(this);
         } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
@@ -72,6 +74,7 @@ public class Audio implements Runnable {
      **/
 
     public static void toggleSound() {
+        maxVolume = !maxVolume;
         for (FloatControl v : volumeControls) {
             if (v.getValue() == v.getMaximum()) {
                 v.setValue(v.getMinimum());
