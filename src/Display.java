@@ -531,9 +531,6 @@ public class Display {
 
         g.setColor(Color.darkGray);
         g.fill(new RoundRectangle2D.Double(0, 0, image.getWidth(), image.getHeight(), 0, 0));
-        g.setColor(Color.BLACK);
-        g.fill(new RoundRectangle2D.Double(50, 30, image.getWidth() - 100, 60, 20, 20)); //Name
-        writeText(team.teamName.toUpperCase(), g, 50, image.getWidth() - 50, 23, 90, textColor, "Boulder");
 
         g.setColor(Color.black);
         g.fill(new RoundRectangle2D.Double(15, 120, 200, 40, 20, 20)); //Name
@@ -589,6 +586,13 @@ public class Display {
         writeText(String.valueOf(totalHits), g, 285, 325, 640, 680, textColor.brighter(), "Boulder"); //H
         writeText(String.valueOf(RBIs), g, 340, 380, 640, 680, textColor.brighter(), "Boulder"); //RBI
         writeText(String.valueOf(HRs), g, 395, 435, 640, 680, textColor.brighter(), "Boulder"); //HR
+
+        g.setColor(Color.BLACK);
+        g.fill(new RoundRectangle2D.Double(15, 30, 345, 60, 20, 20)); //Name
+        writeText(team.teamName.toUpperCase(), g, 15, 360, 23, 90, textColor, "Boulder");
+        g.setColor(Color.BLACK);
+        g.fill(new RoundRectangle2D.Double(375, 30, 60, 60, 20, 20)); //Name
+        writeText(String.valueOf(RBIs), g, 375, 435, 23, 90, textColor, "Boulder");
 
         image = makeTransparent(Color.lightGray, image);
         return image;
