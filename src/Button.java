@@ -7,12 +7,12 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 /** This class extends JButton so that we can create instances of Button (individual buttons) throughout*/
 public class Button extends JButton {
-    public Button(BufferedImage image, Loading loading, int finalI) {
+    public Button(BufferedImage image, Loading loading, int buttonNum) {
         image = Display.resize(image, 228,228);
         setIcon(new ImageIcon(image));
         addActionListener(e -> {
             try {
-                loading.team = Loading.teams.get(finalI);
+                loading.team = Loading.teams.get(buttonNum);
                 loading.label.setIcon(new ImageIcon(Display.lineupCard(loading.team)));
             } catch (Exception ignored) {}
         });
